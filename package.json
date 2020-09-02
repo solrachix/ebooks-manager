@@ -1,0 +1,32 @@
+{
+  "name": "thoth",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:web": "yarn workspace @thoth/web start",
+    "start:server": "yarn workspace @thoth/server start",
+    "start:mobile": "yarn workspace @thoth/app start",
+    "test": "jest",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
+    "fix": "eslint --ext .js,.jsx,.ts,.tsx  --fix ./"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "@thoth/eslint-config": "*",
+    "@types/jest": "^26.0.5",
+    "ts-jest": "^26.1.3",
+    "typescript": "^3.9.7",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "jest": "24.9.0"
+  }
+}
