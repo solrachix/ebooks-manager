@@ -23,7 +23,11 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "extends": "../../tsconfig.json",
+  "references": [
+    {
+      "path": "../axios-config"
+    }
+  ],
 }

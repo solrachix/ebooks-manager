@@ -7,5 +7,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["node_modules", "dist", "lib", "__tests__", "**/*.test*", "**/*.spec*"],
+  "references": [
+    { "path": "packages/axios-config" },
+    { "path": "packages/eslint-config" }
+  ]
 }

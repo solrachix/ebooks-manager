@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
-import api from '@thoth/axios-config'
+import api from '../../../axios-config/src'
 
 interface User {
   id: number,
@@ -9,7 +9,7 @@ interface User {
   whatsapp: string | null,
   bio: string | null
 }
-interface Userentication {
+interface UserAuthentication {
   user: User,
   token: string
 }
@@ -38,7 +38,7 @@ export const UserProvider: React.FC = ({ children }) => {
       const token = localStorage.getItem('@RUser:token')
 
       if (user && token) {
-        api.defaults.headers.Userorization = `token ${token}`
+        api.defaults.headers.UserAuthorization = `token ${token}`
 
         setUser(JSON.parse(user))
       }
@@ -49,7 +49,7 @@ export const UserProvider: React.FC = ({ children }) => {
 
   const Auth = {
     signIn: useCallback(async (url: string, params: unknown) => {
-      const { data } = await api.get<Userentication>(url, { params })
+      const { data } = await api.get<UserAuthentication>(url, { params })
 
       setTimeout(() => {
         setUser(data.user)
