@@ -9,7 +9,11 @@ import { Container, Titleshown, WindowActions, MacActionButton, DefaultActionBut
 import { useConfig } from '../../hooks/useConfig'
 import { ThemeContext } from 'styled-components'
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  title: string
+}
+
+const Header: React.FC<HeaderProps>= ({ title }) => {
   const location = useLocation()
   const theme = useContext(ThemeContext).colors
 
@@ -53,7 +57,7 @@ const Header: React.FC = () => {
 
       <Titleshown id="titleshown">
         <p>
-          { rootRoute && location.pathname.replaceAll('/', '')}
+          {title}
         </p>
       </Titleshown>
 

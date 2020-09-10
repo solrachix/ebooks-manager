@@ -1,4 +1,4 @@
-import { windows as Windows } from '../store/Windows'
+import { windows as Windows } from '../store/windows'
 
 export interface WindowProps {
   id: number;
