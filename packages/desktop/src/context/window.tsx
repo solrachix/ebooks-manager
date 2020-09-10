@@ -150,7 +150,7 @@ export const WindowProvider: React.FC = ({ children }) => {
       Electron
         .remote
         .getCurrentWindow()
-        .setSize(windowSize.width, windowSize.height)
+        .setSize(width, height, true)
       setWindowSize({ width, height})
     }
   }
