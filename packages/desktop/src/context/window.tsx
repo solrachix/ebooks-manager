@@ -13,6 +13,7 @@ import Window, { WindowOptions } from '../components/Window/index'
 
 import ToastContainer from '../components/ToastContainer'
 import { ToastMessage } from '../components/Toast'
+import Header from './../components/Header/index'
 
 interface ToastShow {
   (message: Omit<ToastMessage, 'id'>): string;
@@ -108,7 +109,7 @@ export const WindowProvider: React.FC = ({ children }) => {
   return (
     <WindowContext.Provider
       value={{ newWindow, newNotification, Toast, Menu }}>
-
+      <Header />
       <ToastContainer toasts={messages} />
       {children}
     </WindowContext.Provider>

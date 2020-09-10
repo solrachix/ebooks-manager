@@ -30,10 +30,7 @@ const App = () => {
 
       <AppProvider>
         <Container>
-          <Header />
-
           <Routes />
-
         </Container>
       </AppProvider>
     </ThemeProvider>
