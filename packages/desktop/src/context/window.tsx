@@ -13,7 +13,7 @@ import Window, { WindowOptions } from '../components/Window/index'
 
 import ToastContainer from '../components/ToastContainer'
 import { ToastMessage } from '../components/Toast'
-import Header from './../components/Header/index'
+import HeaderComponent from './../components/Header/index'
 
 interface ToastShow {
   (message: Omit<ToastMessage, 'id'>): string;
@@ -38,7 +38,10 @@ interface WindowContextData {
   newNotification(options: NotificationOptions): void;
   Toast: Toast;
   Menu: Menu;
-  setTitle(props: string): string
+  Header: {
+    hidden(props: boolean): void;
+    setTitle(props: string): string
+  }
 }
 
 const WindowContext = createContext<WindowContextData>({} as WindowContextData)
@@ -48,6 +51,7 @@ export const WindowProvider: React.FC = ({ children }) => {
   const [messages, setMessages] = useState<ToastMessage[]>([])
   const [MenuItems, setMenuItems] = useState<MenuItem[]>([])
   const [title, setStateTitle] = useState(Electron.remote.getCurrentWindow().getTitle())
+  const [header, setHeader] = useState(true)
 
   const newWindow = (options: WindowOptions) => {
     // const webContents = Window(options)
@@ -104,19 +108,24 @@ export const WindowProvider: React.FC = ({ children }) => {
     }, [])
   }
 
-  const setTitle = (name: string): string => {
+  const Header = {
+    hidden(option: boolean) {
+      setHeader(option)
+    },
+    setTitle(name: string): string {
 
-    Electron.remote.getCurrentWindow().setTitle(name)
-    setStateTitle(name)
+      Electron.remote.getCurrentWindow().setTitle(name)
+      setStateTitle(name)
 
-    return name
+      return name
+    }
   }
   // hidden header
 
   return (
     <WindowContext.Provider
-      value={{ newWindow, newNotification, Toast, Menu, setTitle }}>
-      <Header {...{title}} />
+      value={{ newWindow, newNotification, Toast, Menu, Header }}>
+      <HeaderComponent {...{title, hidden: header}} />
       <ToastContainer toasts={messages} />
       {children}
     </WindowContext.Provider>

@@ -10,10 +10,11 @@ import { useConfig } from '../../hooks/useConfig'
 import { ThemeContext } from 'styled-components'
 
 interface HeaderProps {
-  title: string
+  title: string;
+  hidden: boolean;
 }
 
-const Header: React.FC<HeaderProps>= ({ title }) => {
+const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
   const location = useLocation()
   const theme = useContext(ThemeContext).colors
 
@@ -50,6 +51,8 @@ const Header: React.FC<HeaderProps>= ({ title }) => {
   const shouldUseMacOSWindowActions = useMemo(() => {
     return useMacOSWindowActionButtons || os.platform() === 'darwin'
   }, [useMacOSWindowActionButtons])
+
+  if (!hidden) return <></>
 
   return (
     <Container reverse={shouldUseMacOSWindowActions}>
