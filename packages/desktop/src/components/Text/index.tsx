@@ -1,17 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Text } from './styles'
+import styled from 'styled-components'
 
-interface Props {
-  text: string;
+interface StyledProps {
   align?: string;
   size?: number;
   color?: string;
-  bold?: string | number
+  weight?: string | number
 }
-const TextComponent: React.FC<Props> = ({ text, ...props }) => {
-  return <Text {...props }>{ text }</Text>
+
+interface ComponentProps extends StyledProps {
+  text: string;
+}
+
+const Text = styled.p<StyledProps>`
+  width: auto;
+  max-width: 100%;
+  font-family: Roboto, sans-serif;
+  text-align: ${({ align }) => align};
+  font-size: ${({ size }) => size}em;
+  font-weight: ${({ weight }) => weight};
+  color: ${({ color }) => color};
+  margin: 0;
+  word-break: break-word;
+`
+
+const TextComponent: React.FC<ComponentProps> = ({ text, ...props }) => {
+  return <Text {...props}>{ text }</Text>
 }
 
 TextComponent.propTypes = {
@@ -19,7 +35,7 @@ TextComponent.propTypes = {
   align: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  bold: PropTypes.oneOf([
+  weight: PropTypes.oneOf([
     'normal', 'bold',
     100, 200, 300, 400, 500, 600, 700, 800, 900
   ])
@@ -28,7 +44,7 @@ TextComponent.propTypes = {
 TextComponent.defaultProps = {
   size: 1,
   color: '#fff',
-  bold: 'normal',
+  weight: 'normal',
   align: 'left'
 }
 
