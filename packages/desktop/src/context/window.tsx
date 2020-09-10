@@ -33,6 +33,16 @@ interface Menu {
   removeItemsMenu(options: string[]): void;
 }
 
+interface WindowSize {
+  width: number;
+  height: number;
+}
+
+interface Size {
+  getSize(): WindowSize;
+  setSize(props: WindowSize): void;
+}
+
 interface WindowContextData {
   newWindow(options: WindowOptions): WindowProps;
   newNotification(options: NotificationOptions): void;
@@ -41,7 +51,8 @@ interface WindowContextData {
   Header: {
     hidden(props: boolean): void;
     setTitle(props: string): string
-  }
+  },
+  Size: Size
 }
 
 const WindowContext = createContext<WindowContextData>({} as WindowContextData)
@@ -51,6 +62,17 @@ export const WindowProvider: React.FC = ({ children }) => {
   const [messages, setMessages] = useState<ToastMessage[]>([])
   const [MenuItems, setMenuItems] = useState<MenuItem[]>([])
   const [title, setStateTitle] = useState(Electron.remote.getCurrentWindow().getTitle())
+  const [windowSize, setWindowSize] = useState(() => {
+    const response = Electron
+      .remote
+      .getCurrentWindow()
+      .getSize()
+
+      return {
+        width: response[0],
+        height: response[1]
+      }
+  })
   const [header, setHeader] = useState(true)
 
   const newWindow = (options: WindowOptions) => {
@@ -113,19 +135,30 @@ export const WindowProvider: React.FC = ({ children }) => {
       setHeader(option)
     },
     setTitle(name: string): string {
-
       Electron.remote.getCurrentWindow().setTitle(name)
       setStateTitle(name)
 
       return name
     }
   }
-  // hidden header
 
+  const Size = {
+    getSize() {
+      return windowSize
+    },
+    setSize({ width, height}: WindowSize) {
+      Electron
+        .remote
+        .getCurrentWindow()
+        .setSize(windowSize.width, windowSize.height)
+      setWindowSize({ width, height})
+    }
+  }
   return (
     <WindowContext.Provider
-      value={{ newWindow, newNotification, Toast, Menu, Header }}>
+      value={{ newWindow, newNotification, Toast, Menu, Header, Size }}>
       <HeaderComponent {...{title, hidden: header}} />
+
       <ToastContainer toasts={messages} />
       {children}
     </WindowContext.Provider>
