@@ -1,8 +1,10 @@
 import electron, { BrowserWindow as ElectronBrowserWindow, remote } from 'electron'
+import { getWindow, setWindow, WindowProps } from './windowsController'
 import { getWindowBounds, setWindowBounds } from './windowBoundsController'
 import { getAlwaysOnTop } from './alwaysOnTopController'
 
 interface Options extends Electron.BrowserWindowConstructorOptions {
+  id?: number;
   themeSource?: 'light' | 'dark' | 'system';
   partition?: string;
   APPAlreadyInitialized?: boolean;
@@ -50,6 +52,18 @@ export default function Window (options: Options | null): Electron.BrowserWindow
       spellcheck: true
     }
   })
+
+  const WindowProps = {
+    id: options?.id || 0,
+    title: options?.title || 'Electron',
+    ...getWindowBounds(),
+    webContentsID: window.webContents.id
+  }
+
+  delete WindowProps.x
+  delete WindowProps.y
+
+  setWindow(WindowProps)
 
   window.on('close', () => {
     setWindowBounds(window?.getBounds())

@@ -4,6 +4,9 @@ import { uuid } from 'uuidv4'
 import React, { createContext, useState, useEffect, useCallback, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { useWindows } from './../hooks/useWindows'
+import { WindowProps } from './../utils/windowsController'
+
 import { MenuItem, createItem, createMenu } from '../components/Menu'
 import Notification, { NotificationOptions } from '../components/Notification'
 import Window, { WindowOptions } from '../components/Window/index'
@@ -29,13 +32,8 @@ interface Menu {
   removeItemsMenu(options: string[]): void;
 }
 
-interface window {
-  id: number;
-  webContents: Electron.webContents;
-}
-
 interface WindowContextData {
-  newWindow(options: WindowOptions): window;
+  newWindow(options: WindowOptions): WindowProps;
   newNotification(options: NotificationOptions): void;
   Toast: Toast;
   Menu: Menu;
@@ -44,17 +42,20 @@ interface WindowContextData {
 const WindowContext = createContext<WindowContextData>({} as WindowContextData)
 
 export const WindowProvider: React.FC = ({ children }) => {
-  const [windows, setWindows] = useState<window[] | []>([])
+  const [windows, setWindows] = useState<WindowProps[] | []>(useWindows('windows'))
   const [messages, setMessages] = useState<ToastMessage[]>([])
   const [MenuItems, setMenuItems] = useState<MenuItem[]>([])
+  const [title, setTitle] = useState('')
 
   const newWindow = (options: WindowOptions) => {
-    const webContents = Window(options)
-    const id = webContents.id
-    const window = {
-      id,
-      webContents
-    }
+    // const webContents = Window(options)
+    // const id = windows.length // webContents.id
+    // const window = {
+    //   id,
+    //   webContents
+    // }
+    const id = windows.length // webContents.id
+    const window = Window({ ...options, id })
 
     setWindows([...windows, window])
     return window
@@ -100,9 +101,14 @@ export const WindowProvider: React.FC = ({ children }) => {
       setMenuItems(menuItems)
     }, [])
   }
+
+  // title
+  // hidden header
+
   return (
     <WindowContext.Provider
       value={{ newWindow, newNotification, Toast, Menu }}>
+
       <ToastContainer toasts={messages} />
       {children}
     </WindowContext.Provider>

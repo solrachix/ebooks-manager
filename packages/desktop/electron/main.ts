@@ -22,7 +22,7 @@ function createWindow () {
   const splashScreen = new BrowserWindow({ icon, width: 400, height: 400, backgroundColor: '#1C2028', transparent: true, frame: false, alwaysOnTop: true })
   splashScreen.loadURL(chooseUrl(`${app.getAppPath()}/build/splashScreen.html`, 'splashScreen.html'))
 
-  mainWindow = Window({ title: 'Ellipsus', icon, themeSource: 'dark', show: false, partition })
+  mainWindow = Window({ id: 0, title: 'Ellipsus', icon, themeSource: 'dark', show: false, partition })
   mainWindow.loadURL(chooseUrl('http://localhost:4000', 'renderer/index.html'))
 
   mainWindow.once('ready-to-show', () => {

@@ -6,16 +6,18 @@ import { remote } from 'electron'
 import * as path from 'path'
 import * as URL from 'url'
 import Window from '../../utils/window'
+import { getWindow, WindowProps } from '../../utils/windowsController'
 
 console.log(process.platform)
 
 export interface WindowOptions extends Electron.BrowserWindowConstructorOptions {
+  id: number;
   title: string;
   url: string;
   partition?: string;
 }
 
-const createWindow = ({ title, url, ...options }: WindowOptions): Electron.WebContents => {
+const createWindow = ({ title, url, ...options }: WindowOptions): WindowProps /* Electron.WebContents */ => {
   const veracity = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2})\S*$/
   const partition = options.partition || 'persist:electron'
   let newUrl: string = url
@@ -49,7 +51,7 @@ const createWindow = ({ title, url, ...options }: WindowOptions): Electron.WebCo
     })
   })
 
-  return webContents
+  return getWindow(options.id)
 }
 
 export default createWindow
