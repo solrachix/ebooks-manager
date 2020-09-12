@@ -4,7 +4,7 @@ import { remote } from 'electron'
 import os from 'os'
 
 import { FiX, FiMinus, FiMaximize2, FiMinimize2 } from 'react-icons/fi'
-import { IoIosLogOut, IoIosStarOutline, IoIosHeartEmpty, IoIosCalendar } from 'react-icons/io'
+import { IoIosLogOut, IoIosStarOutline, IoIosHeartEmpty, IoIosCalendar, IoMdClose } from 'react-icons/io'
 import { BsBookmarksFill, BsBookmarks } from 'react-icons/bs'
 import LogoIcon from '../../assets/logo.svg'
 
@@ -44,6 +44,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
   const [openTab, setOpenTab] = useState(0)
   const [rootRoute, setRootRoute] = useState(location.pathname === '/')
   const [isMaximized, setIsMaximized] = useState<boolean>(remote.getCurrentWindow().isMaximized())
+  const [openWindowActions, setOpenWindowActions] = useState(false)
 
   useEffect(() => {
     const square = $('.square')
@@ -86,6 +87,90 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
     }
   }
 
+  const handleLogo = async () => {
+    const logoIcon = $('.logoIcon')
+    const close = $('.close')
+    const windowActions = $('.windowActions')
+
+
+    if (logoIcon && close && windowActions) {
+      if(openWindowActions){
+        windowActions.animate({
+          opacity: [ 1, 0 ],
+          transform: ['translateX(6rem)','translateX(-6rem)']
+        }, {
+          duration: 800,
+          easing: 'ease-in-out',
+          iterations: 1
+        }).finished
+
+        windowActions.style.opacity = '0'
+        windowActions.style.transform = 'translateX(-6rem)'
+
+
+        close.animate({
+          opacity: [ 1, 0 ]
+        }, {
+          duration: 800,
+          easing: 'ease-in-out',
+          iterations: 1
+        }).onfinish = () => {
+          close.style.display = `none`
+          logoIcon.style.display = `block`
+
+          logoIcon.animate({
+            opacity: [ 0, 1 ]
+          }, {
+            duration: 800,
+            easing: 'ease-in-out',
+            iterations: 1
+          }).onfinish = () => {
+            logoIcon.style.opacity = '1'
+          }
+
+        }
+
+      } else {
+        windowActions.animate({
+          opacity: [ 0, 1 ],
+          transform: ['translateX(0px)','translateX(6rem)']
+        }, {
+          duration: 800,
+          easing: 'ease-in-out',
+          iterations: 1
+        }).finished
+
+        windowActions.style.opacity = '1'
+        windowActions.style.transform = 'translateX(6rem)'
+
+        logoIcon.animate({
+            opacity: [ 1, 0 ]
+          }, {
+            duration: 800,
+            easing: 'ease-in-out',
+            iterations: 1
+          }).onfinish = () => {
+            logoIcon.style.display = `none`
+            close.style.display = `block`
+
+            close.animate({
+              opacity: [ 0, 1 ]
+            }, {
+              duration: 800,
+              easing: 'ease-in-out',
+              iterations: 1
+            }).onfinish = () => {
+              close.style.opacity = '1'
+            }
+
+          }
+
+      }
+
+      setOpenWindowActions(!openWindowActions)
+    }
+  }
+
   const handleCloseWindow = useCallback(() => {
     const window = remote.getCurrentWindow()
 
@@ -122,8 +207,10 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
   return (
     <Container>
       <div>
-        <Logo>
-          <LogoIcon />
+        <Logo onClick={handleLogo}>
+          <LogoIcon className="logoIcon" />
+
+          <IoMdClose className="close" />
         </Logo>
 
         <Titleshown className="sideBar" >
@@ -135,7 +222,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
                 actived={openTab === index}
                 onClick={() => goToTab(index)}
               >
-                {props.icon()}
+                {props.icon({})}
               </Link>
             ))
           }
@@ -143,7 +230,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
         </Titleshown>
 
 
-        <WindowActions>
+        <WindowActions className="windowActions" >
           {shouldUseMacOSWindowActions ? (
             <>
               <MacActionButton color="close" onClick={handleCloseWindow}>

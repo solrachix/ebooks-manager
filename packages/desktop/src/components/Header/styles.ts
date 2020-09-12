@@ -129,19 +129,41 @@ export const Logo = styled.div`
   cursor: pointer;
   /* border-radius: 50%; */
   -webkit-app-region: no-drag;
+
+  .logoIcon {
+    width: 100%;
+    height: 100%;
+  }
+
+  .close {
+    display: none;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+
+    color: ${props => props.theme.colors.white}
+  }
 `
 
 export const WindowActions = styled.div`
-  /* position: absolute; */
-  display: none;
-  width: 60px;
-  height: 100%;
+  display: flex;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  transform: translateX(-6rem);
+  width: 36px;
+  height: 100px;
 
+  opacity: 0;
+  background: ${props => props.theme.colors.white};
+  border-radius: 10px;
 
   -webkit-app-region: no-drag;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  z-index: -1;
 `
 
 interface MacActionButtonProps {
@@ -203,7 +225,7 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
   background: transparent;
   border: 0;
 
-  color: ${({ pointerEvents = 'auto', theme }) => pointerEvents === 'none' ? theme.colors.blue : theme.colors.white};
+  color: ${({ pointerEvents = 'auto', theme }) => pointerEvents === 'none' ? theme.colors.white : theme.colors.themeColors.primary.normal};
 
   font-weight: 900;
   font-size: .6em;
@@ -217,9 +239,9 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
   justify-content: center;
   align-items: center;
 
-  & + button {
+  /* & + button {
     margin-left: 8px;
-  }
+  } */
 
   &:hover svg {
     color: ${props => props.theme.colors.themeColors.primary.lighter};
