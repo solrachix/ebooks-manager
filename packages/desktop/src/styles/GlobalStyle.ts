@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { rgba } from 'polished'
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -21,11 +22,13 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100%;
     height: 100%;
     max-height: 100%;
+
+    display: flex;
   }
 
   body {
-    color: #E1E1E6;
-    background: transparent;
+    color: ${props => props.theme.colors.themeColors.text.normal};
+    /* background: ${props => rgba(props.theme.colors.themeColors.background.dark, 0.6)}; */
   }
 
   body, input, button {
@@ -51,12 +54,12 @@ export const GlobalStyle = createGlobalStyle`
     &::before {
       width: 1px;
       height: 24px;
-      background: ${props => props.theme.colors.themeColors.background.lightest};
+      background: ${props => props.theme.colors.themeColors.background.lighter};
       content: '';
     }
   }
 
-  .react-resizable-handle-e { 
+  .react-resizable-handle-e {
     right: 0;
     padding-right: 6px;
     top: 50%;
@@ -79,7 +82,7 @@ export const GlobalStyle = createGlobalStyle`
   .modal-content {
     width: 360px;
     background: ${props => props.theme.colors.themeColors.background.dark};
-    border: 1px solid ${props => props.theme.colors.themeColors.background.lightest};
+    border: 1px solid ${props => props.theme.colors.themeColors.background.lighter};
     padding: 16px;
     border-radius: 4px;
 
@@ -92,7 +95,7 @@ export const GlobalStyle = createGlobalStyle`
   *::-webkit-scrollbar-corner,
   *::-webkit-resizer,
   *::-webkit-scrollbar-button
-  {                    
+  {
       width: 100%;
       height: 100%;
       background: ${props => props.theme.colors.themeColors.background.dark};

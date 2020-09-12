@@ -1,92 +1,145 @@
 import styled, { css } from 'styled-components'
+import { rgba } from 'polished'
 
-interface ContainerProps {
-  reverse: boolean;
-}
+import { Link as link } from 'react-router-dom'
 
-export const Container = styled.header<ContainerProps>`
+export const Container = styled.header`
   position: relative;
   display: flex;
-  width: 100%;
-  height: 25px;
+  width: 90px;
+  height: 100%;
   top: 0;
-  left: 0;
+  left: 1px;
 
-  padding-left: 10px;
-  padding-right: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
 
   box-sizing: border-box;
-  background-color: ${props => props.theme.colors.themeColors.background.dark};
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0,0,0, 0.4);
-  *::-moz-selection,
-  *::selection,
-  input::-moz-selection,
-  input::selection {
-    color: ${props => props.theme.colors.white};
-    background: ${props => props.theme.colors.blue};
+  background: ${props => rgba(props.theme.colors.themeColors.background.dark, 0.94)};
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  /* box-shadow: 0px 0px 10px ${props => props.theme.colors.themeColors.primary.darker}; */
+
+  > div {
+    display: flex;
+    width: 90%;
+    height: 92%;
+    padding: 1.4rem 0;
+
+    background-color: ${props => props.theme.colors.themeColors.primary.dark};
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+    *::-moz-selection,
+    *::selection,
+    input::-moz-selection,
+    input::selection {
+      color: ${props => props.theme.colors.white};
+      background: ${props => props.theme.colors.blue};
+    }
+
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+
+    font-family: Nunito;
+    line-height: 30px;
+
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: space-between; /** center */
+    align-items: center;
   }
 
-  -webkit-app-region: drag;
-  -webkit-user-select: none;
-
-  font-family: Nunito;
-  line-height: 30px;
-
-  flex-shrink: 0;
-  flex-direction: ${props => props.reverse ? 'row-reverse' : 'row'};
-  justify-content: center/* space-between */;
+  justify-content: flex-start;
   align-items: center;
-  
   z-index: 99999;
 `
 
 export const Titleshown = styled.div`
-  width: calc(100% - 120px);
-  height: 100%;
+  width: 100%;
+  height: 50%;
 
   margin-left: auto;
   margin-right: auto;
 
-  font-size: 12px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
   display: flex;
   flex: 0 1 auto;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
   zoom: 1;
   overflow: hidden;
 
-  p {
-    -webkit-app-region: no-drag;
-    /* -webkit-user-select: text; */
-    /* width: 80%; */
-    height: 100%;
-    color: ${props => props.theme.colors.blue};
-    text-overflow: "...";
-    text-align: center;
-    font-size: .8em;
-    white-space: nowrap;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .square {
+    position: absolute;
+    margin-top: -63px;
+    left: -50%;
+    width: 50%;
+    height: 2.4rem;
+
+    background: ${props => props.theme.colors.white};
+    border-radius: 5px;
+
+    z-index: 15;
   }
+`
+
+interface LinkProps {
+  actived?: boolean
+}
+
+export const LINK_TAB_SIZE = 50
+
+export const Link = styled(link)<LinkProps>`
+  -webkit-app-region: no-drag;
+  -webkit-user-select: text;
+  width: ${LINK_TAB_SIZE}px;
+  height: ${LINK_TAB_SIZE}px;
+
+  ${({ actived = false, theme }) => actived ? css`
+    /* background: ${theme.colors.white};
+    border-radius: 5px; */
+
+    svg {
+      color: ${theme.colors.themeColors.primary.normal};
+    }
+  `
+  : css`
+    svg {
+      color: ${theme.colors.white};
+    }
+  `}
+
+  text-align: center;
+  font-size: 1.2em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 20;
+`
+
+
+export const Logo = styled.div`
+  width: 2.6rem;
+  height: 2.6rem;
+
+  cursor: pointer;
+  /* border-radius: 50%; */
+  -webkit-app-region: no-drag;
 `
 
 export const WindowActions = styled.div`
   /* position: absolute; */
-  display: flex;
+  display: none;
   width: 60px;
   height: 100%;
 
 
   -webkit-app-region: no-drag;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `
@@ -149,9 +202,9 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
 
   background: transparent;
   border: 0;
-  
-  color: ${({ pointerEvents = 'auto', theme }) => pointerEvents === 'none' ? theme.colors.white : theme.colors.blue};
-  
+
+  color: ${({ pointerEvents = 'auto', theme }) => pointerEvents === 'none' ? theme.colors.blue : theme.colors.white};
+
   font-weight: 900;
   font-size: .6em;
   font-family: Nunito;
@@ -159,7 +212,7 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
 
   cursor: default;
   pointer-events: ${({ pointerEvents = 'auto' }) => pointerEvents};
-  
+
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -169,7 +222,7 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
   }
 
   &:hover svg {
-    color: ${props => props.theme.colors.white};
+    color: ${props => props.theme.colors.themeColors.primary.lighter};
   }
 
   &:active {
@@ -184,20 +237,25 @@ export const DefaultActionButton = styled.button<DefaultActionButtonProps>`
 export const MenuButton = styled.div`
   /* position: absolute; */
   display: flex;
-  width: 10px;
-  height: 100%;
+  width: 1.4rem;
+  height: 1.4rem;
 
   text-align: center;
-  color: ${props => props.theme.colors.blue};
+  color: ${props => props.theme.colors.white};
   font-weight: 900;
   font-size: 1em;
   font-family: Nunito;
 
-  cursor: default;
+  cursor: pointer;
   z-index: 1;
 
   justify-content: center;
   align-items: center;
 
   -webkit-app-region: no-drag;
+
+  svg {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
 `
