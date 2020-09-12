@@ -1,4 +1,5 @@
 import './utils/stringReplaceAll'
+import './utils/$'
 
 import React from 'react'
 import { render } from 'react-dom'
