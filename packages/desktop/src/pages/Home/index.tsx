@@ -3,6 +3,7 @@ import { useWindow } from '../../context/window'
 
 import { ThemeContext } from 'styled-components'
 import { Container } from './styles'
+import Search from './../../components/Search/index'
 
 const Home: React.FC = () => {
   const theme = useContext(ThemeContext).colors
@@ -14,6 +15,10 @@ const Home: React.FC = () => {
   return (
     <Container>
 
+      <header>
+
+        <Search />
+      </header>
     </Container>
   )
 }

@@ -123,7 +123,6 @@ export const Link = styled(link)<LinkProps>`
   z-index: 20;
 `
 
-
 export const Logo = styled.div`
   width: 2.6rem;
   height: 2.6rem;

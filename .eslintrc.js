@@ -1,3 +1,3 @@
-const eslintConfig = require('@thoth/eslint-config')
+const eslintConfig = require('./packages/eslint-config') //' @thoth/eslint-config'
 
 module.exports = eslintConfig

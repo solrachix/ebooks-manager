@@ -68,10 +68,10 @@ export const WindowProvider: React.FC = ({ children }) => {
       .getCurrentWindow()
       .getSize()
 
-      return {
-        width: response[0],
-        height: response[1]
-      }
+    return {
+      width: response[0],
+      height: response[1]
+    }
   })
   const [header, setHeader] = useState(true)
 
@@ -131,10 +131,10 @@ export const WindowProvider: React.FC = ({ children }) => {
   }
 
   const Header = {
-    hidden(option: boolean) {
+    hidden (option: boolean) {
       setHeader(option)
     },
-    setTitle(name: string): string {
+    setTitle (name: string): string {
       Electron.remote.getCurrentWindow().setTitle(name)
       setStateTitle(name)
 
@@ -143,21 +143,21 @@ export const WindowProvider: React.FC = ({ children }) => {
   }
 
   const Size = {
-    getSize() {
+    getSize () {
       return windowSize
     },
-    setSize({ width, height}: WindowSize) {
+    setSize ({ width, height }: WindowSize) {
       Electron
         .remote
         .getCurrentWindow()
         .setSize(width, height, true)
-      setWindowSize({ width, height})
+      setWindowSize({ width, height })
     }
   }
   return (
     <WindowContext.Provider
       value={{ newWindow, newNotification, Toast, Menu, Header, Size }}>
-      <HeaderComponent {...{title, hidden: header}} />
+      <HeaderComponent {...{ title, hidden: header }} />
 
       <ToastContainer toasts={messages} />
       {children}

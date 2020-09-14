@@ -21,15 +21,15 @@ export const Container = styled.div`
     align-items: center;
 
     button {
-        width: 100px;
-        height: 50px;
-        padding: 6px;
+      width: 100px;
+      height: 50px;
+      padding: 6px;
 
-        background: transparent;
-        color: ${(props) => props.theme.colors.themeColors.text.normal};
-        border: 1px solid ${(props) => props.theme.colors.themeColors.primary.normal};
-        border-radius: 6px;
+      background: transparent;
+      color: ${(props) => props.theme.colors.themeColors.text.normal};
+      border: 1px solid ${(props) => props.theme.colors.themeColors.primary.normal};
+      border-radius: 6px;
 
-        cursor: pointer;
+      cursor: pointer;
     }
 `

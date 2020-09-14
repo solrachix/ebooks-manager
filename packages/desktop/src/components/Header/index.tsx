@@ -19,24 +19,24 @@ interface HeaderProps {
 
 const Tabs = [
   {
-    to: "/#",
+    to: '/#',
     icon: IoIosStarOutline
   },
   {
-    to: "/#",
+    to: '/#',
     icon: IoIosHeartEmpty
   },
   {
-    to: "/#",
+    to: '/#',
     icon: IoIosCalendar
   },
   {
-    to: "/#",
+    to: '/#',
     icon: BsBookmarks
   }
 ]
 
-const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
+const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
   const location = useLocation()
   const theme = useContext(ThemeContext).colors
 
@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
 
     if (square) {
       square.animate({
-        left: [`-60%`, `20%`]
+        left: ['-60%', '20%']
       }, {
         duration: 400, // number in ms [this would be equiv of your speed].
         easing: 'ease-in',
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
         // fill: ''
       })
 
-      square.style.left = `20%`
+      square.style.left = '20%'
     }
   }, [])
 
@@ -99,12 +99,11 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
     const close = $('.close')
     const windowActions = $('.windowActions')
 
-
     if (logoIcon && close && windowActions) {
-      if(openWindowActions){
+      if (openWindowActions) {
         windowActions.animate({
-          opacity: [ 1, 0 ],
-          transform: ['translateX(6rem)','translateX(-6rem)']
+          opacity: [1, 0],
+          transform: ['translateX(6rem)', 'translateX(-6rem)']
         }, {
           duration: 800,
           easing: 'ease-in-out',
@@ -114,19 +113,18 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
         windowActions.style.opacity = '0'
         windowActions.style.transform = 'translateX(-6rem)'
 
-
         close.animate({
-          opacity: [ 1, 0 ]
+          opacity: [1, 0]
         }, {
           duration: 800,
           easing: 'ease-in-out',
           iterations: 1
         }).onfinish = () => {
-          close.style.display = `none`
-          logoIcon.style.display = `block`
+          close.style.display = 'none'
+          logoIcon.style.display = 'block'
 
           logoIcon.animate({
-            opacity: [ 0, 1 ]
+            opacity: [0, 1]
           }, {
             duration: 800,
             easing: 'ease-in-out',
@@ -134,13 +132,11 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
           }).onfinish = () => {
             logoIcon.style.opacity = '1'
           }
-
         }
-
       } else {
         windowActions.animate({
-          opacity: [ 0, 1 ],
-          transform: ['translateX(0px)','translateX(6rem)']
+          opacity: [0, 1],
+          transform: ['translateX(0px)', 'translateX(6rem)']
         }, {
           duration: 800,
           easing: 'ease-in-out',
@@ -151,27 +147,25 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
         windowActions.style.transform = 'translateX(6rem)'
 
         logoIcon.animate({
-            opacity: [ 1, 0 ]
+          opacity: [1, 0]
+        }, {
+          duration: 800,
+          easing: 'ease-in-out',
+          iterations: 1
+        }).onfinish = () => {
+          logoIcon.style.display = 'none'
+          close.style.display = 'block'
+
+          close.animate({
+            opacity: [0, 1]
           }, {
             duration: 800,
             easing: 'ease-in-out',
             iterations: 1
           }).onfinish = () => {
-            logoIcon.style.display = `none`
-            close.style.display = `block`
-
-            close.animate({
-              opacity: [ 0, 1 ]
-            }, {
-              duration: 800,
-              easing: 'ease-in-out',
-              iterations: 1
-            }).onfinish = () => {
-              close.style.opacity = '1'
-            }
-
+            close.style.opacity = '1'
           }
-
+        }
       }
 
       setOpenWindowActions(!openWindowActions)
@@ -236,7 +230,6 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
           }
 
         </Titleshown>
-
 
         <WindowActions className="windowActions" >
           {shouldUseMacOSWindowActions ? (

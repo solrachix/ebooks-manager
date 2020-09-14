@@ -2,7 +2,7 @@
 
 import React, { useContext, useState, FormEvent, useEffect } from 'react'
 
-import { useWindow } from './../../context/window';
+import { useWindow } from './../../context/window'
 import { useUser } from '../../context/user'
 
 import { ThemeContext } from 'styled-components'
