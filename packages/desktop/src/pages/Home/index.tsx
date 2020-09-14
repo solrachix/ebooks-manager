@@ -16,7 +16,6 @@ const Home: React.FC = () => {
     <Container>
 
       <header>
-
         <Search />
       </header>
     </Container>

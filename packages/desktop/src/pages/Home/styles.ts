@@ -15,21 +15,31 @@ export const Container = styled.div`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    align-items: center;
+    align-items: center; */
 
-    button {
-      width: 100px;
-      height: 50px;
-      padding: 6px;
+  header {
+    width: 100%;
+    height: 60px;
 
-      background: transparent;
-      color: ${(props) => props.theme.colors.themeColors.text.normal};
-      border: 1px solid ${(props) => props.theme.colors.themeColors.primary.normal};
-      border-radius: 6px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: space-around;
 
-      cursor: pointer;
-    }
+  }
+
+  button {
+    width: 100px;
+    height: 50px;
+    padding: 6px;
+
+    background: transparent;
+    color: ${(props) => props.theme.colors.themeColors.text.normal};
+    border: 1px solid ${(props) => props.theme.colors.themeColors.primary.normal};
+    border-radius: 6px;
+
+    cursor: pointer;
+  }
 `
