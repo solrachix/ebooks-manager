@@ -6,7 +6,7 @@ export const Container = styled.div`
   padding: 0;
 
   background: transparent;
-  border: 1px solid transparent;
+  /* border: 1px solid transparent; */
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 
