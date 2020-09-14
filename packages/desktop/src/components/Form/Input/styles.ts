@@ -31,6 +31,26 @@ export const Container = styled.div<Props>`
     font: 1rem Archivo;
   }
 
+  .input-icon{
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    top: 60%;
+    right: 6%;
+
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.themeColors.text.light};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.themeColors.primary.normal};
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   &:focus-within::after {
     width: calc(100% - 3.2rem);
     height: 2px;

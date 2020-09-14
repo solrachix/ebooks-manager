@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useRef, useEffect, useState } from 'react'
+import React, { InputHTMLAttributes, useRef, useEffect, useState, ReactNode } from 'react'
 import { useField } from '@unform/core'
 
 import { Container, Eye, EyeOff, InputGroup } from './styles'
@@ -8,10 +8,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   type?: string;
   name: string;
   label?: string;
-  ref?: any;
+  ref?: unknown;
+  icon?: ReactNode;
 }
 
-const Input: React.FC<InputProps> = ({ flex, name, label, ...props }) => {
+const Input: React.FC<InputProps> = ({ flex, name, label, icon, ...props }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   // const { fieldName, registerField, defaultValue, error } = useField(name)
   const [type, setType] = useState(props.type)
@@ -35,11 +36,17 @@ const Input: React.FC<InputProps> = ({ flex, name, label, ...props }) => {
         ref={inputRef}
         // defaultValue={defaultValue}
         {...{ ...props, ...{ type, id: name } }} />
-      { isPassword
-        ? type === 'password'
-          ? <Eye onClick={() => setType('text')}/>
-          : <EyeOff onClick={() => setType('password')}/>
-        : null
+      { icon
+        ? (
+          <div className="input-icon">
+            { icon }
+          </div>
+        )
+        : isPassword
+          ? type === 'password'
+            ? <Eye onClick={() => setType('text')}/>
+            : <EyeOff onClick={() => setType('password')}/>
+          : null
       }
     </Container>
   )
