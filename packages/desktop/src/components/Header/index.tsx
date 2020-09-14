@@ -66,12 +66,19 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
   const goToTab = (id: number) => {
     const square = $('.square')
     const sideBar = $('.sideBar')
+    const bodyHeight = window.document.body.clientHeight
 
     if (square && sideBar) {
-      const moveToPX = (id: number) => ((sideBar.clientHeight/numberOfTabs) * id - 62)
+      // const moveToPorcent = (id: number) => Math.floor((($(`#tab-${id}`)!.offsetTop * 100)/bodyHeight) + ((6.25 * 100)/bodyHeight) )
+      const moveToPX = (id: number) => $(`#tab-${id}`)!.offsetTop + 6
+
+      console.log(
+        `${moveToPX(openTab)}px`,
+        `${moveToPX(id)}px`
+      )
 
       square.animate({
-        marginTop: [
+        top: [
           `${moveToPX(openTab)}px`,
           `${moveToPX(id)}px`
         ]
@@ -81,7 +88,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
         iterations: 1 // infinity or a number.
         // fill: ''
       })
-      square.style.marginTop = `${moveToPX(id)}px`
+      square.style.top = `${moveToPX(id)}px`
 
       setOpenTab(id)
     }
@@ -218,6 +225,7 @@ const Header: React.FC<HeaderProps>= ({ title, hidden }) => {
           {
             Tabs.map((props, index) => (
               <Link key={index}
+                id={`tab-${index}`}
                 to={props.to}
                 actived={openTab === index}
                 onClick={() => goToTab(index)}

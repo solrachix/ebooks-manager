@@ -75,6 +75,8 @@ export const Titleshown = styled.div`
     position: absolute;
     margin-top: -63px;
     left: -50%;
+    /* top: 38.6%; */
+    /* margin-top: -4.5rem; */
     width: 50%;
     height: 2.4rem;
 
