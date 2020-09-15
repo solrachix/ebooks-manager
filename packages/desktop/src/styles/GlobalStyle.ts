@@ -31,14 +31,16 @@ export const GlobalStyle = createGlobalStyle`
     /* background: ${props => rgba(props.theme.colors.themeColors.background.dark, 0.6)}; */
   }
 
-  body, input, button {
-    font: 400 16px Roboto, sans-serif;
+  body, input, button, select {
+    font: 500 16px Poppins;
+    outline: none;
+    /* color:  ${props => props.theme.colors.themeColors.text} */
   }
 
-  strong, h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+  h1, h2, h3, h4, h5, h6 {
+    color: ${({ theme }) => theme.colors.themeColors.text};
+    font-family: Poppins;
   }
-
   .react-resizable {
     position: relative;
   }
