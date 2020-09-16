@@ -40,9 +40,10 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
   const location = useLocation()
   const theme = useContext(ThemeContext).colors
 
-  const [numberOfTabs, setNumberOfTabs] = useState(4)
+  // const [numberOfTabs, setNumberOfTabs] = useState(4)
   const [openTab, setOpenTab] = useState(0)
-  const [rootRoute, setRootRoute] = useState(location.pathname === '/')
+  const [animationCurrentlyRunning, setAnimationCurrentlyRunning] = useState<Animation | null>(null)
+  // const [rootRoute, setRootRoute] = useState(location.pathname === '/')
   const [isMaximized, setIsMaximized] = useState<boolean>(remote.getCurrentWindow().isMaximized())
   const [openWindowActions, setOpenWindowActions] = useState(false)
 
@@ -100,74 +101,93 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
     const windowActions = $('.windowActions')
 
     if (logoIcon && close && windowActions) {
+      animationCurrentlyRunning?.cancel()
+
       if (openWindowActions) {
-        windowActions.animate({
+        const windowActionsAnimation = windowActions.animate({
           opacity: [1, 0],
           transform: ['translateX(6rem)', 'translateX(-6rem)']
         }, {
           duration: 800,
           easing: 'ease-in-out',
           iterations: 1
-        }).finished
+        })
 
-        windowActions.style.opacity = '0'
-        windowActions.style.transform = 'translateX(-6rem)'
+        setAnimationCurrentlyRunning(windowActionsAnimation)
 
-        close.animate({
+        const CloseAnimation = close.animate({
           opacity: [1, 0]
         }, {
           duration: 800,
           easing: 'ease-in-out',
           iterations: 1
-        }).onfinish = () => {
+        })
+
+        CloseAnimation.onfinish = () => {
           close.style.display = 'none'
           logoIcon.style.display = 'block'
 
-          logoIcon.animate({
+          const logoIconAnimation = logoIcon.animate({
             opacity: [0, 1]
           }, {
             duration: 800,
             easing: 'ease-in-out',
             iterations: 1
-          }).onfinish = () => {
+          })
+
+          logoIconAnimation.onfinish = () => {
             logoIcon.style.opacity = '1'
           }
+
+          setAnimationCurrentlyRunning(logoIconAnimation)
         }
+
+        windowActions.style.opacity = '0'
+        windowActions.style.transform = 'translateX(-6rem)'
+        setAnimationCurrentlyRunning(CloseAnimation)
       } else {
-        windowActions.animate({
+        const windowActionsAnimation = windowActions.animate({
           opacity: [0, 1],
           transform: ['translateX(0px)', 'translateX(6rem)']
         }, {
           duration: 800,
           easing: 'ease-in-out',
           iterations: 1
-        }).finished
+        })
+        setAnimationCurrentlyRunning(windowActionsAnimation)
 
         windowActions.style.opacity = '1'
         windowActions.style.transform = 'translateX(6rem)'
 
-        logoIcon.animate({
+        const logoIconAnimation = logoIcon.animate({
           opacity: [1, 0]
         }, {
           duration: 800,
           easing: 'ease-in-out',
           iterations: 1
-        }).onfinish = () => {
+        })
+
+        logoIconAnimation.onfinish = () => {
           logoIcon.style.display = 'none'
           close.style.display = 'block'
 
-          close.animate({
+          const CloseAnimation = close.animate({
             opacity: [0, 1]
           }, {
             duration: 800,
             easing: 'ease-in-out',
             iterations: 1
-          }).onfinish = () => {
+          })
+
+          CloseAnimation.onfinish = () => {
             close.style.opacity = '1'
           }
-        }
-      }
 
+          setAnimationCurrentlyRunning(CloseAnimation)
+        }
+
+        setAnimationCurrentlyRunning(logoIconAnimation)
+      }
       setOpenWindowActions(!openWindowActions)
     }
   }

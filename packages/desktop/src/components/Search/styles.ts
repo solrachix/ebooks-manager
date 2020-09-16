@@ -9,13 +9,58 @@ export const Container = styled.div`
 
   /* border-bottom: 1px solid ${props => props.theme.colors.themeColors.primary.normal} */
 
+  .inputBackgroundOnFocus{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    transform: scale(0);
+    width: 100vw;
+    height: 100vh;
+
+    background: ${props => rgba(props.theme.colors.themeColors.background.dark, 0.8)};
+    backdrop-filter: blur(10px);
+    filter: blur(10px);
+    opacity: 0;
+
+    z-index: 998;
+  }
+
   > .input-block {
+    z-index: 999;
 
     input {
       background: transparent;
       border: none;
 
       padding-right: 50px;
+
+    }
+
+    &:after {
+      content: '';
+      width: calc(100% - 3.2rem);
+      height: 2px;
+
+      background: ${props => props.theme.colors.themeColors.text.normal};
+      opacity: .2;
+
+      position: absolute;
+      left: 1.6rem;
+      right: 1.6rem;
+      bottom: 0;
+    }
+    &:focus-within{
+
+      &::after {
+        opacity: 1;
+        background: ${props => props.theme.colors.themeColors.primary.light};
+      }
+
+      & .input-icon svg {
+        opacity: 1;
+        color: ${({ theme }) => theme.colors.themeColors.primary.normal};
+        filter: drop-shadow(0px 0px 4px ${({ theme }) => theme.colors.themeColors.primary.normal});
+      }
     }
 
     .input-icon {
@@ -23,20 +68,23 @@ export const Container = styled.div`
       height: 1.6rem;
       top: 42%;
       right: 4%;
+
+      svg {
+        color: ${props => props.theme.colors.themeColors.text.normal};
+        opacity: .2;
+      }
     }
   }
 `
 export const SearchIcon = styled(BiSearch)`
-  color: ${({ theme }) => theme.colors.themeColors.primary.normal};
-
-  filter: drop-shadow(0px 0px 4px ${({ theme }) => theme.colors.themeColors.primary.normal});
-
   &:hover {
     color: ${({ theme }) => theme.colors.themeColors.primary.normal};
   }
 `
 
 export const Box = styled.div`
+  opacity: 0;
+  transform: translateY(-60rem);
   position: absolute;
   left: 4%;
   width: 300px;
@@ -44,7 +92,7 @@ export const Box = styled.div`
   min-height: 300px;
   padding: 20px;
 
-  background: ${props => rgba(props.theme.colors.themeColors.tertiary, 0.4)};
+  background: ${props => rgba(props.theme.colors.themeColors.background.light, 0.4)};
   border-radius: 10px;
   box-shadow: 0px 2px 20px ${props => darken(0.16, props.theme.colors.themeColors.tertiary)};
   backdrop-filter: blur(6px);
@@ -73,6 +121,8 @@ export const FilterOptions = styled.span<FilterOptionsProps>`
 
   font-weight: 500;
   font-size: 0.8rem;
+
+  transition: .6s;
   ${({ actived, theme }) => actived
     ? css`
       color: ${theme.colors.themeColors.primary.normal};

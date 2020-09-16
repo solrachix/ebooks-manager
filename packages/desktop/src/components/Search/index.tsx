@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect, useState, FocusEvent } from 'react'
 
 import example from '../../assets/example.jpg'
 import { FiUser } from 'react-icons/fi'
@@ -6,20 +6,113 @@ import { Container, SearchIcon, Box, FilterOptions, Ebook } from './styles'
 import Input from './../Form/Input/index'
 
 const Search: React.FC = () => {
+  const BoxRef = useRef<HTMLDivElement>(null)
+  const [focus, setFocus] = useState(false)
+  const [filterOptions, setFilterOptions] = useState<string[]>([
+    'All',
+    'Movie',
+    'Anime'
+  ])
+  const [filterOptionsActived, setFilterOptionsActived] = useState(0)
+
+  useEffect(() => {
+    const Box = BoxRef.current
+    const InputBackgroundOnFocus = $('.inputBackgroundOnFocus')
+
+    if (!Box) return
+    if (!InputBackgroundOnFocus) return
+
+    if (focus) {
+      const BoxAnimation = Box.animate({
+        opacity: [0, 1],
+        transform: ['translateY(-60rem)', 'translateY(0rem)']
+      }, {
+        duration: 2000,
+        easing: 'ease-in',
+        iterations: 1
+      })
+
+      const InputBackgroundOnFocusAnimation = InputBackgroundOnFocus.animate({
+        opacity: [0, 1],
+        transform: ['scale(0)', 'scale(1)']
+      }, {
+        duration: 1000,
+        easing: 'ease-in',
+        iterations: 1
+      })
+
+      Box.style.opacity = '1'
+      Box.style.transform = 'translateX(0rem)'
+      InputBackgroundOnFocus.style.opacity = '1'
+      InputBackgroundOnFocus.style.transform = 'scale(1)'
+    }
+  }, [focus])
+
+  const onFocus = (event: FocusEvent<HTMLInputElement>) => {
+    setFocus(true)
+  }
+
+  const onBlur = () => {
+    const Box = BoxRef.current
+    const InputBackgroundOnFocus = $('.inputBackgroundOnFocus')
+
+    if (!Box) return
+    if (!InputBackgroundOnFocus) return
+
+    const BoxAnimation = Box.animate({
+      opacity: [1, 0],
+      transform: ['translateY(0rem)', 'translateY(-60rem)']
+    }, {
+      duration: 2000,
+      easing: 'ease-in-out',
+      iterations: 1
+    })
+
+    const InputBackgroundOnFocusAnimation = InputBackgroundOnFocus.animate({
+      opacity: [1, 0],
+      transform: ['scale(1)', 'scale(0)']
+    }, {
+      duration: 1000,
+      easing: 'ease-in-out',
+      iterations: 1
+    })
+
+    Box.style.opacity = '0'
+    Box.style.transform = 'translateX(-60rem)'
+    InputBackgroundOnFocus.style.opacity = '0'
+    InputBackgroundOnFocus.style.transform = 'scale(0)'
+
+    setFocus(false)
+  }
+
   return (
     <Container>
-
-      <Input
-        name="search"
-        icon={<SearchIcon />}
+      <div
+        className="inputBackgroundOnFocus"
+        onClick={onBlur}
       />
 
-      <Box>
+      <Input
+        id="search"
+        name="search"
+        icon={<SearchIcon />}
+
+        placeholder="Pesquise..."
+        {...{ onFocus }}
+      />
+
+      <Box ref={BoxRef}>
         <header>
-          <FilterOptions >All</FilterOptions>
-          <FilterOptions>Movie</FilterOptions>
-          <FilterOptions actived>Anime</FilterOptions>
-          <FilterOptions>Anime</FilterOptions>
+          {
+            filterOptions.map((option: string, index) => (
+              <FilterOptions
+                key={option}
+                actived={(filterOptionsActived === index)}
+
+                onClick={() => setFilterOptionsActived(index)}
+              >{option}</FilterOptions>
+            ))
+          }
         </header>
 
         <Ebook>

@@ -48,11 +48,12 @@ export const Container = styled.header`
     flex-direction: column;
     justify-content: space-between; /** center */
     align-items: center;
+
+    z-index: 99999;
   }
 
   justify-content: flex-start;
   align-items: center;
-  z-index: 99999;
 `
 
 export const Titleshown = styled.div`
