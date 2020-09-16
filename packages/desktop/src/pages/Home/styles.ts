@@ -8,7 +8,7 @@ export const Container = styled.div`
     height: 100%;
     top: 0;
     left: 0%;
-    padding: 0;
+    padding: 0px 2.6rem;
 
     background: ${props => rgba(props.theme.colors.themeColors.background.dark, 0.94)};
 
@@ -22,12 +22,40 @@ export const Container = styled.div`
 
   header {
     width: 100%;
-    height: 60px;
+    height: 70px;
 
     display: flex;
-    justify-content: flex-start;
-    align-items: space-around;
+    justify-content: space-between;
+    align-items: center;
 
+    .currentData{
+      width: 100%;
+      max-width: 200px;
+
+      line-height: 10px;
+      color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
+      font-family: Archivo;
+      font-size: 0.8rem;
+    }
+
+    .user {
+      width: 150px;
+
+      color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
+      font-weight: 900;
+      font-family: Archivo;
+      font-size: 0.9rem;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      img {
+        width: 40px;
+
+        border-radius: 50%;
+      }
+    }
   }
 
   button {
@@ -41,5 +69,263 @@ export const Container = styled.div`
     border-radius: 6px;
 
     cursor: pointer;
+  }
+`
+
+export const Content = styled.div`
+  width: 100%;
+  height: auto;
+  margin-top: 4%;
+
+  display: grid;
+  /* grid-template-rows: 1fr; */
+  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 2fr) 1fr;
+  grid-template-areas:
+    'main sidebar';
+
+  main {
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100vh - 70px - 4%);
+    grid-area: main;
+    padding-bottom: 10rem;
+
+    overflow: auto;
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner,
+    &::-webkit-resizer,
+    &::-webkit-scrollbar-button,
+    &::-webkit-scrollbar,
+    &::-webkit-scrollbar-thumb
+    {
+      width: 0px;
+      background: transparent;
+    }
+
+    h4 {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        width: auto;
+        line-height: 10px;
+        color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
+        font-family: Archivo;
+        font-size: 0.8rem;
+
+        display: flex;
+        align-items: center;
+        svg {
+          width: 2rem;
+        }
+      }
+    }
+
+    .recentBooks{
+      width: 100%;
+      max-width: 100%;
+      margin-top: 4%;
+
+      overflow-x: auto;
+
+      /* display: flex; */
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 1.4rem;
+    }
+
+  }
+
+  aside {
+    grid-area: sidebar;
+  }
+
+`
+
+export const Ebook = styled.div`
+  width: 240px;
+  height: 180px;
+  padding: 16px;
+  margin-top: .7rem;
+  margin-bottom: .7rem;
+
+  border-radius: 10px;
+  background: ${props => rgba(props.theme.colors.blue, 0.2)};
+
+  display: flex;
+  /* flex: 0.5; */
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: start;
+
+  .cover {
+    height: 100%;
+
+    border-radius: 10px;
+  }
+
+  > div {
+    width: 100%;
+    padding-left: 6%;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
+
+    h5{
+      font-weight: 1000;
+      font-size: .9rem;
+
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    span {
+      line-height: 1.6rem;
+      font-size: .6rem;
+      font-weight: 600;
+      margin-top: 2%;
+
+      opacity: .8;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        margin-right: 6px;
+      }
+    }
+
+    .stars {
+      display: flex;
+      margin-top: 4%;
+
+      svg {
+        margin-right: 2%;
+      }
+    }
+  }
+`
+
+export const Statistics = styled.div`
+  width: 100%;
+  margin-top: 6%;
+
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  column-gap: 1.4rem;
+
+  div {
+    h4 {
+      width: 100%;
+      padding: 20px;
+
+      background: ${props => props.theme.colors.themeColors.background.normal};
+      border-radius: 4px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      a {
+        width: auto;
+        line-height: 10px;
+        color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
+        font-family: Archivo;
+        font-size: 0.8rem;
+
+        display: flex;
+        align-items: center;
+        svg {
+          width: 1.1rem;
+          height: 1.1rem;
+          margin-left: 0.5rem;
+        }
+      }
+    }
+
+    .autor{
+      padding: 20px;
+      margin-top: .2rem;
+
+      background: ${props => props.theme.colors.themeColors.background.normal};
+      border-radius: 4px;
+
+      display: grid;
+      grid-template-columns: 1fr 3fr 1fr;
+      column-gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+
+        border-radius: 10px;
+      }
+      svg {
+        margin: auto;
+
+        color: ${props => props.theme.colors.themeColors.primary.normal};
+      }
+    }
+
+    .bookStatistics{
+      width: 100%;
+      padding: 12px 20px;
+
+      background: ${props => props.theme.colors.themeColors.background.normal};
+      /* border-radius: 4px; */
+
+      color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
+      font-family: Archivo;
+      font-size: 0.8rem;
+
+      display: grid;
+      grid-template-columns: 1fr 8fr;
+      column-gap: 0.6rem;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 100%;
+
+        border-radius: 10px;
+      }
+
+      h5 {
+        font-size: 0.9rem;
+      }
+
+      span {
+        width: 100%;
+
+        display: flex;
+        justify-content: space-between;
+      }
+
+      progress {
+        width: 100%;
+        height: .4rem;
+        margin-top: .5rem;
+
+        background-color: ${props => props.theme.colors.themeColors.background.light};
+
+        &::-webkit-progress-bar {
+          background-color: ${props => props.theme.colors.themeColors.background.light};
+        }
+        &::-webkit-progress-value {
+          background-color: ${props => props.theme.colors.themeColors.primary.normal} !important;
+          border-radius: 10px;
+        }
+      }
+    }
   }
 `
