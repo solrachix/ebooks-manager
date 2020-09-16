@@ -89,7 +89,7 @@ export const Content = styled.div`
     max-width: 100%;
     max-height: calc(100vh - 70px - 4%);
     grid-area: main;
-    padding-bottom: 10rem;
+    padding-bottom: 6rem;
 
     overflow: auto;
 

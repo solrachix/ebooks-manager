@@ -16,6 +16,40 @@ const Home: React.FC = () => {
   useEffect(() => {
     Header.hidden(true)
   }, [])
+
+  const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    const mainElement = event.currentTarget
+
+    console.log(mainElement.scrollTop)
+    // mainElement.scrollTo({ top: 0 })
+    if (mainElement.scrollTop === 0) {
+      mainElement.animate({
+        transform: ['translateY(0rem)', 'translateY(3rem)', 'translateY(0rem)']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      })
+
+      // MainElementAnimation.onfinish = () => {
+      //    mainElement.style.transform = 'translateY(-3rem)'
+      // }
+    }
+    if (mainElement.scrollTop === 148) {
+      mainElement.animate({
+        transform: ['translateY(0rem)', 'translateY(-3rem)', 'translateY(0rem)']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      })
+
+      // MainElementAnimation.onfinish = () => {
+      //   mainElement.style.transform = 'translateY(-3rem)'
+      // }
+    }
+  }
+
   return (
     <Container>
 
@@ -32,7 +66,9 @@ const Home: React.FC = () => {
       </header>
 
       <Content>
-        <main>
+        <main
+          onScroll={onScroll}
+        >
           <h4>Meus livros
             <a href="#">more <BsArrowRight /></a>
           </h4>
