@@ -87,7 +87,7 @@ export const Content = styled.div`
   main {
     width: 100%;
     max-width: 100%;
-    max-height: calc(100vh - 70px - 4%);
+    max-height: calc(100vh - 70px - 2%);
     grid-area: main;
     padding-bottom: 6rem;
 
@@ -222,6 +222,11 @@ export const Statistics = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.6fr;
   column-gap: 1.4rem;
+
+  @media(max-width: 800px){
+    grid-template-columns: 100%;
+    row-gap: 1.4rem;
+  }
 
   div {
     h4 {

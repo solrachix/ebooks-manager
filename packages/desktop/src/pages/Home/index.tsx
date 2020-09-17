@@ -20,7 +20,6 @@ const Home: React.FC = () => {
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const mainElement = event.currentTarget
 
-    console.log(mainElement.scrollTop)
     // mainElement.scrollTo({ top: 0 })
     if (mainElement.scrollTop === 0) {
       mainElement.animate({
@@ -35,7 +34,7 @@ const Home: React.FC = () => {
       //    mainElement.style.transform = 'translateY(-3rem)'
       // }
     }
-    if (mainElement.scrollTop === 148) {
+    if (mainElement.offsetHeight + mainElement.scrollTop >= mainElement.scrollHeight) {
       mainElement.animate({
         transform: ['translateY(0rem)', 'translateY(-3rem)', 'translateY(0rem)']
       }, {
@@ -43,10 +42,6 @@ const Home: React.FC = () => {
         easing: 'ease-out',
         iterations: 1
       })
-
-      // MainElementAnimation.onfinish = () => {
-      //   mainElement.style.transform = 'translateY(-3rem)'
-      // }
     }
   }
 
