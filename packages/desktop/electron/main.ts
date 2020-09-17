@@ -19,10 +19,19 @@ function createWindow () {
   if (app.dock) {
     app.dock.setIcon(icon)
   }
-  const splashScreen = new BrowserWindow({ icon, width: 500, height: 500, backgroundColor: '#1C2028', transparent: true, frame: false, alwaysOnTop: true })
+  const splashScreen = new BrowserWindow({ icon, width: 400, height: 400, backgroundColor: '#1C2028', transparent: true, frame: false, alwaysOnTop: true })
   splashScreen.loadURL(chooseUrl(`${app.getAppPath()}/build/splashScreen.html`, 'splashScreen.html'))
 
-  mainWindow = Window({ id: 0, title: 'Thoth', icon, themeSource: 'dark', show: false, partition })
+  mainWindow = Window({
+    id: 0,
+    title: 'Thoth',
+    icon,
+    themeSource: 'dark',
+    show: false,
+    minWidth: 760,
+    minHeight: 500,
+    partition
+  })
   mainWindow.loadURL(chooseUrl('http://localhost:4000', 'renderer/index.html'))
 
   mainWindow.once('ready-to-show', () => {

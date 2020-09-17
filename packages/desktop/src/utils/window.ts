@@ -27,8 +27,6 @@ export default function Window (options: Options | null): Electron.BrowserWindow
   let window: Electron.BrowserWindow | null = new BrowserWindow({
     ...options,
     ...getWindowBounds(),
-    minWidth: 260,
-    minHeight: 260,
     resizable: true,
 
     // backgroundColor: systemPreferences.isAeroGlassEnabled()
