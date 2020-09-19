@@ -130,8 +130,8 @@ export const Player = styled.div`
   /* row-gap: .4rem; */
 `
 
-export const Controls = styled.div`
-  width: 100%;
+export const Controls = styled.div`${({ theme }) => css`
+width: 100%;
   height: 100%;
   grid-area: controls;
 
@@ -147,6 +147,8 @@ export const Controls = styled.div`
     height: 1.4rem;
     margin: auto;
 
+    cursor: pointer;
+
     background: transparent;
     &.options {
       grid-area: options;
@@ -159,15 +161,53 @@ export const Controls = styled.div`
       height: 1.8rem;
 
       grid-area: play;
-      background: ${props => props.theme.colors.themeColors.primary.normal};
+      background: ${theme.colors.themeColors.primary.normal};
     }
     &.forward{
       grid-area: forward;
     }
     &.volume{
       grid-area: volume;
+
+      .volumeController{
+        position: absolute;
+        /* top: 0;
+        left: 0; */
+        width: 100px;
+        height: 4px;
+        margin: -10rem 0px 0px 2.8rem;
+
+        transform-origin: 75px 75px;
+        transform: rotate(-90deg);
+
+        background: linear-gradient(${`
+          to right,
+          ${theme.colors.themeColors.primary.normal} 0%,
+          ${theme.colors.themeColors.primary.normal} 100%,
+          ${theme.colors.themeColors.background.light} 100%,
+          ${theme.colors.themeColors.background.light} 100%`
+        });
+        /* border: solid 1px #82CFD0; */
+        border-radius: 8px;
+
+        transition: background 450ms ease-in;
+
+        appearance: none;
+        cursor: pointer;
+        outline: none;
+
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          width: 16px;
+          height: 10px;
+          background: ${theme.colors.themeColors.background.normal};
+          border: 2px solid ${theme.colors.themeColors.primary.normal};
+          border-radius: 5px;
+        }
+      }
     }
-    color: ${props => props.theme.colors.white};
+    color: ${theme.colors.white};
     border: none;
     border-radius: 4px;
 
@@ -180,7 +220,7 @@ export const Controls = styled.div`
       height: 90%;
     }
   }
-`
+`}`
 
 export const AudioData = styled.div`
   width: 100%;

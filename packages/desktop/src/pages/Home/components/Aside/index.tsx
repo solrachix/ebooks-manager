@@ -24,6 +24,8 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
   const [AudioBooksBeingPlayedId, setAudioBooksBeingPlayedId] = useState(0)
   const [AudioBooksBeingPlayedData, setAudioBooksBeingPlayedIdData] = useState<AudioBooksItem | null>(null)
   const [playingAudio, setPlayingAudio] = useState(false)
+  const [volumeController, setVolumeController] = useState(false)
+  const [volumeRate, setVolumeRate] = useState(100)
   const [audioDuration, setAudioDuration] = useState(0)
   const [elapsedTime, setElapsedTime] = useState(0)
   // playbackRate
@@ -33,7 +35,7 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
     const input = inputRef.current
     if (audio && input && AudioBooksBeingPlayedData) {
       audio.pause()
-      audio.currentTime = 0;
+      audio.currentTime = 0
     }
 
     setAudioBooksBeingPlayedIdData(AudioBooksItems[AudioBooksBeingPlayedId])
@@ -41,8 +43,15 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
     setAudioDuration(0)
     setElapsedTime(0)
     onTimeUpdate()
-
   }, [AudioBooksBeingPlayedId])
+
+  useEffect(() => {
+    const volumeController = $('.volumeController') as HTMLInputElement
+    if (volumeController) {
+      volumeController.value = String(volumeRate)
+      handleButtonVolumeChange(volumeController)
+    }
+  }, [volumeController])
 
   const handleSlide = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, id: number) => {
     if (id === AudioBooksBeingPlayedId) return
@@ -83,6 +92,25 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
       if (option === 'backward') second = -second
 
       audio.currentTime = audio.currentTime + second
+    }
+  }
+
+  const handleButtonVolumeChange = (element: HTMLInputElement) => {
+    const value = element.value
+    const audio = audioRef.current
+    const percentage = Number(value) / 100
+
+    console.log(percentage)
+    if (audio) {
+      audio.volume = percentage
+      setVolumeRate(value)
+
+      element.style.background = `linear-gradient(
+        to right,
+        ${theme.themeColors.primary.normal} 0%,
+        ${theme.themeColors.primary.normal} ${value}%,
+        ${theme.themeColors.background.light} ${value}%,
+        ${theme.themeColors.background.light} 100%)`
     }
   }
 
@@ -167,7 +195,7 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
         </div>
       </AudioBooksSlide>
 
-      {AudioBooksBeingPlayedData &&  (
+      {AudioBooksBeingPlayedData && (
         <>
           <Player>
             <AudioData>
@@ -217,8 +245,20 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
               <button className="forward" onClick={() => handleButtonForOrBackWard('forward')}>
                 <AiFillForward />
               </button>
-              <button className="volume" onClick={() => handleButtonForOrBackWard('forward')}>
+              <button className="volume" onClick={() => setVolumeController(!volumeController)}>
                 <BsVolumeUp />
+
+                { volumeController &&
+                <input
+                  type="range"
+                  className="volumeController"
+
+                  // value={String(volumeRate / 100)}
+                  min={0}
+                  max={100}
+                  onChange={e => handleButtonVolumeChange(e.currentTarget)}
+                />
+                }
               </button>
             </Controls>
           </Player>
@@ -230,10 +270,10 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
 
             { ...{ onEnded, onTimeUpdate, onCanPlay }}
           >
-              <source src={AudioBooksBeingPlayedData.src} type="audio/mp3" />
-            </audio>
+            <source src={AudioBooksBeingPlayedData.src} type="audio/mp3" />
+          </audio>
         </>
-        )
+      )
       }
     </Container>
   )
