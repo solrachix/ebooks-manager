@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { rgba } from 'polished'
 
 export const Container = styled.div`
@@ -83,6 +83,7 @@ export const Content = styled.div`
   grid-template-columns: minmax(0, 2fr) 1fr;
   grid-template-areas:
     'main sidebar';
+  column-gap: 1.4rem;
 
   main {
     width: 100%;

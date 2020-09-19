@@ -1,14 +1,40 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useWindow } from '../../context/window'
 
-import example from '../../assets/example.jpg'
 import { ThemeContext } from 'styled-components'
+
+import example from '../../assets/example.jpg'
+
 import { BsArrowRight } from 'react-icons/bs'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
 import { RiBookletLine } from 'react-icons/ri'
-import { Container, Content, Ebook, Statistics } from './styles'
-import Search from './../../components/Search/index'
 
+import Search from './../../components/Search/index'
+import Aside from './components/Aside'
+import { Container, Content, Ebook, Statistics } from './styles'
+
+const AudioBooksItems = [
+  {
+    img: example,
+    title: 'Opaa aaeae',
+    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+  },
+  {
+    img: example,
+    title: 'Opaa aaeae',
+    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+  },
+  {
+    img: example,
+    title: 'Opaa aaeae',
+    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+  },
+  {
+    img: example,
+    title: 'Opaa aaeae',
+    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+  }
+]
 const Home: React.FC = () => {
   const theme = useContext(ThemeContext).colors
   const { newWindow, newNotification, Toast, Header, Size } = useWindow()
@@ -206,9 +232,7 @@ const Home: React.FC = () => {
           </Statistics>
         </main>
 
-        <aside>
-
-        </aside>
+        <Aside {...{ AudioBooksItems }} />
       </Content>
 
     </Container>
