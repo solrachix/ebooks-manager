@@ -17,22 +17,26 @@ const AudioBooksItems = [
   {
     img: example,
     title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+    description: 'aaaaaaaaaaaaaa aaaaaaaa',
+    src: 'https://521dimensions.com/songs/Terrain-pglost.mp3'
   },
   {
     img: example,
     title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+    description: 'aaaaaaaaaaaaaa aaaaaaaa',
+    src: 'https://521dimensions.com/songs/Terrain-pglost.mp3'
   },
   {
     img: example,
     title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+    description: 'aaaaaaaaaaaaaa aaaaaaaa',
+    src: 'https://521dimensions.com/songs/Terrain-pglost.mp3'
   },
   {
     img: example,
     title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
+    description: 'aaaaaaaaaaaaaa aaaaaaaa',
+    src: 'https://521dimensions.com/songs/Terrain-pglost.mp3'
   }
 ]
 const Home: React.FC = () => {

@@ -58,7 +58,7 @@ export const Container = styled.div`
     }
   }
 
-  button {
+  /* button {
     width: 100px;
     height: 50px;
     padding: 6px;
@@ -69,7 +69,7 @@ export const Container = styled.div`
     border-radius: 6px;
 
     cursor: pointer;
-  }
+  } */
 `
 
 export const Content = styled.div`
