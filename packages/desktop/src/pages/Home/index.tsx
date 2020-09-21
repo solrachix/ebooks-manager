@@ -6,12 +6,13 @@ import { ThemeContext } from 'styled-components'
 import example from '../../assets/example.jpg'
 
 import { BsArrowRight } from 'react-icons/bs'
+import { HiOutlineBookOpen, HiOutlineUser } from 'react-icons/hi'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
 import { RiBookletLine } from 'react-icons/ri'
 
 import Search from './../../components/Search/index'
 import Aside from './components/Aside'
-import { Container, Content, Ebook, Statistics } from './styles'
+import { Container, Content, Ebook, Statistics, UserDataAboutReading } from './styles'
 
 const AudioBooksItems = [
   {
@@ -161,6 +162,49 @@ const Home: React.FC = () => {
             </Ebook>
 
           </nav>
+
+          <UserDataAboutReading>
+            <div className="card">
+              <div className="icon" data-color="blue" >
+                <HiOutlineBookOpen />
+              </div>
+              <p>
+                <strong>94</strong>
+                <br />
+                Livros lidos
+              </p>
+            </div>
+            <div className="card">
+              <div className="icon" data-color="lightBlur" >
+                <HiOutlineBookOpen />
+              </div>
+              <p>
+                <strong>94</strong>
+                <br />
+                Livros lidos
+              </p>
+            </div>
+            <div className="card">
+              <div className="icon" data-color="yellow">
+                <HiOutlineUser />
+              </div>
+              <p>
+                <strong>94</strong>
+                <br />
+                Livros lidos
+              </p>
+            </div>
+            <div className="card">
+              <div className="icon" data-color="green" >
+                <HiOutlineBookOpen />
+              </div>
+              <p>
+                <strong>94</strong>
+                <br />
+                Livros lidos
+              </p>
+            </div>
+          </UserDataAboutReading>
 
           <Statistics>
             <div>

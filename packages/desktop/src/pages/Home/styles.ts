@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { rgba } from 'polished'
+import { rgba, lighten, darken, saturate } from 'polished'
 
 export const Container = styled.div`
     position: relative;
@@ -332,6 +332,81 @@ export const Statistics = styled.div`
           border-radius: 10px;
         }
       }
+    }
+  }
+`
+
+export const UserDataAboutReading = styled.div`
+  width: 100%;
+  height: auto;
+  margin-top: 6%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1rem;
+
+  @media(max-width: 400px){
+    grid-template-columns: 100%;
+    row-gap: 1rem;
+  }
+
+  .card {
+    width: 140px;
+    height: 54px;
+    padding: 14px;
+
+    background: ${props => props.theme.colors.themeColors.background.normal};
+    border-radius: 10px;
+    border-bottom: 1px solid ${props => props.theme.colors.themeColors.background.dark};
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .icon {
+      width: 30px;
+      height: 30px;
+
+      background: ${props => rgba(saturate(0.2, props.theme.colors.blue), 0.2)};
+      border-radius: 50%;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg{
+        width: 1rem;
+        height: 1rem;
+        color: ${props => props.theme.colors.blue};
+      }
+
+      &[data-color="blue"]{
+        background: ${props => rgba(lighten(0.1, props.theme.colors.blue), 0.2)};
+        svg{
+          color: ${props =>lighten(0.04, props.theme.colors.blue) };
+        }
+      }
+      &[data-color="lightBlur"]{
+        background: ${props => rgba(saturate(0.2, props.theme.colors.lightBlur), 0.2)};
+        svg{
+          color: ${props => props.theme.colors.lightBlur};
+        }
+      }
+      &[data-color="yellow"]{
+        background: ${props => rgba(saturate(0.2, props.theme.colors.yellow), 0.2)};
+        svg{
+          color: ${props => props.theme.colors.yellow};
+        }
+      }
+      &[data-color="green"]{
+        background: ${props => rgba(saturate(0.2, props.theme.colors.green), 0.2)};
+        svg{
+          color: ${props => props.theme.colors.green};
+        }
+      }
+    }
+
+    p {
+      font-size: 0.8rem;
     }
   }
 `
