@@ -37,6 +37,7 @@ export type ThemeTypes = {
     orange: string;
     pink: string;
     blue: string;
+    lightBlur: string;
     red: string;
     yellow: string;
   }

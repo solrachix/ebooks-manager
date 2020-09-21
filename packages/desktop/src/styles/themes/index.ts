@@ -37,7 +37,8 @@ export const LightTheme: ThemeTypes = {
     green: '#67e480',
     orange: '#E89E64',
     pink: '#FF79C6',
-    blue: '#4347FE', /** #5659eb */
+    blue: '#2436e8', /** #5659eb*/
+    lightBlur: '#3AC5FF',
     red: '#E96379',
     yellow: '#e7de79'
   }
@@ -78,7 +79,8 @@ export const DarkTheme: ThemeTypes = {
     green: '#67e480',
     orange: '#E89E64',
     pink: '#FF79C6',
-    blue: '#4347FE', /** #5659eb */
+    blue: '#2436e8', /** #5659eb */
+    lightBlur: '#3AC5FF',
     red: '#E96379',
     yellow: '#e7de79'
   }
