@@ -122,8 +122,10 @@ app.on('web-contents-created', (e, contents) => {
 })
 
 app.on('ready', () => {
-  createWindow()
-  createShortcuts()
+  setTimeout(() => {
+    createWindow()
+    createShortcuts()
+  }, 2000)
 })
 
 app.on('activate', recreateWindow)
