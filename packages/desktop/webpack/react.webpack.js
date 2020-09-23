@@ -72,10 +72,12 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin({
-      patterns: {
-        from: path.resolve(rootPath, 'public'),
-        to: path.resolve(rootPath, 'dist')
-      }
+      patterns: [
+        {
+          from: 'public'
+          // to: 'dist/renderer'
+        }
+      ]
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(rootPath, 'index.html')

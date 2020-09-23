@@ -1,22 +1,22 @@
 import React, { useRef, useEffect } from 'react'
-import WebViewer from '@pdftron/webviewer'
+import WebViewer from '@pdftron/webViewer'
 
 import { Container } from './styles'
 
 const Read: React.FC = () => {
-  const viewerRef = useRef(null)
+  const webViewerRef = useRef(null)
 
   useEffect(() => {
-    const webviewer = viewerRef.current
+    const webViewer = webViewerRef.current
 
-    if (!webviewer) return
+    if (!webViewer) return
 
     WebViewer(
       {
         path: '/webviewer/lib',
-        initialDoc: 'https://3000-b06ccf80-358e-436e-8482-54721b21f339.ws-us02.gitpod.io/files/PDFTRON_about.pdf'
+        initialDoc: 'http://localhost:3333/uploads/o.pdf'
       },
-      webviewer
+      webViewer
     ).then((instance) => {
       const { docViewer, Annotations, setTheme } = instance
       const annotManager = docViewer.getAnnotationManager()
@@ -42,7 +42,7 @@ const Read: React.FC = () => {
 
   return (
     <Container>
-      <div ref={viewerRef} className="webviewer"></div>
+      <div ref={webViewerRef} className="webViewer"></div>
     </Container>
   )
 }

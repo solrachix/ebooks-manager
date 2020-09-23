@@ -35,6 +35,7 @@
     "@thoth/axios-config": "*",
     "@unform/core": "^2.1.3",
     "@unform/web": "^2.1.3",
+    "based-blob": "^1.0.1",
     "copy-webpack-plugin": "^6.1.1",
     "css-loader": "^4.0.0",
     "electron-context-menu": "^2.3.0",
