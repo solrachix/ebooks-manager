@@ -1,5 +1,8 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 
+import axios from 'axios'
+import audioBeatDetection from '../../../../utils/audioBeatDetection'
+
 import { ThemeContext } from 'styled-components'
 
 import { BsPlay, BsPause, BsVolumeUp } from 'react-icons/bs'
@@ -37,6 +40,18 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
       audio.pause()
       audio.currentTime = 0
     }
+    const a = (new Audio(AudioBooksItems[AudioBooksBeingPlayedId].src))
+
+    // audioBeatDetection()
+
+    // axios.get(`https://cors-anywhere.herokuapp.com/${AudioBooksItems[AudioBooksBeingPlayedId].src}`)
+    //   .then((responce) => {
+    //     const arrayBuffer = Buffer.from(responce.data)
+    //     const blob = new Blob([arrayBuffer], { type: 'audio/wav' })
+    //     // const url = window.URL.createObjectURL(blob)
+
+    //     // console.log(url)
+    //   })
 
     setAudioBooksBeingPlayedIdData(AudioBooksItems[AudioBooksBeingPlayedId])
     setPlayingAudio(false)
@@ -103,7 +118,7 @@ const Aside: React.FC<AsideProps> = ({ AudioBooksItems, ...props }) => {
     console.log(percentage)
     if (audio) {
       audio.volume = percentage
-      setVolumeRate(value)
+      setVolumeRate(Number(value))
 
       element.style.background = `linear-gradient(
         to right,
