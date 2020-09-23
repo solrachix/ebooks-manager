@@ -74,10 +74,10 @@ export const Titleshown = styled.div`
 
   .square {
     position: absolute;
-    margin-top: -63px;
+    /* margin-top: -63px; */
     left: -50%;
     /* top: 38.6%; */
-    /* margin-top: -4.5rem; */
+    margin-top: -4.8rem;
     width: 50%;
     height: 2.4rem;
 
@@ -94,7 +94,7 @@ interface LinkProps {
 
 export const LINK_TAB_SIZE = 50
 
-export const Link = styled(link)<LinkProps>`
+export const Link = styled.a<LinkProps>`
   -webkit-app-region: no-drag;
   -webkit-user-select: text;
   width: ${LINK_TAB_SIZE}px;

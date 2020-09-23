@@ -1,11 +1,11 @@
 import React, { useContext, useCallback, useMemo, useEffect, useState, createRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { remote } from 'electron'
 import os from 'os'
 
 import { FiX, FiMinus, FiMaximize2, FiMinimize2 } from 'react-icons/fi'
-import { IoIosLogOut, IoIosStarOutline, IoIosHeartEmpty, IoIosCalendar, IoMdClose } from 'react-icons/io'
-import { BsBookmarksFill, BsBookmarks } from 'react-icons/bs'
+import { IoIosLogOut, IoIosHeartEmpty, IoIosCalendar, IoMdClose } from 'react-icons/io'
+import { BsBookmarksFill, BsBookmarks, BsSearch } from 'react-icons/bs'
 import LogoIcon from '../../assets/logo.svg'
 
 import { Container, Titleshown, WindowActions, MacActionButton, DefaultActionButton, MenuButton, Logo, Link, LINK_TAB_SIZE } from './styles'
@@ -19,12 +19,12 @@ interface HeaderProps {
 
 const Tabs = [
   {
-    to: '/#',
-    icon: IoIosStarOutline
+    to: '/',
+    icon: IoIosHeartEmpty
   },
   {
-    to: '/#',
-    icon: IoIosHeartEmpty
+    to: '/search',
+    icon: BsSearch
   },
   {
     to: '/#',
@@ -38,6 +38,7 @@ const Tabs = [
 
 const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
   const location = useLocation()
+  const history = useHistory()
   const theme = useContext(ThemeContext).colors
 
   // const [numberOfTabs, setNumberOfTabs] = useState(4)
@@ -71,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
 
     if (square && sideBar) {
       // const moveToPorcent = (id: number) => Math.floor((($(`#tab-${id}`)!.offsetTop * 100)/bodyHeight) + ((6.25 * 100)/bodyHeight) )
-      const moveToPX = (id: number) => $(`#tab-${id}`)!.offsetTop + 6
+      const moveToPX = (id: number) => $(`#tab-${id}`)!.offsetTop + 80
 
       console.log(
         `${moveToPX(openTab)}px`,
@@ -240,9 +241,12 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
             Tabs.map((props, index) => (
               <Link key={index}
                 id={`tab-${index}`}
-                to={props.to}
+                href={props.to}
                 actived={openTab === index}
-                onClick={() => goToTab(index)}
+                onClick={() => {
+                  history.push(props.to)
+                  goToTab(index)
+                }}
               >
                 {props.icon({})}
               </Link>
@@ -279,7 +283,9 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
           )}
         </WindowActions>
 
-        <MenuButton onClick={() => {}} ><IoIosLogOut /></MenuButton>
+        <MenuButton
+        // onClick={() => {}}
+        ><IoIosLogOut /></MenuButton>
       </div>
     </Container>
   )
