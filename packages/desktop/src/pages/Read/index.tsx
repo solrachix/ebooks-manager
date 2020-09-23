@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useContext } from 'react'
 import WebViewer from '@pdftron/webViewer'
 
-import { Container } from './styles'
+import { ThemeContext } from 'styled-components'
+import { Container, WebViewerCSSVariables } from './styles'
 
 const Read: React.FC = () => {
   const webViewerRef = useRef(null)
+  const theme = useContext(ThemeContext)
 
   useEffect(() => {
     const webViewer = webViewerRef.current
@@ -18,24 +20,32 @@ const Read: React.FC = () => {
       },
       webViewer
     ).then((instance) => {
-      const { docViewer, Annotations, setTheme } = instance
-      const annotManager = docViewer.getAnnotationManager()
+      const { docViewer, setTheme, iframeWindow, setLanguage } = instance
+      const iframeDoc = iframeWindow.document
+      const Body = iframeDoc.querySelector('body')
 
+      setLanguage('pt_br')
       setTheme('dark')
+      // setTheme({ primary: 'blue', secondary: 'white' });
+      if (Body) {
+        Body.style = WebViewerCSSVariables(theme)
+      }
 
       docViewer.on('documentLoaded', () => {
-        // const rectangleAnnot = new Annotations.RectangleAnnotation()
-        // rectangleAnnot.PageNumber = 1
-        // // values are in page coordinates with (0, 0) in the top left
-        // rectangleAnnot.X = 100
-        // rectangleAnnot.Y = 150
-        // rectangleAnnot.Width = 200
-        // rectangleAnnot.Height = 50
-        // rectangleAnnot.Author = annotManager.getCurrentUser()
 
-        // annotManager.addAnnotation(rectangleAnnot)
-        // // need to draw the annotation otherwise it won't show up until the page is refreshed
-        // annotManager.redrawAnnotation(rectangleAnnot)
+      })
+      iframeWindow.addEventListener('loaderror', (err) => {
+        // Do something with error. eg. instance.showErrorMessage('An error has occurred')
+        alert(err)
+      })
+
+      docViewer.on('pageNumberUpdated', (pageNumber) => {
+        // here it's guaranteed that page {pageNumber} is fully rendered
+        // you can get or set pixels on the canvas, etc
+        const totalPage = docViewer.getPageCount()
+        const percentage = Math.floor((pageNumber * 100) / totalPage)
+
+        console.log(percentage, pageNumber, totalPage)
       })
     })
   }, [])
