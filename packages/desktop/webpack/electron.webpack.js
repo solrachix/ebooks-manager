@@ -2,7 +2,7 @@ const path = require('path')
 
 const rootPath = path.resolve(__dirname, '..')
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     // splashScreen: path.resolve(rootPath, 'build', 'splashScreen.html'),
-    app: path.resolve(rootPath, 'electron', 'main.ts'),
+    app: path.resolve(rootPath, 'electron', 'main.ts')
   },
   target: 'electron-main',
   module: {
@@ -26,8 +26,8 @@ module.exports = {
       },
       {
         test: /\.html$/i,
-        loader: 'html-loader',
-      },
+        loader: 'html-loader'
+      }
     ]
   },
   output: {
