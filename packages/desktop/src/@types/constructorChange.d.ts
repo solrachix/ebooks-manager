@@ -3,3 +3,7 @@ declare interface String {
 }
 
 declare var $: function(elem): HTMLElement | null;
+
+interface Window {
+  webkitAudioContext: typeof AudioContext
+}
