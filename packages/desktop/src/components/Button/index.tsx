@@ -5,12 +5,12 @@ import { FiLoader } from 'react-icons/fi'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   loading?: boolean;
-  color: 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'cyan' | 'red' | 'yellow';
+  color?: 'primary' | 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'red' | 'yellow';
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  color = 'pink',
+  color = 'primary',
   type = 'button',
   loading = false,
   ...rest

@@ -1,12 +1,15 @@
 import styled, { keyframes } from 'styled-components'
 
 interface ContainerProps {
-  color: 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'cyan' | 'red' | 'yellow';
+  color: 'primary' | 'grey' | 'opaque' | 'purple' | 'green' | 'orange' | 'pink' | 'red' | 'yellow';
 }
 
 export const Container = styled.button<ContainerProps>`
   height: 42px;
-  background: ${props => props.theme.colors[props.color]};
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  background: ${props => props.color === 'primary' ? props.theme.colors.themeColors.primary.normal : props.theme.colors[props.color]};
   border: 0;
   border-radius: 4px;
   color: #FFF;
@@ -15,8 +18,10 @@ export const Container = styled.button<ContainerProps>`
   align-items: center;
   justify-content: center;
 
-  font-weight: 600;
+  font-family: Poppins;
+  font-weight: 500;
   font-size: 14px;
+  letter-spacing: .4px;
 
   cursor: pointer;
   transition: opacity 0.2s;

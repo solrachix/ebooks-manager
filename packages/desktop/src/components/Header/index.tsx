@@ -241,7 +241,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
             Tabs.map((props, index) => (
               <Link key={index}
                 id={`tab-${index}`}
-                href={props.to}
+                // href={props.to}
                 actived={openTab === index}
                 onClick={() => {
                   history.push(props.to)
