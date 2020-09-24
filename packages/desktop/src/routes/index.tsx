@@ -12,13 +12,13 @@ const Routes: React.FC = () => {
   const { signed } = useUser()
 
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
       <Switch>
         {!signed ? <AppRoutes /> : <AuthRoutes />}
 
         <Route path="/webview/:url" component={Webview} />
       </Switch>
-    </BrowserRouter>
+    // </BrowserRouter>
   )
 }
 
