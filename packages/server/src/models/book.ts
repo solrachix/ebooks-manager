@@ -3,6 +3,7 @@
 import fs from 'fs'
 import path from 'path'
 import PDF from 'pdf-poppler'
+import Tesseract from 'tesseract.js'
 
 require('dotenv').config()
 
@@ -20,5 +21,17 @@ export const getCover = async (fileName: string): Promise<string> => {
     page: 1
   })
 
-  return imageName
+  return `${imageName}-001.jpg`
+}
+
+export const extractTextFromImage = async (thumbnailName: string): Promise<string> => {
+  Tesseract.recognize(
+    'https://tesseract.projectnaptha.com/img/eng_bw.png',
+    'eng',
+    { logger: m => console.log(m) }
+  ).then(({ data: { text } }) => {
+    console.log(text)
+  })
+
+  return 'a'
 }
