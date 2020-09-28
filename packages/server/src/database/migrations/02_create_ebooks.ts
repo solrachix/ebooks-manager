@@ -5,6 +5,8 @@ export async function up (knex: Knex): Promise<unknown> {
   return knex.schema.createTable('ebooks', table => {
     table.increments('id').primary()
     table.string('title').notNullable()
+    table.string('description').notNullable()
+    table.string('url').notNullable()
     table.string('thumbnail').notNullable()
     table.integer('edition').notNullable()
 
