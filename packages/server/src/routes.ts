@@ -33,9 +33,33 @@ routes.get('/user/authenticate', userController.show)
 /**
  * Autenticação do Header Authorization em todas as rotas após essa!!
  */
-import auth from './middlewares/auth'
+
+import auth from './middlewares/middleware'
 routes.use(auth)
 
 routes.post('/user/update', userController.update)
+
+/**
+ * Rota "album"/
+ * default Controllers = index, show, create, update, delete
+ */
+import AlbumController from './controllers/albumController'
+const albumController = new AlbumController()
+routes.get('/album', albumController.index)
+routes.post('/album/create', albumController.create)
+routes.get('/album/update', albumController.update)
+
+/**
+ * Rota "ebook"/
+ * default Controllers = index, show, create, update, delete
+ */
+import EbookController from './controllers/ebookController'
+const ebookController = new EbookController()
+routes.get('/ebook', ebookController.index)
+routes.post(
+  '/ebook/create',
+  upload.single('ebook'),
+  ebookController.create
+)
 
 export default routes
