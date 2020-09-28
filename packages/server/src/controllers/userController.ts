@@ -33,10 +33,10 @@ export default class UserController {
       .where('email', String(email))
       .distinct()
 
-    if (!user) res.status(400).json({ error: 'User not found' })
+    if (!user) return res.status(400).json({ error: 'User not found' })
 
     const response = await compareHash(user.password, String(password))
-    if (!response) res.status(400).json({ error: 'Invalid password' })
+    if (!response) return res.status(400).json({ error: 'Invalid password' })
 
     return res.json({
       user,
@@ -55,7 +55,7 @@ export default class UserController {
       .where('email', String(email))
       .distinct()
 
-    if (verify.length > 0) response.status(400).json({ error: 'User already exists' })
+    if (verify.length > 0) return response.status(400).json({ error: 'User already exists' })
 
     const [id] = await db('users').insert({
       email,
@@ -82,7 +82,7 @@ export default class UserController {
       .where('id', String(userId))
       .distinct()
 
-    if (!user) response.status(400).json({ error: 'User not found' })
+    if (!user) return response.status(400).json({ error: 'User not found' })
     if (!password) password = user.password
     if (!email) email = user.email
     if (!name) name = user.name
