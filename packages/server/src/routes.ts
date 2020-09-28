@@ -47,7 +47,7 @@ import AlbumController from './controllers/albumController'
 const albumController = new AlbumController()
 routes.get('/album', albumController.index)
 routes.post('/album/create', albumController.create)
-routes.get('/album/update', albumController.update)
+routes.put('/album/update', albumController.update)
 
 /**
  * Rota "ebook"/
@@ -61,5 +61,15 @@ routes.post(
   upload.single('ebook'),
   ebookController.create
 )
+
+/**
+ * Rota "like"/
+ * default Controllers = index, show, create, update, delete
+ */
+import LovedListController from './controllers/lovedListController'
+const lovedListController = new LovedListController()
+routes.get('/like', lovedListController.show)
+routes.post('/like/create', lovedListController.create)
+routes.delete('/like/delete', lovedListController.delete)
 
 export default routes
