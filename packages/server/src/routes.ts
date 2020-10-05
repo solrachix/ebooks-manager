@@ -72,4 +72,13 @@ routes.get('/like', lovedListController.show)
 routes.post('/like/create', lovedListController.create)
 routes.delete('/like/delete', lovedListController.delete)
 
+/**
+ * Rota "reading list"/
+ * default Controllers = show, createOrUpdate, delete
+ */
+import ReadingListController from './controllers/readingListController'
+const readingListController = new ReadingListController()
+routes.get('/readingList', readingListController.show)
+routes.post('/readingList', readingListController.createOrUpdate)
+
 export default routes
