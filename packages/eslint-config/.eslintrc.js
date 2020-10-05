@@ -28,6 +28,7 @@ module.exports = {
     "react/prop-types": "off",
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
+    "@typescript-eslint/no-var-requires": 'off',
     "import/extensions": [
       "error",
       "ignorePackages",
