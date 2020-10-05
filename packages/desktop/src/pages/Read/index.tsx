@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useContext } from 'react'
-import WebViewer from '@pdftron/webViewer'
+import WebViewer from '@pdftron/webviewer'
 
 import { ThemeContext } from 'styled-components'
 import { Container, WebViewerCSSVariables } from './styles'
