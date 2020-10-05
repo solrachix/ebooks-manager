@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.2",
+    "moment": "^2.29.0",
     "multer": "^1.4.2",
     "pdf-poppler": "^0.2.1",
     "sqlite3": "^5.0.0",
