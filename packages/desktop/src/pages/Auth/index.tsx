@@ -1,9 +1,12 @@
 /* eslint-disable no-unused-expressions */
 
+import electron from 'electron'
 import React, { useContext, useState, FormEvent, useEffect } from 'react'
 
 import { useWindow } from './../../context/window'
 import { useUser } from '../../context/user'
+
+import api from '@thoth/axios-config'
 
 import { ThemeContext } from 'styled-components'
 import { rgba } from 'polished'
@@ -14,7 +17,7 @@ import { Container, Title, Content, Button } from './styles'
 
 const Auth: React.FC = () => {
   const theme = useContext(ThemeContext).colors
-  const { Header, Size } = useWindow()
+  const { Header, Size, Toast, newWindow } = useWindow()
 
   const { Auth } = useUser()
   const { signIn } = Auth
@@ -96,13 +99,20 @@ const Auth: React.FC = () => {
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault()
 
-    try {
-      // await signIn('/user/authenticate', {
-      //   email: loginEmail,
-      //   password: loginPassword
-      // })
+    const LoginScreen = electron.remote.BrowserWindow.fromId(electron.remote.getCurrentWindow().id)
+    const icon = electron.nativeImage.createFromPath(`${electron.remote.app.getAppPath()}/build/icon.png`)
 
+    try {
+      await signIn('/user/authenticate', {
+        email: loginEmail,
+        password: loginPassword
+      })
     } catch (error) {
+      Toast.addToast({
+        title: 'Erro',
+        type: 'error',
+        description: 'Email ou senha incorretos'
+      })
       console.log(error)
     }
   }
@@ -110,21 +120,32 @@ const Auth: React.FC = () => {
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault()
 
-    // try {
-    //   await api.post('/user/create', {
-    //     name: `${name} ${surname}`,
-    //     email: registerEmail,
-    //     password: registerPassword
-    //   })
+    try {
+      await api.post('/user/create', {
+        name: name.trim(),
+        email: registerEmail,
+        password: registerPassword
+      })
 
-    //   setLoginEmail(registerEmail)
-    //   setRegisterEmail('')
-    //   setRegisterPassword('')
+      setLoginEmail(registerEmail)
+      setName('')
+      setRegisterEmail('')
+      setRegisterPassword('')
 
-    //   handleToggle()
-    // } catch (error) {
-    //   console.log(error)
-    // }
+      Toast.addToast({
+        title: 'Sucesso!',
+        type: 'success',
+        description: 'cadastrado com sucesso!'
+      })
+      handleToggle()
+    } catch (error) {
+      Toast.addToast({
+        title: 'Erro',
+        type: 'error',
+        description: error
+      })
+      console.log(error)
+    }
 
     return false
   }

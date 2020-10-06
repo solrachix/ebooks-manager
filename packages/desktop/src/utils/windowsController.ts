@@ -10,6 +10,7 @@ export interface WindowProps {
 }
 
 export const getWindow = function (WindowId: number): WindowProps {
+  console.log(Windows.get('windows'))
   const {
     id,
     title,
@@ -33,10 +34,14 @@ export const setWindow = function (props: WindowProps): void{
   if (!props) {
     return
   }
+  const newWindows:WindowProps[] = (Windows.get('windows') as WindowProps[])
+  newWindows.push(props)
 
-  const windows = (Windows.get('windows') as WindowProps[]).map(window => {
+  console.log(newWindows)
+  const windows = newWindows.map(window => {
     return window.id === props.id ? props : window
   })
 
+  console.log(props, windows)
   Windows.set('windows', windows)
 }

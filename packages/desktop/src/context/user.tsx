@@ -1,7 +1,9 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import api from '../../../axios-config/src'
 
-interface User {
+import { useConfig } from './../hooks/useConfig'
+
+interface UserData {
   id: number,
   name: string,
   email: string,
@@ -9,8 +11,14 @@ interface User {
   whatsapp: string | null,
   bio: string | null
 }
+interface User {
+  Logged: boolean,
+  token: null | string,
+  data: null | UserData
+}
+
 interface UserAuthentication {
-  user: User,
+  user: UserData,
   token: string
 }
 
@@ -29,18 +37,24 @@ interface UserContextData {
 const UserContext = createContext<UserContextData>({} as UserContextData)
 
 export const UserProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null)
+  // const [user, setUser] = useState<User>(useConfig('user'))
+  const [user, setUser] = useConfig('user')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function loadStorageData () {
-      const user = localStorage.getItem('@RUser:user')
-      const token = localStorage.getItem('@RUser:token')
+      // const user = localStorage.getItem('@RUser:user')
+      // const token = localStorage.getItem('@RUser:token')
 
-      if (user && token) {
-        api.defaults.headers.UserAuthorization = `token ${token}`
+      // if (user && token) {
+      //   api.defaults.headers.UserAuthorization = `token ${token}`
 
-        setUser(JSON.parse(user))
+      //   setUser(JSON.parse(user))
+
+      // }
+
+      if (user.Logged) {
+        api.defaults.headers.UserAuthorization = `token ${user.token}`
       }
       setLoading(false)
     }
@@ -51,25 +65,32 @@ export const UserProvider: React.FC = ({ children }) => {
     signIn: useCallback(async (url: string, params: unknown) => {
       const { data } = await api.get<UserAuthentication>(url, { params })
 
-      setTimeout(() => {
-        setUser(data.user)
-      }, 1000)
+      // setTimeout(() => {
+
+      // }, 1000)
 
       // Set toke for all request
       api.defaults.headers.UserAuthorization = `Token ${data.token}`
 
-      localStorage.setItem('@RUser:user', JSON.stringify(data.user))
-      localStorage.setItem('@RUser:token', data.token)
+      setUser({
+        Logged: true,
+        token: data.token,
+        data: data.user
+      })
     }, []),
     signOut: useCallback(() => {
       localStorage.clear()
-      setUser(null)
+      setUser({
+        Logged: false,
+        token: null,
+        data: null
+      })
     }, [])
   }
 
   return (
     <UserContext.Provider
-      value={{ signed: !!user, user, loading, Auth }}>
+      value={{ signed: user.Logged, user, loading, Auth }}>
       {!loading && children}
     </UserContext.Provider>
   )

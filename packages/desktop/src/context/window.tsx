@@ -1,5 +1,5 @@
 import * as Electron from 'electron'
-import { uuid } from 'uuidv4'
+import { v4 as uuid } from 'uuid'
 
 import React, { createContext, useState, useEffect, useCallback, useContext } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -82,7 +82,7 @@ export const WindowProvider: React.FC = ({ children }) => {
     //   id,
     //   webContents
     // }
-    const id = windows.length // webContents.id
+    const id = windows.length || Electron.remote.getCurrentWebContents().id + 1 // webContents.id
     const window = Window({ ...options, id })
 
     setWindows([...windows, window])

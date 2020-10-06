@@ -39,6 +39,7 @@ const createWindow = ({ title, url, ...options }: WindowOptions): WindowProps /*
     newUrl = `${atualUrl}/${url}`
   }
 
+  console.log(options.id)
   // window.open(newUrl)
   const mainWindow = Window({ title: title, show: true, partition, APPAlreadyInitialized: true, ...options })
   const webContents = mainWindow.webContents

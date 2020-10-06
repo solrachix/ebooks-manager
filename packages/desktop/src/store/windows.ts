@@ -23,4 +23,4 @@ export const windows = new Store({
   watch: true
 })
 
-console.log(windows)
+console.log(windows.path)

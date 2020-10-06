@@ -2,6 +2,15 @@ import Store from 'electron-store'
 import { JSONSchemaType } from 'json-schema-typed'
 
 export const schema = {
+  user: {
+    type: JSONSchemaType.Object,
+    default: {
+      Logged: false,
+      token: null,
+      data: null
+    }
+  },
+
   useMacOSWindowActionButtons: {
     type: JSONSchemaType.Boolean,
     default: false
