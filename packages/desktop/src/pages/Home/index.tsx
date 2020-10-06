@@ -181,7 +181,7 @@ const Home: React.FC = () => {
               <p>
                 <strong>94</strong>
                 <br />
-                Livros lidos
+                Autores lidos
               </p>
             </div>
             <div className="card">
@@ -189,9 +189,9 @@ const Home: React.FC = () => {
                 <HiOutlineUser />
               </div>
               <p>
-                <strong>94</strong>
+                <strong>110</strong>
                 <br />
-                Livros lidos
+                Páginas de livros
               </p>
             </div>
             <div className="card">
@@ -201,7 +201,7 @@ const Home: React.FC = () => {
               <p>
                 <strong>94</strong>
                 <br />
-                Livros lidos
+                Lendo
               </p>
             </div>
           </UserDataAboutReading>
@@ -280,7 +280,7 @@ const Home: React.FC = () => {
           </Statistics>
         </main>
 
-        <Aside {...{ AudioBooksItems }} />
+        {/* <Aside {...{ AudioBooksItems }} /> */}
       </Content>
 
     </Container>

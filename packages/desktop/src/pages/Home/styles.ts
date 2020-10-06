@@ -82,7 +82,7 @@ export const Content = styled.div`
   grid-template-columns: 2fr 1fr;
   grid-template-columns: minmax(0, 2fr) 1fr;
   grid-template-areas:
-    'main sidebar';
+    'main main';
   column-gap: 1.4rem;
 
   main {
@@ -103,6 +103,7 @@ export const Content = styled.div`
     {
       width: 0px;
       background: transparent;
+      box-shadow: none;
     }
 
     h4 {
@@ -224,7 +225,7 @@ export const Statistics = styled.div`
   grid-template-columns: 1fr 1.6fr;
   column-gap: 1.4rem;
 
-  @media(max-width: 800px){
+  @media(max-width: 600px){
     grid-template-columns: 100%;
     row-gap: 1.4rem;
   }
@@ -351,7 +352,7 @@ export const UserDataAboutReading = styled.div`
   }
 
   .card {
-    width: 140px;
+    width: 164px;
     height: 54px;
     padding: 14px;
 
@@ -360,12 +361,13 @@ export const UserDataAboutReading = styled.div`
     border-bottom: 1px solid ${props => props.theme.colors.themeColors.background.dark};
 
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     .icon {
       width: 30px;
       height: 30px;
+      margin-right: 1rem;
 
       background: ${props => rgba(saturate(0.2, props.theme.colors.blue), 0.2)};
       border-radius: 50%;
@@ -382,7 +384,7 @@ export const UserDataAboutReading = styled.div`
       &[data-color="blue"]{
         background: ${props => rgba(lighten(0.1, props.theme.colors.blue), 0.2)};
         svg{
-          color: ${props =>lighten(0.04, props.theme.colors.blue) };
+          color: ${props => lighten(0.04, props.theme.colors.blue)};
         }
       }
       &[data-color="lightBlur"]{
