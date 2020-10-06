@@ -265,7 +265,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
         </Titleshown>
 
         <WindowActions className="windowActions" >
-          {shouldUseMacOSWindowActions ? (
+          {shouldUseMacOSWindowActions[0] ? (
             <>
               <MacActionButton color="close" onClick={handleCloseWindow}>
                 <FiX />
