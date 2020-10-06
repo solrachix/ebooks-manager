@@ -22,7 +22,7 @@ const Auth: React.FC = () => {
 
   useEffect(() => {
     Size.setSize({
-      width: 600,
+      width: 500,
       height: 640
     })
     Header.hidden(false)
@@ -45,6 +45,11 @@ const Auth: React.FC = () => {
     $('.form-panel.two')?.classList.add('active')
 
     if (Form) {
+      Size.setSize({
+        width: 500,
+        height: 700
+      })
+
       Form.animate({
         height: [`${formHeight}px`, `${panelTwo}px`]
       }, {
@@ -79,6 +84,12 @@ const Auth: React.FC = () => {
       })
 
       Form.style.height = `${panelOne}px`
+      setTimeout(() => {
+        Size.setSize({
+          width: 500,
+          height: 640
+        })
+      }, 400)
     }
   }
 

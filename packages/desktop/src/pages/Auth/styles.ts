@@ -44,10 +44,6 @@ export const Title = styled.div`
 `
 
 export const Content = styled.div`
-
-  -webkit-app-region: no-drag;
-  -webkit-user-select: text;
-
   position: relative;
   /* width: calc(600px - 40px); */
   width: 600px;
@@ -62,6 +58,20 @@ export const Content = styled.div`
 
   overflow: hidden;
   z-index: 15;
+
+  *,
+  .form-toggle:before,
+  .form-toggle:after{
+    -webkit-app-region: no-drag;
+    -webkit-user-select: text;
+  }
+
+  .form-content,
+  .form-header,
+  .form-panel.one {
+    -webkit-app-region: drag;
+    -webkit-user-select: none;
+  }
 
   input[type='checkbox'] {
     display: inline-block;

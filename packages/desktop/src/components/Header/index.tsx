@@ -5,7 +5,8 @@ import os from 'os'
 
 import { FiX, FiMinus, FiMaximize2, FiMinimize2 } from 'react-icons/fi'
 import { IoIosLogOut, IoIosHeartEmpty, IoIosCalendar, IoMdClose } from 'react-icons/io'
-import { BsBookmarksFill, BsBookmarks, BsSearch } from 'react-icons/bs'
+import { BsBookmarksFill, BsBookmarks, BsSearch, BsUpload } from 'react-icons/bs'
+import { VscHome } from 'react-icons/vsc'
 import LogoIcon from '../../assets/logo.svg'
 
 import { Container, Titleshown, WindowActions, MacActionButton, DefaultActionButton, MenuButton, Logo, Link, LINK_TAB_SIZE } from './styles'
@@ -20,6 +21,10 @@ interface HeaderProps {
 const Tabs = [
   {
     to: '/',
+    icon: VscHome
+  },
+  {
+    to: '/',
     icon: IoIosHeartEmpty
   },
   {
@@ -27,13 +32,17 @@ const Tabs = [
     icon: BsSearch
   },
   {
-    to: '/#',
-    icon: IoIosCalendar
-  },
-  {
-    to: '/#',
-    icon: BsBookmarks
+    to: '/upload',
+    icon: BsUpload
   }
+  // {
+  //   to: '/#',
+  //   icon: IoIosCalendar
+  // },
+  // {
+  //   to: '/#',
+  //   icon: BsBookmarks
+  // }
 ]
 
 const Header: React.FC<HeaderProps> = ({ title, hidden }) => {

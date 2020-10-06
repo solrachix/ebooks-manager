@@ -13,11 +13,11 @@ const Routes: React.FC = () => {
 
   return (
     // <BrowserRouter>
-      <Switch>
-        {!signed ? <AppRoutes /> : <AuthRoutes />}
+    <Switch>
+      {signed ? <AppRoutes /> : <AuthRoutes />}
 
-        <Route path="/webview/:url" component={Webview} />
-      </Switch>
+      <Route path="/webview/:url" component={Webview} />
+    </Switch>
     // </BrowserRouter>
   )
 }
