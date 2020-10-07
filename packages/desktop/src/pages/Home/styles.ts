@@ -130,14 +130,26 @@ export const Content = styled.div`
     .recentBooks{
       width: 100%;
       max-width: 100%;
+      /* height: 100%; */
       margin-top: 4%;
 
       overflow-x: auto;
+      /* overscroll-behavior-x: contain; */
 
-      /* display: flex; */
+      /* display: flex;
+      flex-direction: column; */
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       column-gap: 1.4rem;
+
+      /* transform-origin: right top;
+      transform: rotate(-90deg) translate3d(0, -240px, 0);
+
+      & > * {
+        transform-origin: left top;
+        transform: rotate(90deg) translate3d(0, calc(-240px), 0);
+      } */
+
     }
 
   }
@@ -155,6 +167,15 @@ export const Ebook = styled.div`
   margin-top: .7rem;
   margin-bottom: .7rem;
 
+  cursor: move;
+  user-select: none;
+  /* &:first-of-type {
+    margin-top: 0rem;
+  }
+  &:last-of-type {
+    margin-bottom: 0rem; */
+  /* } */
+
   border-radius: 10px;
   background: ${props => rgba(props.theme.colors.blue, 0.2)};
 
@@ -166,7 +187,7 @@ export const Ebook = styled.div`
 
   .cover {
     height: 100%;
-
+    user-select: none;
     border-radius: 10px;
   }
 
