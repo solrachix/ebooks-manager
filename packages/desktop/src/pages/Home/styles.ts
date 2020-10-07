@@ -166,9 +166,9 @@ export const Ebook = styled.div`
   padding: 16px;
   margin-top: .7rem;
   margin-bottom: .7rem;
-
+/*
   cursor: move;
-  user-select: none;
+  user-select: none; */
   /* &:first-of-type {
     margin-top: 0rem;
   }
@@ -187,7 +187,7 @@ export const Ebook = styled.div`
 
   .cover {
     height: 100%;
-    user-select: none;
+
     border-radius: 10px;
   }
 

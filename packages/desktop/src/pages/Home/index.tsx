@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 
 import { useWindow } from '../../context/window'
 
+import Drag from '@mystroken/drag'
 import { ThemeContext } from 'styled-components'
 
 import example from '../../assets/example.jpg'
@@ -44,18 +45,24 @@ const AudioBooksItems = [
 const Home: React.FC = () => {
   const theme = useContext(ThemeContext).colors
   const { newWindow, newNotification, Toast, Header, Size } = useWindow()
-  const [active, setActive] = useState(false)
-  const [recentBooksScrollLeft, setRecentBooksScrollLeft] = useState(0)
-
-  let currentX
-  let currentY
-  let initialX
-  let initialY
-  const xOffset = 0
-  const yOffset = 0
+  let currentX = 0
+  let currentY = 0
 
   useEffect(() => {
     Header.hidden(true)
+    const container = $('.recentBooks')
+
+    if (container) {
+      const options = {
+        listener: container,
+        multiplier: 1 // default: 1
+      }
+      const drag = new Drag(options)
+      drag.on(event => {
+        currentX = event.X
+        currentY = event.Y
+      })
+    }
   }, [])
 
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -89,40 +96,6 @@ const Home: React.FC = () => {
     }
   }
 
-  const MouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    // console.log(active)
-    setActive(true)
-  }
-
-  const MouseUp = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    // console.log(active)
-    setActive(false)
-  }
-
-  const MouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    const carousel = $('.recentBooks')
-    // e.preventDefault()
-    if (active && carousel) {
-      const { clientX, screenX, movementX } = e
-      // console.log(clientX, screenX, movementX)
-      console.log(carousel.scrollWidth, carousel.scrollLeft, recentBooksScrollLeft)
-      if (carousel.scrollWidth === recentBooksScrollLeft && carousel.scrollLeft < recentBooksScrollLeft) {
-        setRecentBooksScrollLeft(recentBooksScrollLeft - 2)
-        carousel.scrollLeft = recentBooksScrollLeft
-        // carousel.scrollTo({
-        //   left: scrollLeft,
-        //   behavior: 'smooth'
-        // })
-      } else {
-        setRecentBooksScrollLeft(recentBooksScrollLeft + 2)
-        carousel.scrollLeft = recentBooksScrollLeft
-        // carousel.scrollTo({
-        //   left: scrollLeft,
-        //   behavior: 'smooth'
-        // })
-      }
-    }
-  }
   return (
     <Container>
 
@@ -146,15 +119,8 @@ const Home: React.FC = () => {
             <a href="#">more <BsArrowRight /></a>
           </h4>
 
-          <nav className="recentBooks" onScroll={(e) => {
-            console.log(e.nativeEvent, e)
-          }} >
-            <Ebook
-              className="Ebook"
-              onMouseDown={MouseDown}
-              onMouseUp={MouseUp}
-              onMouseMove={MouseMove}
-            >
+          <nav className="recentBooks dragscroll">
+            <Ebook className="Ebook" >
               <img className="cover" src={example} alt=""/>
 
               <div>
@@ -174,12 +140,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </Ebook>
-            <Ebook
-              className="Ebook"
-              onMouseDown={MouseDown}
-              onMouseUp={MouseUp}
-              onMouseMove={MouseMove}
-            >
+            <Ebook className="Ebook" >
               <img className="cover" src={example} alt=""/>
 
               <div>
@@ -199,12 +160,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </Ebook>
-            <Ebook
-              className="Ebook"
-              onMouseDown={MouseDown}
-              onMouseUp={MouseUp}
-              onMouseMove={MouseMove}
-            >
+            <Ebook className="Ebook" >
               <img className="cover" src={example} alt=""/>
 
               <div>
@@ -224,6 +180,7 @@ const Home: React.FC = () => {
                 </div>
               </div>
             </Ebook>
+
           </nav>
 
           <UserDataAboutReading>

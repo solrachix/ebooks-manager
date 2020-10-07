@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@mystroken/drag": "^0.2.0",
     "@pdftron/webviewer": "^7.0.1",
     "@phuocng/react-pdf-viewer": "1.7.0",
     "@thoth/axios-config": "*",
