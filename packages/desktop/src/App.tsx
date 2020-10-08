@@ -1,5 +1,7 @@
 import './utils/stringReplaceAll'
 import './utils/$'
+import './utils/NumberClamp'
+import './utils/NumberRound'
 
 import React from 'react'
 import { render } from 'react-dom'
@@ -8,7 +10,6 @@ import { GlobalStyle } from './styles/GlobalStyle'
 import { DarkTheme } from './styles/themes'
 import { ThemeProvider } from 'styled-components'
 
-import Header from './components/Header'
 import { Container } from './styles/App.styles'
 
 import AppProvider from './context'
