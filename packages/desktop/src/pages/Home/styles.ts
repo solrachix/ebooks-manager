@@ -92,7 +92,8 @@ export const Content = styled.div`
     grid-area: main;
     padding-bottom: 6rem;
 
-    overflow: auto;
+    overflow: hidden;
+    overflow-y: auto;
 
     &::-webkit-scrollbar-track,
     &::-webkit-scrollbar-corner,
@@ -126,116 +127,12 @@ export const Content = styled.div`
         }
       }
     }
-
-    .recentBooks{
-      width: 100%;
-      max-width: 100%;
-      /* height: 100%; */
-      margin-top: 4%;
-
-      overflow-x: auto;
-      /* overscroll-behavior-x: contain; */
-
-      /* display: flex;
-      flex-direction: column; */
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      column-gap: 1.4rem;
-
-      /* transform-origin: right top;
-      transform: rotate(-90deg) translate3d(0, -240px, 0);
-
-      & > * {
-        transform-origin: left top;
-        transform: rotate(90deg) translate3d(0, calc(-240px), 0);
-      } */
-
-    }
-
   }
 
   aside {
     grid-area: sidebar;
   }
 
-`
-
-export const Ebook = styled.div`
-  width: 240px;
-  height: 180px;
-  padding: 16px;
-  margin-top: .7rem;
-  margin-bottom: .7rem;
-/*
-  cursor: move;
-  user-select: none; */
-  /* &:first-of-type {
-    margin-top: 0rem;
-  }
-  &:last-of-type {
-    margin-bottom: 0rem; */
-  /* } */
-
-  border-radius: 10px;
-  background: ${props => rgba(props.theme.colors.blue, 0.2)};
-
-  display: flex;
-  /* flex: 0.5; */
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: start;
-
-  .cover {
-    height: 100%;
-
-    border-radius: 10px;
-  }
-
-  > div {
-    width: 100%;
-    padding-left: 6%;
-    margin: auto;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: start;
-
-    h5{
-      font-weight: 1000;
-      font-size: .9rem;
-
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
-
-    span {
-      line-height: 1.6rem;
-      font-size: .6rem;
-      font-weight: 600;
-      margin-top: 2%;
-
-      opacity: .8;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      svg {
-        margin-right: 6px;
-      }
-    }
-
-    .stars {
-      display: flex;
-      margin-top: 4%;
-
-      svg {
-        margin-right: 2%;
-      }
-    }
-  }
 `
 
 export const Statistics = styled.div`
