@@ -46,9 +46,10 @@ const Tabs = [
 ]
 
 const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
+  const theme = useContext(ThemeContext).colors
+  const [user, setUser] = useConfig('user')
   const location = useLocation()
   const history = useHistory()
-  const theme = useContext(ThemeContext).colors
 
   // const [numberOfTabs, setNumberOfTabs] = useState(4)
   const [openTab, setOpenTab] = useState(0)
@@ -104,6 +105,15 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
       setOpenTab(id)
     }
   }
+
+  const handleSignOut = useCallback(() => {
+    localStorage.clear()
+    setUser({
+      Logged: false,
+      token: null,
+      data: null
+    })
+  }, [])
 
   const handleLogo = async () => {
     const logoIcon = $('.logoIcon')
@@ -293,7 +303,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
         </WindowActions>
 
         <MenuButton
-        // onClick={() => {}}
+          onClick={handleSignOut}
         ><IoIosLogOut /></MenuButton>
       </div>
     </Container>
