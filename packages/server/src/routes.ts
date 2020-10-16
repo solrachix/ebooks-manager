@@ -81,4 +81,12 @@ const readingListController = new ReadingListController()
 routes.get('/readingList', readingListController.show)
 routes.post('/readingList', readingListController.createOrUpdate)
 
+/**
+ * Rota "statistics"/
+ * default Controllers = show
+ */
+import StatisticsController from './controllers/statisticsController'
+const statisticsController = new StatisticsController()
+routes.get('/statistics', statisticsController.show)
+
 export default routes
