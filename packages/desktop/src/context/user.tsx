@@ -70,7 +70,7 @@ export const UserProvider: React.FC = ({ children }) => {
       // }, 1000)
 
       // Set toke for all request
-      api.defaults.headers.Authorization = `Token ${data.token}`
+      api.defaults.headers.authorization = `Token ${data.token}`
 
       setUser({
         Logged: true,
