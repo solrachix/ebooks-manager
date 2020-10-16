@@ -70,7 +70,7 @@ export const UserProvider: React.FC = ({ children }) => {
       // }, 1000)
 
       // Set toke for all request
-      api.defaults.headers.UserAuthorization = `Token ${data.token}`
+      api.defaults.headers.Authorization = `Token ${data.token}`
 
       setUser({
         Logged: true,
@@ -87,7 +87,9 @@ export const UserProvider: React.FC = ({ children }) => {
       })
     }, [])
   }
-
+  useEffect(() => {
+    console.log(Auth)
+      }, [Auth])
   return (
     <UserContext.Provider
       value={{ signed: user.Logged, user, loading, Auth }}>
