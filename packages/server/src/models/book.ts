@@ -3,6 +3,7 @@
 import fs from 'fs'
 import path from 'path'
 import PDF from 'pdf-poppler'
+import pdfParse from 'pdf-parse'
 import Tesseract from 'tesseract.js'
 
 require('dotenv').config()
@@ -22,6 +23,23 @@ export const getCover = async (fileName: string): Promise<string> => {
   })
 
   return `${imageName}-001.jpg`
+}
+
+interface PDFData {
+  numpages: number;
+  numrender: number;
+  info: string;
+  metadata: string;
+  version: string;
+  text: string;
+}
+export const getNumberOfPages = async (fileName: string): Promise<number> => {
+  const filePath = path.resolve(uploadsURL, fileName)
+  const dataBuffer = fs.readFileSync(filePath)
+
+  const data: PDFData = await pdfParse(dataBuffer)
+
+  return data.numpages
 }
 
 export const extractTextFromImage = async (thumbnailName: string): Promise<string> => {

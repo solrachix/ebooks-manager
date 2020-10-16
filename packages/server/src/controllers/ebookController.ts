@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import db from '../database/connection'
-import { getCover, extractTextFromImage } from './../models/book'
+import { getCover, getNumberOfPages } from './../models/book'
 
 interface File {
   fieldname: string;
@@ -80,6 +80,7 @@ export default class EbookController {
       title,
       description,
       edition,
+      numberOfPages: await getNumberOfPages(ebook.filename),
 
       albums_id: albumId,
       url: ebook.filename,

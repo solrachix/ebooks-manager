@@ -6,6 +6,8 @@ export async function up (knex: Knex): Promise<unknown> {
     table.increments('id').primary()
     table.string('title').notNullable()
     table.string('description').notNullable()
+    table.number('numberOfPages').notNullable()
+
     table.string('url').notNullable()
     table.string('thumbnail').notNullable()
     table.integer('edition').notNullable()

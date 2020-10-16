@@ -8,22 +8,33 @@ export default class LovedListController {
   async show (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
 
-    const [lovedList] = await db('reading_list')
+    const lovedList = await db('reading_list')
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
       .where('user_id', String(userId))
       .select('*')
 
     if (!lovedList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
-    return res.json(lovedList)
+    /**
+    * Processo de virtualização dos campos do banco.
+    */
+    const serializedMidia = lovedList.map((ebook) => {
+      return {
+        ...ebook,
+        url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
+        thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
+      }
+    })
+
+    return res.json(serializedMidia)
   }
 
   async createOrUpdate (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
-    const { ebookId, percentage = '0/0' } = req.body
+    const { ebookId, percentage = '0/0', readingTime, completeBook = false } = req.body
 
     if (!ebookId) return res.status(400).json({ error: 'Pass the ebook id' })
-    const date = moment()
+    const date = moment().format('LLL')
     const Percentage = Math.floor((Number(percentage.split('/')[0]) * 100) / Number(percentage.split('/')[1]))
     console.log(userId, date, Percentage)
 
@@ -36,10 +47,12 @@ export default class LovedListController {
       await db('reading_list')
         .where('ebook_id', String(ebookId))
         .where('user_id', String(userId))
-        .update({
+        .update(completeBook ? { completeBook } : {
           Percentage,
-          lastAccess: date
+          lastAccess: date,
+          readingTime
         })
+
       return res.status(201).json({ id: verify[0].id, date })
     }
 
@@ -48,7 +61,8 @@ export default class LovedListController {
       ebook_id: ebookId,
 
       Percentage,
-      lastAccess: date
+      lastAccess: date,
+      readingTime
     })
 
     if (!id) return res.status(400).json({ error: 'Album registration failed' })
