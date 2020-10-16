@@ -4,14 +4,15 @@ import db from '../database/connection'
 
 import moment from 'moment'
 
-export default class LovedListController {
+export default class ReadingListController {
   async show (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
 
     const lovedList = await db('reading_list')
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
+      .join('albums', 'ebooks.albums_id', '=', 'albums.id')
       .where('user_id', String(userId))
-      .select('*')
+      .select('reading_list.*', 'ebooks.*', 'albums.name AS albumName', 'albums.author')
 
     if (!lovedList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
@@ -31,7 +32,7 @@ export default class LovedListController {
 
   async createOrUpdate (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
-    const { ebookId, percentage = '0/0', readingTime, completeBook = false } = req.body
+    const { ebookId, percentage = '0/0', readingTime = '0s', completeBook = false } = req.body
 
     if (!ebookId) return res.status(400).json({ error: 'Pass the ebook id' })
     const date = moment().format('LLL')

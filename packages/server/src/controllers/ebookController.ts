@@ -25,8 +25,9 @@ export default class EbookController {
     }
 
     const ebooks = await db('ebooks')
+      .join('albums', 'ebooks.albums_id', '=', 'albums.id')
       .where('title', 'like', `%${String(search)}%`)
-      .select('*')
+      .select('ebooks.*', 'albums.name AS albumName', 'albums.author')
 
     /**
     * Processo de virtualização dos campos do banco.
@@ -55,7 +56,16 @@ export default class EbookController {
 
     if (!ebook) return res.status(400).json({ error: 'Ebook not found' })
 
-    return res.json(ebook)
+    /**
+    * Processo de virtualização dos campos do banco.
+    */
+    const serializedMidia = {
+      ...ebook,
+      url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
+      thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
+    }
+
+    return res.json(serializedMidia)
   }
 
   async create (req: Request, res: Response): Promise<Response<unknown>> {
