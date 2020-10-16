@@ -39,7 +39,7 @@ const HorizontalList: React.FC = ({ children }) => {
     if (slider && cursor) {
       const sliderWidth = slider.scrollWidth
       slider.style.position = 'relative'
-      slider.style.width = `${sliderWidth}px`
+      slider.style.width = `${sliderWidth + 200}px`
 
       const options = {
         listener: slider,
