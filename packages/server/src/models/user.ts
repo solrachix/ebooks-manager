@@ -19,7 +19,7 @@ export async function generateHash (password: string) {
 
 export function generateToken (id: number) {
   return jwt.sign({ id }, process.env.JWTSecretKey || '', {
-    expiresIn: 86400
+    expiresIn: '7d'
   })
 }
 

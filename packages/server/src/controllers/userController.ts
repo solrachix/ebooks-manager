@@ -44,18 +44,18 @@ export default class UserController {
     })
   }
 
-  async create (request: Request, response: Response): Promise<Response<unknown>> {
+  async create (req: Request, res: Response): Promise<Response<unknown>> {
     const {
       name,
       email,
       password
-    } = request.body
+    } = req.body
 
     const verify = await db('users')
       .where('email', String(email))
       .distinct()
 
-    if (verify.length > 0) return response.status(400).json({ error: 'User already exists' })
+    if (verify.length > 0) return res.status(400).json({ error: 'User already exists' })
 
     const [id] = await db('users').insert({
       email,
@@ -63,26 +63,26 @@ export default class UserController {
       password: await generateHash(password)
     })
 
-    if (!id) return response.status(400).json({ error: 'User registration failed' })
+    if (!id) return res.status(400).json({ error: 'User registration failed' })
 
-    return response.status(201).json({ id })
+    return res.status(201).json({ id })
   }
 
-  async update (request: Request, response: Response): Promise<Response<unknown>> {
-    const userId = request.headers.userId
+  async update (req: Request, res: Response): Promise<Response<unknown>> {
+    const userId = req.headers.userId
     let {
       name = null,
       email = null,
       password = null,
       avatar = null
-    } = request.body
+    } = req.body
 
     const [user] = await db('users')
       .select('*')
       .where('id', String(userId))
       .distinct()
 
-    if (!user) return response.status(400).json({ error: 'User not found' })
+    if (!user) return res.status(400).json({ error: 'User not found' })
     if (!password) password = user.password
     if (!email) email = user.email
     if (!name) name = user.name
@@ -96,6 +96,14 @@ export default class UserController {
         avatar
       })
 
-    return response.status(201).send()
+    return res.status(201).send()
+  }
+
+  async renewToken (req: Request, res: Response): Promise<Response<unknown>> {
+    const userId = req.headers.userId
+
+    return res.json({
+      token: generateToken(Number(userId))
+    })
   }
 }

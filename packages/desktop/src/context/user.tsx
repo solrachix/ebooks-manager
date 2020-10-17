@@ -3,6 +3,8 @@ import api from '../../../axios-config/src'
 
 import { useConfig } from './../hooks/useConfig'
 
+import { useWindow } from './window'
+
 interface UserData {
   id: number,
   name: string,
@@ -37,6 +39,7 @@ interface UserContextData {
 const UserContext = createContext<UserContextData>({} as UserContextData)
 
 export const UserProvider: React.FC = ({ children }) => {
+  const { Toast } = useWindow()
   // const [user, setUser] = useState<User>(useConfig('user'))
   const [user, setUser] = useConfig('user')
   const [loading, setLoading] = useState(true)
@@ -54,12 +57,38 @@ export const UserProvider: React.FC = ({ children }) => {
       // }
 
       if (user.Logged) {
-        api.defaults.headers.UserAuthorization = `token ${user.token}`
+        await renewToken()
+
+        setInterval(() => renewToken(), 1000 * 60 * 60)
       }
       setLoading(false)
     }
     loadStorageData()
   }, [])
+
+  const renewToken = async () => {
+    await api.get<UserAuthentication>('/user/renewToken', {
+      headers: {
+        authorization: `Token ${user?.data?.token}`
+      }
+    }).then(({ data }) => {
+      // Set toke for all request
+      api.defaults.headers.authorization = `Token ${data.token}`
+
+      setUser({
+        ...user,
+        token: data.token
+      })
+    }).catch((error) => {
+      Toast.addToast({
+        title: 'Erro',
+        type: 'error',
+        description: 'Ouve um problema na sua autenticação, tente logar novamente!'
+      })
+      console.log(error)
+      Auth.signOut()
+    })
+  }
 
   const Auth = {
     signIn: useCallback(async (url: string, params: unknown) => {
@@ -87,9 +116,7 @@ export const UserProvider: React.FC = ({ children }) => {
       })
     }, [])
   }
-  useEffect(() => {
-    console.log(Auth)
-      }, [Auth])
+
   return (
     <UserContext.Provider
       value={{ signed: user.Logged, user, loading, Auth }}>
