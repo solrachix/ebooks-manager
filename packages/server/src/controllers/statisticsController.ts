@@ -18,6 +18,9 @@ interface Ebook {
   author: string;
   albums_id: number;
   albumName: string;
+  author_id: number;
+  authorName: string;
+  authorAvatar: string;
 }
 
 interface ReadingBook {
@@ -28,19 +31,35 @@ interface ReadingBook {
   percentage: number;
 }
 
+interface Author {
+  id: number;
+  name: string;
+  avatar: string;
+}
 export default class StatisticsController {
   async show (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
 
+    // const author = await db('ebooks')
+    //   .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+    //   .join('authors', 'albums.author_id', '=', 'authors.id')
+    //   .where('authors.id', String(authorID))
+    //   .select('*')
+    //   .distinct()
+
     const lovedList: Ebook[] = await db('reading_list')
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
       .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+      .join('authors', 'albums.author_id', '=', 'authors.id')
       .where('user_id', String(userId))
-      .select('reading_list.*', 'ebooks.*', 'albums.name AS albumName', 'albums.author')
+      .select('reading_list.*', 'ebooks.*',
+        'albums.name AS albumName', 'albums.author_id',
+        'authors.name AS authorName', 'authors.avatar AS authorAvatar'
+      )
 
     if (!lovedList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
-    const authors: string[] = []
+    const authors: Author[] = []
     const readingBooks: ReadingBook[] = []
     const booksRead: string[] = []
     let numberOfPagesAlreadyRead = 0
@@ -48,7 +67,15 @@ export default class StatisticsController {
     * Processo de virtualização dos campos do banco.
     */
     const serializedMidia = lovedList.map((ebook) => {
-      !authors.includes(ebook.author) && authors.push(ebook.author)
+      const newAuthor = () => authors.push({
+        id: ebook.author_id,
+        name: ebook.authorName,
+        avatar: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.authorAvatar}`
+      })
+
+      authors.length <= 0
+        ? newAuthor()
+        : authors.map(author => ebook.authorName !== author.name && newAuthor())
 
       const numberOfPagesRead = Math.round(ebook.numberOfPages * (ebook.percentage / 100))
 
@@ -73,7 +100,7 @@ export default class StatisticsController {
       }
     })
 
-    console.log(serializedMidia)
+    // console.log(serializedMidia)
     return res.json({ authors, booksRead, readingBooks, numberOfPagesAlreadyRead })
   }
 }
