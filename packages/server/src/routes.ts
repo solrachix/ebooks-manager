@@ -41,6 +41,20 @@ routes.post('/user/update', userController.update)
 routes.post('/user/renewToken', userController.renewToken)
 
 /**
+ * Rota "author"/
+ * default Controllers = index, show, create, update, delete
+ */
+import AuthorController from './controllers/authorController'
+const authorController = new AuthorController()
+routes.get('/author/list', authorController.index)
+routes.get('/author', authorController.show)
+routes.post(
+  '/author/create',
+  upload.single('avatar'),
+  authorController.create
+)
+
+/**
  * Rota "album"/
  * default Controllers = index, show, create, update, delete
  */
