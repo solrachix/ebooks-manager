@@ -18,16 +18,26 @@ export default class EbookController {
     const {
       search = null
     } = req.query
+    let ebooks
 
     if (!search) {
-      const ebooks = await db('ebooks').select('*')
-      return res.json(ebooks)
+      ebooks = await db('ebooks')
+        .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+        .join('authors', 'albums.author_id', '=', 'authors.id')
+        .select('ebooks.*',
+          'albums.name AS albumName', 'albums.author_id',
+          'authors.name AS authorName', 'authors.avatar AS authorAvatar'
+        )
+    } else {
+      ebooks = await db('ebooks')
+        .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+        .join('authors', 'albums.author_id', '=', 'authors.id')
+        .where('title', 'like', `%${String(search)}%`)
+        .select('ebooks.*',
+          'albums.name AS albumName', 'albums.author_id',
+          'authors.name AS authorName', 'authors.avatar AS authorAvatar'
+        )
     }
-
-    const ebooks = await db('ebooks')
-      .join('albums', 'ebooks.albums_id', '=', 'albums.id')
-      .where('title', 'like', `%${String(search)}%`)
-      .select('ebooks.*', 'albums.name AS albumName', 'albums.author')
 
     /**
     * Processo de virtualização dos campos do banco.
