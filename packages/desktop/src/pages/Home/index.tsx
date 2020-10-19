@@ -15,6 +15,7 @@ import Search from './../../components/Search/index'
 import Aside from './components/Aside'
 import RecentBooks from './components/RecentBooks'
 import { Container, Content, Statistics, UserDataAboutReading } from './styles'
+import api from '@thoth/axios-config'
 
 const AudioBooksItems = [
   {
@@ -42,12 +43,41 @@ const AudioBooksItems = [
     src: 'https://521dimensions.com/songs/Terrain-pglost.mp3'
   }
 ]
+
+interface Author {
+  id: number;
+  name: string;
+  avatar: string;
+}
+
+interface Statistics {
+  authors: Author[];
+  booksRead: string[];
+  readingBooks: [
+    {
+      title: string;
+      description: string;
+      thumbnail: string;
+      pagesAlreadyRead: string;
+      percentage: number;
+    }
+  ],
+  numberOfPagesAlreadyRead: number;
+}
+
 const Home: React.FC = () => {
   const theme = useContext(ThemeContext).colors
   const { newWindow, newNotification, Toast, Header, Size } = useWindow()
+  const [statistics, setStatistics] = useState<Statistics | null>(null)
 
   useEffect(() => {
     Header.hidden(true)
+
+    api.get<Statistics>('/statistics').then(Response => {
+      setStatistics(Response.data)
+    }).catch(e => {
+      console.log(e)
+    })
   }, [])
 
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -113,7 +143,7 @@ const Home: React.FC = () => {
                 <HiOutlineBookOpen />
               </div>
               <p>
-                <strong>94</strong>
+                <strong>{statistics?.booksRead.length}</strong>
                 <br />
                 Livros lidos
               </p>
@@ -123,7 +153,7 @@ const Home: React.FC = () => {
                 <HiOutlineBookOpen />
               </div>
               <p>
-                <strong>94</strong>
+                <strong>{statistics?.authors.length}</strong>
                 <br />
                 Autores lidos
               </p>
@@ -133,9 +163,9 @@ const Home: React.FC = () => {
                 <HiOutlineUser />
               </div>
               <p>
-                <strong>110</strong>
+                <strong>{statistics?.numberOfPagesAlreadyRead}</strong>
                 <br />
-                Páginas de livros
+                Páginas lidas
               </p>
             </div>
             <div className="card">
@@ -143,9 +173,9 @@ const Home: React.FC = () => {
                 <HiOutlineBookOpen />
               </div>
               <p>
-                <strong>94</strong>
+                <strong>{statistics?.readingBooks.length}</strong>
                 <br />
-                Lendo
+                Sendo lido
               </p>
             </div>
           </UserDataAboutReading>
@@ -156,26 +186,20 @@ const Home: React.FC = () => {
                 <a href="#">Mais <BsArrowRight /></a>
               </h4>
 
-              <div className="autor">
+              {
+                statistics?.authors.map((author, index) => index < 5 && (
+                  <div className="autor">
+                    <img src={author.avatar} alt={author.name}/>
+                    <h5>{author.name}</h5>
+                    <RiBookletLine />
+                  </div>
+                ))
+              }
+              {/* <div className="autor">
                 <img src="https://avatars2.githubusercontent.com/u/57706806?s=460&u=d99f75dd759767691aecc7463b92fa022a4b01ee&v=4" alt="Autor"/>
                 <h5>Eduardo Sphoth</h5>
                 <RiBookletLine />
-              </div>
-              <div className="autor">
-                <img src="https://avatars2.githubusercontent.com/u/57706806?s=460&u=d99f75dd759767691aecc7463b92fa022a4b01ee&v=4" alt="Autor"/>
-                <h5>Eduardo Sphoth</h5>
-                <RiBookletLine />
-              </div>
-              <div className="autor">
-                <img src="https://avatars2.githubusercontent.com/u/57706806?s=460&u=d99f75dd759767691aecc7463b92fa022a4b01ee&v=4" alt="Autor"/>
-                <h5>Eduardo Sphoth</h5>
-                <RiBookletLine />
-              </div>
-              <div className="autor">
-                <img src="https://avatars2.githubusercontent.com/u/57706806?s=460&u=d99f75dd759767691aecc7463b92fa022a4b01ee&v=4" alt="Autor"/>
-                <h5>Eduardo Sphoth</h5>
-                <RiBookletLine />
-              </div>
+              </div> */}
 
             </div>
 
@@ -184,42 +208,20 @@ const Home: React.FC = () => {
                 <a href="#">Mais <BsArrowRight /></a>
               </h4>
 
-              <div className="bookStatistics">
-                <img src={example} alt=""/>
+              {
+                statistics?.readingBooks.map((book, index) => index < 5 && (
+                  <div key={book.title} className="bookStatistics">
+                    <img src={book.thumbnail} alt=""/>
 
-                <div>
-                  <h5>A Batalha do apocalipse</h5>
-                  <span>aaaaaaaaaasd <i>200/400</i></span>
-                  <progress value="50" max="100">50 %</progress>
-                </div>
-              </div>
-              <div className="bookStatistics">
-                <img src={example} alt=""/>
+                    <div>
+                      <h5>{book.title}</h5>
+                      <span>{book.description} <i>{book.pagesAlreadyRead}</i></span>
+                      <progress value={book.percentage} max="100">{book.percentage} %</progress>
+                    </div>
+                  </div>
+                ))
+              }
 
-                <div>
-                  <h5>A Batalha do apocalipse</h5>
-                  <span>aaaaaaaaaasd <i>200/400</i></span>
-                  <progress value="50" max="100">50 %</progress>
-                </div>
-              </div>
-              <div className="bookStatistics">
-                <img src={example} alt=""/>
-
-                <div>
-                  <h5>A Batalha do apocalipse</h5>
-                  <span>aaaaaaaaaasd <i>200/400</i></span>
-                  <progress value="50" max="100">50 %</progress>
-                </div>
-              </div>
-              <div className="bookStatistics">
-                <img src={example} alt=""/>
-
-                <div>
-                  <h5>A Batalha do apocalipse</h5>
-                  <span>aaaaaaaaaasd <i>200/400</i></span>
-                  <progress value="50" max="100">50 %</progress>
-                </div>
-              </div>
             </div>
           </Statistics>
         </main>

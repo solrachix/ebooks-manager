@@ -118,7 +118,7 @@ const HorizontalList: React.FC = ({ children }) => {
       // Items
       vWidth = window.innerWidth
       mWidth = container.getBoundingClientRect().width
-      console.log(container.children)
+      // console.log(container.children)
 
       clampTarget()
       rAF = requestAnimationFrame(moveSlider)
