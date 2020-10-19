@@ -55,8 +55,7 @@ export default class AlbumController {
 
   async show (req: Request, res: Response): Promise<Response<unknown>> {
     const {
-      name,
-      author
+      name
     } = req.query
 
     const [album] = await db('albums')
@@ -73,7 +72,7 @@ export default class AlbumController {
     // const { userId } = request.headers
     const {
       name,
-      author
+      authorId
     } = request.body
 
     const verify = await db('albums')
@@ -84,7 +83,7 @@ export default class AlbumController {
 
     const [id] = await db('albums').insert({
       name,
-      author
+      author_id: authorId
     })
 
     if (!id) return response.status(400).json({ error: 'Album registration failed' })
@@ -96,7 +95,7 @@ export default class AlbumController {
     const albumId = request.headers.albumId
     let {
       name = null,
-      author = null
+      authorId = null
     } = request.body
 
     const [album] = await db('albums')
@@ -106,13 +105,13 @@ export default class AlbumController {
 
     if (!album) return response.status(400).json({ error: 'Album not found' })
     if (!name) name = album.name
-    if (!author) author = album.author
+    if (!authorId) authorId = album.author_id
 
     await db('albums')
       .where('id', albumId)
       .update({
         name,
-        author
+        author_id: authorId
       })
 
     return response.status(201).send()

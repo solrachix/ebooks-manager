@@ -47,7 +47,7 @@ routes.post('/user/renewToken', userController.renewToken)
 import AuthorController from './controllers/authorController'
 const authorController = new AuthorController()
 routes.get('/author/list', authorController.index)
-routes.get('/author', authorController.show)
+routes.get('/author/:id', authorController.show)
 routes.post(
   '/author/create',
   upload.single('avatar'),

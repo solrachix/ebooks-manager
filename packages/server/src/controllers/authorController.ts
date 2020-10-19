@@ -31,18 +31,34 @@ export default class AuthorController {
   }
 
   async show (req: Request, res: Response): Promise<Response<unknown>> {
-    const {
-      authorID
-    } = req.query
+    const authorID = req.params.id
+
+    //   select * from ebooks
+    //    join albums on ebooks.albums_id = albums.id
+    //    join authors on albums.author_id = authors.id
+    // const author = await db('ebooks')
+    //   .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+    //   .join('authors', 'albums.author_id', '=', 'authors.id')
+    //   .where('authors.id', String(authorID))
+    //   .select('*')
+    //   .distinct()
 
     const [author] = await db('authors')
-      .select('*')
       .where('id', String(authorID))
+      .select('*')
       .distinct()
+    // console.log(author)
 
     if (!author) return res.status(400).json({ error: 'Author not found' })
 
-    return res.json(author)
+    const albums = await db('albums')
+      .where('author_id', String(authorID))
+      .select('*')
+
+    return res.json({
+      ...author,
+      albums
+    })
   }
 
   async create (req: Request, res: Response): Promise<Response<unknown>> {
