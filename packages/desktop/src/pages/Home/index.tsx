@@ -188,7 +188,7 @@ const Home: React.FC = () => {
 
               {
                 statistics?.authors.map((author, index) => index < 5 && (
-                  <div className="autor">
+                  <div key={index} className="autor">
                     <img src={author.avatar} alt={author.name}/>
                     <h5>{author.name}</h5>
                     <RiBookletLine />

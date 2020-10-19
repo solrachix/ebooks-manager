@@ -13,12 +13,15 @@ interface Ebook {
   title: string;
   description: string;
   numberOfPages: number;
+  percentage: number;
   url: string;
   thumbnail: string;
   edition: number;
-  author: string;
   albums_id: number;
   albumName: string;
+  author_id: number;
+  authorName: string;
+  authorAvatar: string;
 }
 
 const RecentBooks: React.FC = () => {
@@ -49,7 +52,7 @@ const RecentBooks: React.FC = () => {
               <h5 title={ebook.title}>{ebook.title}</h5>
               <span>
                 {/* <FiUser /> */}
-                {ebook.author} (2003) <br/>
+                {ebook.authorName} (2003) <br/>
                   Novel
               </span>
 

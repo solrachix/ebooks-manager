@@ -5,7 +5,7 @@ import { darken, rgba } from 'polished'
 
 export const Container = styled.div`
   width: 300px;
-  height: 60px;
+  height: 56px;
 
   /* border-bottom: 1px solid ${props => props.theme.colors.themeColors.primary.normal} */
 
@@ -91,6 +91,7 @@ export const Box = styled.div`
   height: auto;
   min-height: 300px;
   padding: 20px;
+  padding-bottom: 10px;
 
   background: ${props => rgba(props.theme.colors.themeColors.background.light, 0.4)};
   border-radius: 10px;
@@ -106,6 +107,16 @@ export const Box = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+  }
+
+  p {
+    width: 100%;
+    text-align: center;
+
+    font-weight: 700;
+    color: ${props => props.theme.colors.themeColors.primary.normal};
+
+    cursor: pointer;
   }
 `
 
@@ -153,8 +164,10 @@ export const Ebook = styled.div`
   justify-content: flex-start;
   align-items: start;
 
-  &:last-child{
+  &:last-of-type{
     border: none;
+    margin-bottom: .3rem;
+    padding-bottom: 10px;
   }
 
   .cover {

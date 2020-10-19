@@ -15,7 +15,6 @@ interface Ebook {
   url: string;
   thumbnail: string;
   edition: number;
-  author: string;
   albums_id: number;
   albumName: string;
   author_id: number;

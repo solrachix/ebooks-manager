@@ -11,8 +11,14 @@ export default class ReadingListController {
     const lovedList = await db('reading_list')
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
       .join('albums', 'ebooks.albums_id', '=', 'albums.id')
+      .join('authors', 'albums.author_id', '=', 'authors.id')
       .where('user_id', String(userId))
-      .select('reading_list.*', 'ebooks.*', 'albums.name AS albumName', 'albums.author')
+      .select(
+        'reading_list.*',
+        'ebooks.*',
+        'albums.name AS albumName', 'albums.author_id',
+        'authors.name AS authorName', 'authors.avatar AS authorAvatar'
+      )
 
     if (!lovedList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
