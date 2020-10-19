@@ -96,7 +96,7 @@ const EbookData: React.FC<EbookDataProps> = ({ actived: active = false }) => {
             </p>
             <span>
               {
-                likes.map(number => number === 1 ? <IoIosHeart /> : <IoIosHeartEmpty />)
+                likes.map((number, index) => number === 1 ? <IoIosHeart key={index} /> : <IoIosHeartEmpty key={index} />)
               }
             </span>
           </div>

@@ -1,4 +1,7 @@
-import React from 'react'
+/* eslint-disable camelcase */
+
+import React, { useState, useEffect } from 'react'
+import api from '@thoth/axios-config'
 
 import example from '../../assets/example.jpg'
 import Input from '../../components/Form/Input/index'
@@ -31,7 +34,45 @@ const BooksItems = [
     description: 'aaaaaaaaaaaaaa aaaaaaaa'
   }
 ]
+
+interface EbookProps {
+  id: number;
+  title: string;
+  description: string;
+  numberOfPages: number;
+  url: string;
+  thumbnail: string;
+  edition: number;
+  albums_id: number;
+}
+
 const Search: React.FC = () => {
+  const [ebooks, setEbooks] = useState<EbookProps[] | null>(null)
+
+  useEffect(() => {
+    api.get('/ebook').then(response => {
+      setEbooks(response.data)
+    }).catch(e => {
+      console.log(e)
+    })
+  }, [])
+
+  const onKeyUp = () => {
+    const input = $('#searchPage') as HTMLInputElement
+
+    if (input) {
+      api.get('/ebook', {
+        params: {
+          search: input.value
+        }
+      }).then(response => {
+        setEbooks(response.data)
+      }).catch(e => {
+        console.log(e)
+      })
+    }
+  }
+
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
     const mainElement = event.currentTarget
 
@@ -64,28 +105,29 @@ const Search: React.FC = () => {
     <Container>
       <header>
         <Input
-          id="search"
-          name="search"
+          name="searchPage"
           icon={<SearchIcon />}
 
           placeholder="Pesquise..."
+
+          {...{ onKeyUp }}
         />
       </header>
 
       <Fieldset>
-        <legend><b>10</b> livros encontrados</legend>
+        <legend><b>{ebooks ? ebooks.length : 0}</b> livros encontrados</legend>
 
         <div {...{ onScroll }}>
 
-          {
-            BooksItems.map(props => (
+          { ebooks &&
+            ebooks.map(ebook => (
               <Ebook
-                key={props.id}
+                key={ebook.id}
               >
                 <img
                   className="cover"
-                  src={props.img}
-                  alt={`Capa do livros ${props.title}`}
+                  src={ebook.thumbnail}
+                  alt={`Capa do livros ${ebook.title}`}
                 />
               </Ebook>
             ))
