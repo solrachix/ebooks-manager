@@ -5,7 +5,13 @@ export async function up (knex: Knex): Promise<unknown> {
   return knex.schema.createTable('albums', table => {
     table.increments('id').primary()
     table.string('name').notNullable()
-    table.string('author').notNullable()
+
+    table.integer('author_id')
+      .notNullable()
+      .references('id')
+      .inTable('authors')
+      .onUpdate('CASCADE')
+      .onDelete('CASCADE')
   })
 }
 
