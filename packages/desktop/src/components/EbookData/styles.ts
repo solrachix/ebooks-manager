@@ -41,7 +41,7 @@ export const Container = styled.div`
 
 export const Ebook = styled.div`
   width: 100%;
-  height: 190px;
+  height: 200px;
   margin-top: .7rem;
   margin-bottom: .7rem;
   padding-bottom: 10px;

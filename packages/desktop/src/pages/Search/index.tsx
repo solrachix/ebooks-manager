@@ -8,33 +8,6 @@ import Input from '../../components/Form/Input/index'
 import EbookData from '../../components/EbookData'
 import { Container, SearchIcon, Fieldset, Ebook } from './styles'
 
-const BooksItems = [
-  {
-    id: 0,
-    img: example,
-    title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
-  },
-  {
-    id: 1,
-    img: example,
-    title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
-  },
-  {
-    id: 2,
-    img: example,
-    title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
-  },
-  {
-    id: 3,
-    img: example,
-    title: 'Opaa aaeae',
-    description: 'aaaaaaaaaaaaaa aaaaaaaa'
-  }
-]
-
 interface EbookProps {
   id: number;
   title: string;
@@ -48,6 +21,8 @@ interface EbookProps {
 
 const Search: React.FC = () => {
   const [ebooks, setEbooks] = useState<EbookProps[] | null>(null)
+  const [openEbookData, setOpenEbookData] = useState(false)
+  const [ebookData, setEbookData] = useState<EbookProps | null>(null)
 
   useEffect(() => {
     api.get('/ebook').then(response => {
@@ -101,6 +76,10 @@ const Search: React.FC = () => {
     }
   }
 
+  const handleClickOnBook = (ebook: EbookProps) => {
+    setOpenEbookData(true)
+    setEbookData(ebook)
+  }
   return (
     <Container>
       <header>
@@ -123,6 +102,7 @@ const Search: React.FC = () => {
             ebooks.map(ebook => (
               <Ebook
                 key={ebook.id}
+                onClick={() => handleClickOnBook(ebook)}
               >
                 <img
                   className="cover"
@@ -136,7 +116,7 @@ const Search: React.FC = () => {
 
       </Fieldset>
 
-      <EbookData />
+      <EbookData open={{ openEbookData, setOpenEbookData }} ebook={ebookData} />
     </Container>
   )
 }

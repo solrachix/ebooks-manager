@@ -126,6 +126,8 @@ export const Ebook = styled.div`${({ theme }) => css`
   justify-content: flex-start;
   align-items: start;
 
+  cursor: pointer;
+
   .cover {
     width: 160px;
     height: 240px;
