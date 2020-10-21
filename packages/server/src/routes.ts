@@ -88,6 +88,15 @@ routes.post('/like/create', lovedListController.create)
 routes.delete('/like/delete', lovedListController.delete)
 
 /**
+ * Rota "evaluation"/
+ * default Controllers = index, show, create, update, delete
+ */
+import EvaluationController from './controllers/evaluationController'
+const evaluationController = new EvaluationController()
+routes.get('/evaluation', evaluationController.show)
+routes.post('/evaluation/create', evaluationController.createOrUpdate)
+
+/**
  * Rota "reading list"/
  * default Controllers = show, createOrUpdate, delete
  */
