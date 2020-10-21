@@ -72,6 +72,7 @@ export const Titleshown = styled.div`
   zoom: 1;
   overflow: hidden;
 
+  z-index: 10;
   .square {
     position: absolute;
     /* margin-top: -63px; */
@@ -84,7 +85,7 @@ export const Titleshown = styled.div`
     background: ${props => props.theme.colors.white};
     border-radius: 5px;
 
-    z-index: 16;
+    z-index: 15;
   }
 `
 

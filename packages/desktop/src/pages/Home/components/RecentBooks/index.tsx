@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import example from '../../../../assets/example.jpg'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
 import HorizontalList from '../../../../components/HorizontalList'
 import { Container, Ebook } from './styles'
@@ -25,6 +25,7 @@ interface Ebook {
 }
 
 const RecentBooks: React.FC = () => {
+  const history = useHistory()
   const [ebooks, setEbooks] = useState<Ebook[] | null>(null)
 
   useEffect(() => {
@@ -39,13 +40,23 @@ const RecentBooks: React.FC = () => {
     })
   }, [])
 
+  const handleEbookClick = (ebook: Ebook) => {
+    history.push({
+      pathname: '/read',
+      ebook
+    })
+  }
   return (
     <Container>
       <HorizontalList >
 
         { ebooks &&
         ebooks.map((ebook: Ebook) => (
-          <Ebook key={ebook.id} className="Ebook" >
+          <Ebook
+            key={ebook.id}
+            className="Ebook"
+            onClick={() => handleEbookClick(ebook)}
+          >
             <img className="cover" src={ebook.thumbnail} alt={ebook.title} />
 
             <div>

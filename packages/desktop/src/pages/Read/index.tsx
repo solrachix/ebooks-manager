@@ -1,22 +1,46 @@
+/* eslint-disable camelcase */
+
 import React, { useRef, useEffect, useContext } from 'react'
 import WebViewer from '@pdftron/webviewer'
 
 import { ThemeContext } from 'styled-components'
 import { Container, WebViewerCSSVariables } from './styles'
+import api from '@thoth/axios-config'
 
-const Read: React.FC = () => {
-  const webViewerRef = useRef(null)
+interface EbookProps {
+  id: number;
+  title: string;
+  description: string;
+  numberOfPages: number;
+  url: string;
+  thumbnail: string;
+  edition: number;
+  albums_id: number;
+  albumName:string;
+  author_id: number;
+  authorName: string;
+  authorAvatar: string;
+}
+
+interface Props {
+  location: {
+    ebook: EbookProps
+  }
+}
+const Read: React.FC<Props> = (props) => {
+  const webViewerRef = useRef<HTMLDivElement>(null)
   const theme = useContext(ThemeContext)
+  const Ebook = props.location.ebook
 
   useEffect(() => {
     const webViewer = webViewerRef.current
 
-    if (!webViewer) return
+    if (!webViewer && !Ebook) return
 
     WebViewer(
       {
         path: '/webviewer/lib',
-        initialDoc: 'http://localhost:3333/uploads/o.pdf'
+        initialDoc: Ebook.url
       },
       webViewer
     ).then((instance) => {
@@ -32,11 +56,12 @@ const Read: React.FC = () => {
       }
 
       docViewer.on('documentLoaded', () => {
-
+        console.log('loaded')
       })
       iframeWindow.addEventListener('loaderror', (err) => {
         // Do something with error. eg. instance.showErrorMessage('An error has occurred')
-        alert(err)
+        // alert(err)
+        console.log(err)
       })
 
       docViewer.on('pageNumberUpdated', (pageNumber) => {
@@ -45,9 +70,16 @@ const Read: React.FC = () => {
         const totalPage = docViewer.getPageCount()
         const percentage = Math.floor((pageNumber * 100) / totalPage)
 
-        console.log(percentage, pageNumber, totalPage)
+        // console.log(percentage, pageNumber, totalPage)
+
+        api.post('/readingList', {
+          ebookId: Ebook.id,
+          percentage: `${pageNumber}/${totalPage}`
+        })
       })
     })
+
+    // return () => { WebViewer.length = 0 }
   }, [])
 
   return (

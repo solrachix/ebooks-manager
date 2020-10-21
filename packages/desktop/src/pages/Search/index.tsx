@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import api from '@thoth/axios-config'
 
-import example from '../../assets/example.jpg'
 import Input from '../../components/Form/Input/index'
 import EbookData from '../../components/EbookData'
 import { Container, SearchIcon, Fieldset, Ebook } from './styles'
@@ -22,7 +21,7 @@ interface EbookProps {
 const Search: React.FC = () => {
   const [ebooks, setEbooks] = useState<EbookProps[] | null>(null)
   const [openEbookData, setOpenEbookData] = useState(false)
-  const [ebookData, setEbookData] = useState<EbookProps | null>(null)
+  const [ebookData, setEbookData] = useState<EbookProps | undefined>(undefined)
 
   useEffect(() => {
     api.get('/ebook').then(response => {

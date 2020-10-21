@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import example from '../../assets/example.jpg'
 import { IoIosHeartEmpty, IoIosHeart, IoMdClose } from 'react-icons/io'
 import OutlineOwl from '../../assets/outlineOwl.svg'
 import FilledOwl from '../../assets/filledOwl.svg'
@@ -30,17 +30,12 @@ interface EbookDataProps {
     openEbookData: boolean;
     setOpenEbookData: React.Dispatch<React.SetStateAction<boolean>>;
   };
-  ebook?: EbookProps | null;
+  ebook?: EbookProps | undefined;
 }
 
 const EbookData: React.FC<EbookDataProps> = ({ open, ebook }) => {
   // const [actived, setActived] = useState(active)
-
-  useEffect(() => {
-    if (ebook) {
-
-    }
-  }, [ebook])
+  const history = useHistory()
 
   useEffect(() => {
     const container = $('.EbookData')
@@ -104,6 +99,12 @@ const EbookData: React.FC<EbookDataProps> = ({ open, ebook }) => {
     }
   }
 
+  const handleReadInit = () => {
+    history.push({
+      pathname: '/read',
+      ebook
+    })
+  }
   return (
     <Container className="EbookData" {...{ onScroll }}>
       <IoMdClose className="Close" onClick={() => open.setOpenEbookData(false)} />
@@ -128,7 +129,10 @@ const EbookData: React.FC<EbookDataProps> = ({ open, ebook }) => {
             </span>
           </div>
 
-          <Button type="button">Iniciar Leitura</Button>
+          <Button
+            type="button"
+            onClick={handleReadInit}
+          >Iniciar Leitura</Button>
         </div>
       </Ebook>}
 
