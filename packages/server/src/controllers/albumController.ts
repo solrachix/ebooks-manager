@@ -27,8 +27,11 @@ export default class AlbumController {
           const album = albums[key]
 
           const ebooks = await trx('ebooks')
-            .select('*')
+            .join('evaluations', 'evaluations.ebook_id', '=', 'ebooks.id')
             .where('albums_id', '=', album.id)
+            .select('ebooks.*')
+            .avg('evaluations.note as notes')
+            .groupBy('evaluations.ebook_id')
 
           album.ebooks = ebooks
         }

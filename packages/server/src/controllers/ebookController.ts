@@ -24,19 +24,25 @@ export default class EbookController {
       ebooks = await db('ebooks')
         .join('albums', 'ebooks.albums_id', '=', 'albums.id')
         .join('authors', 'albums.author_id', '=', 'authors.id')
+        .join('evaluations', 'evaluations.ebook_id', '=', 'ebooks.id')
         .select('ebooks.*',
           'albums.name AS albumName', 'albums.author_id',
           'authors.name AS authorName', 'authors.avatar AS authorAvatar'
         )
+        .avg('evaluations.note as notes')
+        .groupBy('evaluations.ebook_id')
     } else {
       ebooks = await db('ebooks')
         .join('albums', 'ebooks.albums_id', '=', 'albums.id')
         .join('authors', 'albums.author_id', '=', 'authors.id')
+        .join('evaluations', 'evaluations.ebook_id', '=', 'ebooks.id')
         .where('title', 'like', `%${String(search)}%`)
         .select('ebooks.*',
           'albums.name AS albumName', 'albums.author_id',
           'authors.name AS authorName', 'authors.avatar AS authorAvatar'
         )
+        .avg('evaluations.note as notes')
+        .groupBy('evaluations.ebook_id')
     }
 
     /**

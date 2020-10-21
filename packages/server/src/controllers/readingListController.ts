@@ -12,14 +12,17 @@ export default class ReadingListController {
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
       .join('albums', 'ebooks.albums_id', '=', 'albums.id')
       .join('authors', 'albums.author_id', '=', 'authors.id')
-      .where('user_id', String(userId))
-      .orderBy('reading_list.lastAccess', 'desc')
+      .join('evaluations', 'evaluations.ebook_id', '=', 'ebooks.id')
+      .where('reading_list.user_id', String(userId))
       .select(
         'reading_list.*',
         'ebooks.*',
         'albums.name AS albumName', 'albums.author_id',
         'authors.name AS authorName', 'authors.avatar AS authorAvatar'
       )
+      .avg('evaluations.note as notes')
+      .groupBy('evaluations.ebook_id')
+      .orderBy('reading_list.lastAccess', 'desc')
 
     if (!readingList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
