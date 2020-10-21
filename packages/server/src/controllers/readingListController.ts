@@ -8,11 +8,12 @@ export default class ReadingListController {
   async show (req: Request, res: Response): Promise<Response<unknown>> {
     const { userId } = req.headers
 
-    const lovedList = await db('reading_list')
+    const readingList = await db('reading_list')
       .join('ebooks', 'reading_list.ebook_id', '=', 'ebooks.id')
       .join('albums', 'ebooks.albums_id', '=', 'albums.id')
       .join('authors', 'albums.author_id', '=', 'authors.id')
       .where('user_id', String(userId))
+      .orderBy('reading_list.lastAccess', 'desc')
       .select(
         'reading_list.*',
         'ebooks.*',
@@ -20,12 +21,12 @@ export default class ReadingListController {
         'authors.name AS authorName', 'authors.avatar AS authorAvatar'
       )
 
-    if (!lovedList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
+    if (!readingList) return res.status(400).json({ message: 'you haven\'t started reading any books yet' })
 
     /**
     * Processo de virtualização dos campos do banco.
     */
-    const serializedMidia = lovedList.map((ebook) => {
+    const serializedMidia = readingList.map((ebook) => {
       return {
         ...ebook,
         url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
