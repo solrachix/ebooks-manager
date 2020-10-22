@@ -102,3 +102,76 @@ export const WebViewerCSSVariables = ({ colors }: DefaultTheme): string => css`
   --outline-color: var(--blue-6);
   --outline-hover: var(--blue-3);
 `.toString().replaceAll(',', '')
+
+export const SideBar = styled.aside`${({ theme: { colors: { themeColors, white } } }) => css`
+  position: absolute;
+  right: 0%;
+  width: 60%;
+  /* height: 50vh; */
+  padding: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  color: ${white};
+  background: ${rgba(themeColors.background.darker, 0.6)};
+  backdrop-filter: blur(4px);
+  border-radius: 8px;
+
+  .puller{
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    margin-left: -50px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: ${rgba(themeColors.background.darker, 0.6)};
+    border-bottom-left-radius: 50px;
+    border-top-left-radius: 50px;
+
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    svg {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+
+
+
+`}`
+
+interface EbookProps {
+  active: boolean;
+}
+
+export const Ebook = styled.div<EbookProps>`${({ active, theme: { colors: { themeColors, white } } }) => css`
+  min-width: 180px;
+  min-height: 16rem;
+
+  cursor: grab;
+  &:active{
+    cursor: grabbing;
+  }
+
+  &:not(:first-of-type) {
+    margin-left: 1.6rem;
+  }
+
+  ${active && css`
+    img { opacity: 0.6; }
+  `}
+
+  border-radius: 4px;
+  /* background: red; */
+
+  display: flex;
+  flex: 0 0 180px;
+  justify-content: center;
+  img {
+    width: 100%;
+    min-height: 100%;
+  }
+`}`

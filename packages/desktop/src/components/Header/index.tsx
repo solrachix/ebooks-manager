@@ -1,11 +1,11 @@
 import React, { useContext, useCallback, useMemo, useEffect, useState, createRef } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { remote } from 'electron'
 import os from 'os'
 
-import { FiX, FiMinus, FiMaximize2, FiMinimize2 } from 'react-icons/fi'
-import { IoIosLogOut, IoIosHeartEmpty, IoIosCalendar, IoMdClose } from 'react-icons/io'
-import { BsBookmarksFill, BsBookmarks, BsSearch, BsUpload } from 'react-icons/bs'
+import { FiX, FiMinus, FiMaximize2, FiMinimize2, FiBookOpen } from 'react-icons/fi'
+import { IoIosLogOut, IoIosHeartEmpty, IoIosCalendar, IoMdClose, IoMdBook } from 'react-icons/io'
+import { BsBookmarksFill, BsBookmarks, BsSearch, BsUpload, BsBook } from 'react-icons/bs'
 import { VscHome } from 'react-icons/vsc'
 import LogoIcon from '../../assets/logo.svg'
 
@@ -22,6 +22,10 @@ const Tabs = [
   {
     to: '/',
     icon: VscHome
+  },
+  {
+    to: '/read',
+    icon: BsBook
   },
   {
     to: '/',
@@ -48,7 +52,6 @@ const Tabs = [
 const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
   const theme = useContext(ThemeContext).colors
   const [user, setUser] = useConfig('user')
-  const location = useLocation()
   const history = useHistory()
 
   // const [numberOfTabs, setNumberOfTabs] = useState(4)

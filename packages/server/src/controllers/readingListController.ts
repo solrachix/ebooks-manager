@@ -46,7 +46,7 @@ export default class ReadingListController {
 
     if (!ebookId) return res.status(400).json({ error: 'Pass the ebook id' })
     const date = moment().format('LLL')
-    const Percentage = Math.floor((Number(percentage.split('/')[0]) * 100) / Number(percentage.split('/')[1]))
+    const Percentage = (Number(percentage.split('/')[0]) * 100) / Number(percentage.split('/')[1])
     console.log(userId, date, Percentage)
 
     const verify = await db('reading_list')
