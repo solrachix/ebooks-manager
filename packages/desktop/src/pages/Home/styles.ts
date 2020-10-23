@@ -214,15 +214,16 @@ export const Statistics = styled.div`
       font-size: 0.8rem;
 
       display: grid;
-      grid-template-columns: 1fr 8fr;
+      grid-template-columns: 1.3fr 8fr;
       column-gap: 0.6rem;
       justify-content: center;
       align-items: center;
 
       img {
         width: 100%;
+        height: 100%;
 
-        border-radius: 10px;
+        border-radius: 4px;
       }
 
       h5 {

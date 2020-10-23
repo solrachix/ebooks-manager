@@ -103,7 +103,7 @@ const HorizontalList: React.FC = ({ children }) => {
 
   const clampTarget = () => {
     const max = mWidth - vWidth
-
+    console.log(mWidth, vWidth, max)
     target = target.clamp(-1 * max, 0)
   }
 
@@ -117,7 +117,8 @@ const HorizontalList: React.FC = ({ children }) => {
       cursorHeight = cursor.getBoundingClientRect().height
       // Items
       vWidth = window.innerWidth
-      mWidth = container.getBoundingClientRect().width
+      mWidth = container.getBoundingClientRect().width + 200
+      console.log(container.getBoundingClientRect().width)
       // console.log(container.children)
 
       clampTarget()

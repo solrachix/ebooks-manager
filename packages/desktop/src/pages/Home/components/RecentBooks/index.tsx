@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import example from '../../../../assets/example.jpg'
 import { IoIosStarOutline, IoIosStar } from 'react-icons/io'
 import HorizontalList from '../../../../components/HorizontalList'
 import { Container, Ebook } from './styles'
@@ -48,14 +49,12 @@ const RecentBooks: React.FC = () => {
   }
   return (
     <Container>
-      <HorizontalList >
-
-        { ebooks &&
-        ebooks.map((ebook: Ebook) => (
+      { ebooks && <HorizontalList >
+        { ebooks.map((ebook: Ebook) => (
           <Ebook
             key={ebook.id}
             className="Ebook"
-            onClick={() => handleEbookClick(ebook)}
+            onDoubleClick={() => handleEbookClick(ebook)}
           >
             <img className="cover" src={ebook.thumbnail} alt={ebook.title} />
 
@@ -97,9 +96,8 @@ const RecentBooks: React.FC = () => {
               <IoIosStarOutline />
             </div>
           </div>
-        </Ebook>
-       */}
-      </HorizontalList>
+        </Ebook> */}
+      </HorizontalList> }
     </Container>
   )
 }
