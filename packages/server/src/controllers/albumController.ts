@@ -31,6 +31,7 @@ export default class AlbumController {
             .where('albums_id', '=', album.id)
             .select('ebooks.*')
             .avg('evaluations.note as notes')
+.count('evaluations.note as numberOfEatings')
             .groupBy('evaluations.ebook_id')
 
           album.ebooks = ebooks

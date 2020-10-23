@@ -21,6 +21,7 @@ export default class ReadingListController {
         'authors.name AS authorName', 'authors.avatar AS authorAvatar'
       )
       .avg('evaluations.note as notes')
+      .count('evaluations.note as numberOfEatings')
       .groupBy('evaluations.ebook_id')
       .orderBy('reading_list.lastAccess', 'desc')
 

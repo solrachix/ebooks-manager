@@ -30,6 +30,7 @@ export default class EbookController {
           'authors.name AS authorName', 'authors.avatar AS authorAvatar'
         )
         .avg('evaluations.note as notes')
+        .count('evaluations.note as numberOfEatings')
         .groupBy('evaluations.ebook_id')
     } else {
       ebooks = await db('ebooks')
@@ -42,6 +43,7 @@ export default class EbookController {
           'authors.name AS authorName', 'authors.avatar AS authorAvatar'
         )
         .avg('evaluations.note as notes')
+        .count('evaluations.note as numberOfEatings')
         .groupBy('evaluations.ebook_id')
     }
 

@@ -12,6 +12,7 @@ export default class EvaluationController {
       // .where('ebook_id', String(ebookId))
       .select('*')
       .avg('evaluations.note as notes')
+.count('evaluations.note as numberOfEatings')
       .groupBy('evaluations.ebook_id')
       .orderBy('notes', 'desc')
 
