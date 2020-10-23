@@ -105,7 +105,7 @@ export const WebViewerCSSVariables = ({ colors }: DefaultTheme): string => css`
 
 export const SideBar = styled.aside`${({ theme: { colors: { themeColors, white } } }) => css`
   position: absolute;
-  right: 0%;
+  right: -60%;
   width: 60%;
   /* height: 50vh; */
   padding: 20px;

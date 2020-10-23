@@ -33,9 +33,11 @@ interface Props {
 }
 const Read: React.FC<Props> = (props) => {
   const webViewerRef = useRef<HTMLDivElement>(null)
+  const SideBarRef = useRef<HTMLDivElement>(null)
   const theme = useContext(ThemeContext)
   const [ebooks, setEbooks] = useState<EbookProps[] | null>(null)
   const [readingBook, setReadingBooks] = useState(0)
+  const [showSidebar, setShowSidebar] = useState(false)
 
   useEffect(() => {
     api.get<EbookProps[]>('/readingList').then(response => {
@@ -62,6 +64,34 @@ const Read: React.FC<Props> = (props) => {
 
     // return () => { WebViewer.length = 0 }
   }, [])
+
+  useEffect(() => {
+    const SideBar = SideBarRef.current
+
+    if (!SideBar) return
+
+    if (showSidebar) {
+      SideBar.animate({
+        right: ['-60%', '0%']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      })
+
+      SideBar.style.right = '0%'
+    } else {
+      SideBar.animate({
+        right: ['0%', '-60%']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      })
+
+      SideBar.style.right = '-60%'
+    }
+  }, [showSidebar])
 
   const SetNewEbook = (Ebook: EbookProps) => {
     const webViewer = webViewerRef.current
@@ -126,12 +156,16 @@ const Read: React.FC<Props> = (props) => {
       setReadingBooks(index)
     }
   }
+
   return (
     <Container>
       <div ref={webViewerRef} className="webViewer"></div>
 
-      <SideBar>
-        <div className="puller">
+      <SideBar ref={SideBarRef}>
+        <div
+          className="puller"
+          onClick={() => setShowSidebar(!showSidebar)}
+        >
           <IoIosArrowBack/>
         </div>
 
