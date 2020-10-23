@@ -49,37 +49,22 @@ export default class EbookController {
     * Processo de virtualização dos campos do banco.
     */
     const serializedMidia = ebooks.map((ebook) => {
+      const notes = []
+      for (let i = 1; i <= 5; i++) {
+        if (i <= ebook.notes) {
+          notes.push(true)
+        } else {
+          notes.push(false)
+        }
+      }
+
       return {
         ...ebook,
+        notes,
         url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
         thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
       }
     })
-
-    return res.json(serializedMidia)
-  }
-
-  async show (req: Request, res: Response): Promise<Response<unknown>> {
-    const {
-      email,
-      password
-    } = req.query
-
-    const [ebook] = await db('ebooks')
-      .select('*')
-      .where('email', String(email))
-      .distinct()
-
-    if (!ebook) return res.status(400).json({ error: 'Ebook not found' })
-
-    /**
-    * Processo de virtualização dos campos do banco.
-    */
-    const serializedMidia = {
-      ...ebook,
-      url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
-      thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
-    }
 
     return res.json(serializedMidia)
   }

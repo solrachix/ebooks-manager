@@ -23,6 +23,7 @@ interface Ebook {
   author_id: number;
   authorName: string;
   authorAvatar: string;
+  notes: boolean[]
 }
 
 const RecentBooks: React.FC = () => {
@@ -67,11 +68,11 @@ const RecentBooks: React.FC = () => {
               </span>
 
               <div className="stars">
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStar />
-                <IoIosStarOutline />
+                {
+                  ebook.notes.map(note => (
+                    note ? <IoIosStar /> : <IoIosStarOutline />
+                  ))
+                }
               </div>
             </div>
           </Ebook>

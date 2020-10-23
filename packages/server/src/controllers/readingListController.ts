@@ -30,8 +30,18 @@ export default class ReadingListController {
     * Processo de virtualização dos campos do banco.
     */
     const serializedMidia = readingList.map((ebook) => {
+      const notes = []
+      for (let i = 1; i <= 5; i++) {
+        if (i <= ebook.notes) {
+          notes.push(true)
+        } else {
+          notes.push(false)
+        }
+      }
+
       return {
         ...ebook,
+        notes,
         url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
         thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
       }

@@ -23,6 +23,7 @@ interface EbookProps {
   author_id: number;
   authorName: string;
   authorAvatar: string;
+  notes: boolean[];
 }
 
 interface EbookDataProps {
@@ -124,7 +125,9 @@ const EbookData: React.FC<EbookDataProps> = ({ open, ebook }) => {
             </p>
             <span>
               {
-                likes.map((number, index) => number === 1 ? <IoIosHeart key={index} /> : <IoIosHeartEmpty key={index} />)
+                ebook.notes.map(note => (
+                  note ? <IoIosHeart /> : <IoIosHeartEmpty />
+                ))
               }
             </span>
           </div>
