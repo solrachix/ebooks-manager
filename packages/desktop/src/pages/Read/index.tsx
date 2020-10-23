@@ -65,15 +65,18 @@ const Read: React.FC<Props> = (props) => {
 
   const SetNewEbook = (Ebook: EbookProps) => {
     const webViewer = webViewerRef.current
-
     if (!webViewer) return
+
+    if (webViewer.childNodes[0]) webViewer.removeChild(webViewer.childNodes[0])
+
+    const NewInstance = document.createElement('div')
 
     WebViewer(
       {
         path: '/webviewer/lib',
         initialDoc: Ebook.url
       },
-      webViewer
+      NewInstance
     ).then((instance) => {
       const { docViewer, setTheme, iframeWindow, setLanguage } = instance
       const iframeDoc = iframeWindow.document
@@ -113,6 +116,8 @@ const Read: React.FC<Props> = (props) => {
         }).catch(err => console.log(err))
       })
     })
+
+    webViewer.appendChild(NewInstance)
   }
 
   const handleEbookClick = (index: number) => {
