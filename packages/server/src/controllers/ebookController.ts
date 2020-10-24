@@ -60,6 +60,11 @@ export default class EbookController {
         }
       }
 
+      // const lovedList = await db('loved_list')
+      //   .join('ebooks', 'loved_list.ebook_id', '=', String(ebook.id))
+      //   .count('* as numberOfLove')
+      //   .select('*').then(() => )
+
       return {
         ...ebook,
         notes,
