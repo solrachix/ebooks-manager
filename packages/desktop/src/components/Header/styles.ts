@@ -85,7 +85,7 @@ export const Titleshown = styled.div`
     background: ${props => props.theme.colors.white};
     border-radius: 5px;
 
-    z-index: 15;
+    z-index: 16;
   }
 `
 
