@@ -1,5 +1,6 @@
 import './utils/stringReplaceAll'
 import './utils/$'
+import './utils/ColorThief'
 import './utils/NumberClamp'
 import './utils/NumberRound'
 
