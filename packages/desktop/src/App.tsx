@@ -1,4 +1,5 @@
 import './utils/stringReplaceAll'
+import './utils/shuffle'
 import './utils/$'
 import './utils/ColorThief'
 import './utils/NumberClamp'

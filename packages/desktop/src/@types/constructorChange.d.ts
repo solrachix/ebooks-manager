@@ -17,3 +17,7 @@ interface Number {
   round(places?: number): number;
   clamp(lower: number, upper: number): number;
 }
+
+interface Array {
+  shuffle<K>(): K[];
+}
