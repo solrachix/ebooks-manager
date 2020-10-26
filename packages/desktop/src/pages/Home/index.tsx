@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
 import { useWindow } from '../../context/window'
+import { useUser } from '../../context/user'
 
 import { ThemeContext } from 'styled-components'
 
@@ -16,6 +17,7 @@ import Aside from './components/Aside'
 import RecentBooks from './components/RecentBooks'
 import { Container, Content, Statistics, UserDataAboutReading } from './styles'
 import api from '@thoth/axios-config'
+import Avatar from './../../components/Avatar/index'
 
 const AudioBooksItems = [
   {
@@ -68,6 +70,7 @@ interface Statistics {
 const Home: React.FC = () => {
   const theme = useContext(ThemeContext).colors
   const { newWindow, newNotification, Toast, Header, Size } = useWindow()
+  const { user } = useUser()
   const [statistics, setStatistics] = useState<Statistics | null>(null)
 
   useEffect(() => {
@@ -120,9 +123,9 @@ const Home: React.FC = () => {
         <div className="currentData">Quarta feira, 17 de março de 2020</div>
 
         <div className="user">
-          Carlos Miguel
+          {/* {user?.data?.name.split(' ')[0]} */}
 
-          <img src="https://avatars2.githubusercontent.com/u/57706806?s=460&u=d99f75dd759767691aecc7463b92fa022a4b01ee&v=4" alt="User avatar"/>
+          <Avatar avatarId={user?.data?.avatar} />
         </div>
       </header>
 

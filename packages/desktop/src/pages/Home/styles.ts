@@ -24,37 +24,28 @@ export const Container = styled.div`
     width: 100%;
     height: 70px;
 
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 51% 39% 10%;
+    column-gap: .4rem;
+    justify-content: center;
     align-items: center;
 
     .currentData{
       width: 100%;
       max-width: 200px;
 
-      line-height: 10px;
+      /* line-height: 10px; */
       color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
       font-family: Archivo;
       font-size: 0.8rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .user {
-      width: 150px;
-
-      color: ${props => rgba(props.theme.colors.themeColors.text.normal, 0.8)};
-      font-weight: 900;
-      font-family: Archivo;
-      font-size: 0.9rem;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      img {
-        width: 40px;
-
-        border-radius: 50%;
-      }
+      width: 100%;
     }
   }
 

@@ -8,7 +8,7 @@ import api from '@thoth/axios-config'
 import { IoIosStarOutline, IoIosStar, IoIosHeartEmpty, IoIosHeart, IoMdClose } from 'react-icons/io'
 import OutlineOwl from '../../assets/outlineOwl.svg'
 import FilledOwl from '../../assets/filledOwl.svg'
-import Man2 from '../../assets/avatars/man 2.svg'
+import Man2 from '../../assets/avatars/man02.png'
 
 import Button from './../Button/index'
 import { Container, Ebook, Content } from './styles'
