@@ -37,7 +37,7 @@ routes.get('/user/authenticate', userController.show)
 import auth from './middlewares/middleware'
 routes.use(auth)
 
-routes.post('/user/update', userController.update)
+routes.put('/user/update', userController.update)
 routes.post('/user/renewToken', userController.renewToken)
 
 /**

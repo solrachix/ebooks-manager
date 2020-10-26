@@ -60,7 +60,9 @@ export default class UserController {
     const [id] = await db('users').insert({
       email,
       name,
-      password: await generateHash(password)
+      password: await generateHash(password),
+
+      avatar: 'default.png'
     })
 
     if (!id) return res.status(400).json({ error: 'User registration failed' })
@@ -86,6 +88,7 @@ export default class UserController {
     if (!password) password = user.password
     if (!email) email = user.email
     if (!name) name = user.name
+    if (!avatar) avatar = user.avatar
 
     await db('users')
       .where('id', userId)

@@ -64,6 +64,7 @@ export default class EvaluationController {
 
             ebook.assessments[indexTwo] = {
               ...assessment,
+              avatar: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${assessment.avatar}`,
               note: individualNote
             }
           })
