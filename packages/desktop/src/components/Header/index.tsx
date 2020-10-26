@@ -36,7 +36,7 @@ const Tabs = [
     icon: BsSearch
   },
   {
-    to: '/upload',
+    to: '/sendBook',
     icon: BsUpload
   }
   // {
