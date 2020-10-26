@@ -266,7 +266,7 @@ export const Content = styled.div<ContentProps>`
           justify-content: center;
           align-items: center;
 
-          img {
+          .avatar {
             grid-area: avatar;
 
             width: 100%;

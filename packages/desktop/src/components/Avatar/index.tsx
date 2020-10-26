@@ -8,13 +8,14 @@ import api from '@thoth/axios-config'
 
 interface Props {
   avatarId: string;
+  withoutPopup?: boolean;
 }
 
 interface Avatar {
   id: string,
   base64: string
 }
-const Avatar: React.FC<Props> = ({ avatarId }) => {
+const Avatar: React.FC<Props> = ({ avatarId, withoutPopup, ...props }) => {
   const PopupRef = useRef<HTMLDivElement>(null)
   const [avatars, setAvatars] = useState<Avatar[] | null>(null)
   const [selectedAvatar, setSelectedAvatar] = useState<Avatar | null>()
@@ -94,13 +95,13 @@ const Avatar: React.FC<Props> = ({ avatarId }) => {
   }
 
   return (
-    <Container>
+    <Container {...props}>
       { selectedAvatar
         ? <img
           src={`data:image/png;base64, ${selectedAvatar.base64}`}
           alt="User avatar"
 
-          onClick={handleOpenPopup}
+          onClick={() => !withoutPopup && handleOpenPopup()}
         />
         : 'loading...'
       }

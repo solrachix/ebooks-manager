@@ -12,6 +12,7 @@ import Man2 from '../../assets/avatars/man02.png'
 
 import Button from './../Button/index'
 import { Container, Ebook, Content } from './styles'
+import Avatar from './../Avatar/index'
 
 interface EbookProps {
   id: number;
@@ -207,7 +208,8 @@ const EbookData: React.FC<EbookDataProps> = ({ open, ebook }) => {
                     <div key={index} className="user">
                       <header>
 
-                        <img src={Man2} alt={assessment.name}/>
+                        <Avatar className="avatar" avatarId={assessment.avatar} withoutPopup={true} />
+                        {/* <img src={Man2} alt={assessment.name}/> */}
                         <h3>{assessment.name}</h3>
                         <span>
                           {
