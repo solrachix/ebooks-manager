@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, Select, CreatableSelect } from './styles'
+import { Container, Select, CreatableSelect, Menu } from './styles'
 
-export interface OptionsType {value: string; label: string}
+export interface OptionsType {value: string|number; label: string}
 
 interface SelectProps {
   flex?: number;
@@ -16,7 +16,8 @@ interface SelectProps {
   label: string;
   options: OptionsType[];
   defaultValue?: OptionsType;
-  onChange?(props: OptionsType): void
+  onChange?(props: OptionsType): void;
+  onCreateOption?: (inputValue: any) => void
 }
 
 const SelectComponent: React.FC<SelectProps> = ({ isClearable = false, flex, name, label, ...props }) => {
@@ -29,16 +30,19 @@ const SelectComponent: React.FC<SelectProps> = ({ isClearable = false, flex, nam
           ? <CreatableSelect
             classNamePrefix="select"
             menuPortalTarget={document.body}
+            // onChange={(newValue, actionMeta) => console.log(newValue, actionMeta)}
+            onCreateOption={(inputValue) => console.log(inputValue)}
+
             {...props}
           />
           : <Select
             classNamePrefix="select"
+            menuPortalTarget={document.body}
             // defaultValue={colourOptions[0]}
             // isRtl={isRtl}
 
             // cacheOptions
             // defaultOptions
-            menuPortalTarget={document.body}
             {...props}
           />
       }

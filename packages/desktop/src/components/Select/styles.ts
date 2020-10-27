@@ -40,7 +40,16 @@ export const Select = styled(select)`
   }
 `
 
-export const CreatableSelect = styled(creatableSelect)`
+export const CreatableSelect = styled(creatableSelect).attrs(() => {
+  return {
+    styles: {
+      MenuList: base => ({
+        ...base,
+        zIndex: 9999999
+      })
+    }
+  }
+})`
   .select__control{
     width: 100%;
     height: 3rem;

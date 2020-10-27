@@ -49,7 +49,7 @@ export const Container = styled.header`
     justify-content: space-between; /** center */
     align-items: center;
 
-    z-index: 99999;
+    z-index: 100;
   }
 
   justify-content: flex-start;
@@ -72,7 +72,7 @@ export const Titleshown = styled.div`
   zoom: 1;
   overflow: hidden;
 
-  z-index: 10;
+  z-index: 101;
   .square {
     position: absolute;
     /* margin-top: -63px; */
@@ -85,7 +85,7 @@ export const Titleshown = styled.div`
     background: ${props => props.theme.colors.white};
     border-radius: 5px;
 
-    z-index: 16;
+    z-index: 102;
   }
 `
 
@@ -122,7 +122,7 @@ export const Link = styled.a<LinkProps>`
   justify-content: center;
   align-items: center;
 
-  z-index: 20;
+  z-index: 103;
 `
 
 export const Logo = styled.div`

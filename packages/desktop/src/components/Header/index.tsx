@@ -65,6 +65,8 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
     const square = $('.square')
 
     if (square) {
+      goToTab(0)
+
       square.animate({
         left: ['-60%', '20%']
       }, {
@@ -76,7 +78,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
 
       square.style.left = '20%'
     }
-  }, [])
+  }, [hidden])
 
   const goToTab = (id: number) => {
     const square = $('.square')
@@ -246,7 +248,7 @@ const Header: React.FC<HeaderProps> = ({ title, hidden }) => {
     return useMacOSWindowActionButtons || os.platform() === 'darwin'
   }, [useMacOSWindowActionButtons])
 
-  if (!hidden) return <></>
+  if (hidden) return <></>
 
   return (
     <Container>
