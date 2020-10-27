@@ -6,10 +6,11 @@ import { Container, P } from './styles'
 
 interface Props{
   text?: string;
+  accept?: string | string[];
   onFileUploaded: (file: File) => void;
 }
 
-const DropZone: React.FC<Props> = ({ onFileUploaded, text }) => {
+const DropZone: React.FC<Props> = ({ onFileUploaded, text, accept }) => {
   const [selectedFileUrl, setSelectedFileUrl] = useState('')
 
   const onDrop = useCallback(acceptedFiles => {
@@ -23,12 +24,12 @@ const DropZone: React.FC<Props> = ({ onFileUploaded, text }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: 'video/*' // Somente aceita videos
+    accept
   })
 
   return (
     <Container {...getRootProps()} >
-      <input {...getInputProps()} accept="video/*" />
+      <input {...getInputProps()} />
 
       {selectedFileUrl
         ? <video src={selectedFileUrl} />
