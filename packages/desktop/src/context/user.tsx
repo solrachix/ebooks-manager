@@ -67,11 +67,11 @@ export const UserProvider: React.FC = ({ children }) => {
   }, [])
 
   const renewToken = async () => {
-    await api.get<UserAuthentication>('/user/renewToken', {
-      headers: {
-        authorization: `Token ${user?.data?.token}`
-      }
-    }).then(({ data }) => {
+    console.log(user?.token)
+
+    api.defaults.headers.authorization = `Token ${user?.token}`
+
+    await api.post<UserAuthentication>('/user/renewToken').then(({ data }) => {
       // Set toke for all request
       api.defaults.headers.authorization = `Token ${data.token}`
 
