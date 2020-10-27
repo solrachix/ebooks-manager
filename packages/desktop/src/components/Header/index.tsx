@@ -7,7 +7,7 @@ import { FiX, FiMinus, FiMaximize2, FiMinimize2, FiBookOpen } from 'react-icons/
 import { IoIosLogOut, IoIosHeartEmpty, IoIosCalendar, IoMdClose, IoMdBook } from 'react-icons/io'
 import { BsBookmarksFill, BsBookmarks, BsSearch, BsUpload, BsBook } from 'react-icons/bs'
 import { VscHome } from 'react-icons/vsc'
-import LogoIcon from '../../assets/logo.svg'
+import LogoIcon from '../../assets/dark-logo.svg'
 
 import { Container, Titleshown, WindowActions, MacActionButton, DefaultActionButton, MenuButton, Logo, Link, LINK_TAB_SIZE } from './styles'
 import { useConfig } from '../../hooks/useConfig'

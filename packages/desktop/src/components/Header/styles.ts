@@ -136,6 +136,9 @@ export const Logo = styled.div`
   .logoIcon {
     width: 100%;
     height: 100%;
+    path {
+      fill: ${props => props.theme.colors.white};
+    }
   }
 
   .close {
