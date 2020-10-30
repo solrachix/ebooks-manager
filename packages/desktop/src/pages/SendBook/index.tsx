@@ -11,6 +11,7 @@ import InputGroup from './../../components/Form/InputGroup'
 import Textarea from './../../components/Textarea'
 import Select from './../../components/Select'
 import DropZone from './../../components/DropZone/index'
+import UploadBar from './../../components/UploadBar/index'
 import { Container } from './styles'
 
 interface Ebook {
@@ -31,6 +32,12 @@ interface Albums {
     author_id: number;
     ebooks: Ebook[] | null;
 }
+
+interface ProgressEvent {
+  loaded: number;
+  total: number;
+}
+
 const SendBook: React.FC = () => {
   const { Toast } = useWindow()
   const [albums, setAlbums] = useState<Albums[] | null>(null)
@@ -75,10 +82,11 @@ const SendBook: React.FC = () => {
       data.append('edition', edition)
       data.append('description', description)
 
-      api.post('/author/create', data, {
+      api.post('/ebook/create', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
-        }
+        },
+        onUploadProgress
       }).then(response => {
         Toast.addToast({
           title: 'Sucesso!',
@@ -86,11 +94,11 @@ const SendBook: React.FC = () => {
           type: 'success'
         })
       }).catch(err => {
-        console.log(err)
+        const { error } = err.response.data
 
         Toast.addToast({
           title: 'Erro!',
-          description: 'Tente novamente mais tarde...',
+          description: error || 'Tente novamente mais tarde...',
           type: 'error'
         })
       })
@@ -101,6 +109,11 @@ const SendBook: React.FC = () => {
         type: 'error'
       })
     }
+  }
+
+  const onUploadProgress = (progressEvent: ProgressEvent) => {
+    const percentage = (progressEvent.loaded / progressEvent.total) * 100
+    console.log(percentage)
   }
 
   const onScroll = (event: React.UIEvent<HTMLDivElement>) => {
@@ -224,6 +237,7 @@ const SendBook: React.FC = () => {
 
       </main>
 
+      {/* <UploadBar /> */}
     </Container>
   )
 }
