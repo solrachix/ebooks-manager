@@ -74,7 +74,7 @@ const Home: React.FC = () => {
   const [statistics, setStatistics] = useState<Statistics | null>(null)
 
   useEffect(() => {
-    Header.hidden(true)
+    Header.hidden(false)
 
     api.get<Statistics>('/statistics').then(Response => {
       setStatistics(Response.data)

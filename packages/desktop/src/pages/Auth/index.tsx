@@ -28,7 +28,7 @@ const Auth: React.FC = () => {
       width: 500,
       height: 640
     })
-    Header.hidden(false)
+    Header.hidden(true)
   }, [])
 
   const [loginEmail, setLoginEmail] = useState('')

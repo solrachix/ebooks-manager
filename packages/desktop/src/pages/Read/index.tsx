@@ -108,9 +108,16 @@ const Read: React.FC<Props> = (props) => {
       },
       NewInstance
     ).then((instance) => {
-      const { docViewer, setTheme, iframeWindow, setLanguage } = instance
+      const { docViewer, setTheme, iframeWindow, disableElements, setToolbarGroup, setLanguage } = instance
       const iframeDoc = iframeWindow.document
       const Body = iframeDoc.querySelector('body')
+
+      disableElements(['ribbons'])
+      // set the default toolbar group to the Shapes group
+      setToolbarGroup('toolbarGroup-view')
+
+      disableElements(['highlightToolGroupButton'])
+      disableElements(['underlineToolGroupButton'])
 
       setLanguage('pt_br')
       setTheme('dark')
@@ -120,8 +127,6 @@ const Read: React.FC<Props> = (props) => {
       }
 
       docViewer.on('documentLoaded', () => {
-        console.log('loaded')
-
         // const pageNumber = (Number(Ebook.percentage) * Ebook.numberOfPages) / 100
         const pageNumber = Math.round(Ebook.numberOfPages * (Number(Ebook.percentage) / 100))
         docViewer.setCurrentPage(pageNumber)
@@ -134,8 +139,6 @@ const Read: React.FC<Props> = (props) => {
       })
 
       docViewer.on('pageNumberUpdated', (pageNumber) => {
-        // here it's guaranteed that page {pageNumber} is fully rendered
-        // you can get or set pixels on the canvas, etc
         const totalPage = docViewer.getPageCount()
         // const percentage = Math.floor((pageNumber * 100) / totalPage)
         // console.log(percentage, pageNumber, totalPage)

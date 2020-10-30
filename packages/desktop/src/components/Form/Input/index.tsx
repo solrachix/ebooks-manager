@@ -29,13 +29,25 @@ const Input: React.FC<InputProps> = ({ flex, name, label, icon, ...props }) => {
   }, [])
 
   return (
-    <Container isPassword={isPassword} className="input-block" style={{ flex }}>
+    <Container
+      isPassword={isPassword}
+      className={`input-block ${type === 'file' ? 'file' : ''}`}
+      style={{ flex }}>
 
-      {label && <label htmlFor={name}>{label}</label> }
+      {label && <label className={type === 'file' ? 'file' : ''} htmlFor={name}>{label}</label> }
+
       <input
         ref={inputRef}
         // defaultValue={defaultValue}
-        {...{ ...props, ...{ type, id: name } }} />
+        {...{
+          ...props,
+          ...{
+            type,
+            id: name,
+            style: { display: type === 'file' ? 'none' : 'block' }
+          }
+        }}
+      />
       { icon
         ? (
           <div className="input-icon">

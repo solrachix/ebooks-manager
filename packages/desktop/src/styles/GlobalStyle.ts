@@ -93,6 +93,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
+
   *::-webkit-scrollbar-track,
   *::-webkit-scrollbar-corner,
   *::-webkit-resizer,

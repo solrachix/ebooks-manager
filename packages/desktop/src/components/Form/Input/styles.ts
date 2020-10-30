@@ -9,9 +9,37 @@ interface Props {
 export const Container = styled.div<Props>`
   width: 100%;
   margin-bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* align-items: center; */
+
+  &.file {
+    height: 5.4rem;
+
+    justify-content: flex-end;
+  }
   label {
     color: ${props => props.theme.colors.themeColors.text.light};
     font-size: 1rem;
+
+    &.file{
+      width: 100%;
+      height: 2.9rem;
+      /* margin-top: 0.8rem; */
+      padding: 0.6rem 1.6rem;
+
+      background: ${props => props.theme.colors.themeColors.tertiary};
+      color: ${props => props.theme.colors.themeColors.text.light};
+      border-radius: 0.8rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font: 1rem Archivo;
+    }
   }
   position: relative;
 

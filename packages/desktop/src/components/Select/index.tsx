@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
-import { Container, Select, CreatableSelect, Menu } from './styles'
+import { Container, Select, CreatableSelect } from './styles'
 
 export interface OptionsType {value: string|number; label: string}
 
@@ -21,6 +21,23 @@ interface SelectProps {
 }
 
 const SelectComponent: React.FC<SelectProps> = ({ isClearable = false, flex, name, label, ...props }) => {
+  const setZIndex = (event) => {
+    if (event.target.style) {
+      event.target.style.zIndex = 999999999999999
+    }
+    // console.log(event.target)
+    // if (event.target.parentNode.id === 'parent') {
+    //   // direct descendant
+    // };
+  }
+  useEffect(() => {
+    document.body.addEventListener('DOMNodeInserted', setZIndex, false)
+
+    return () => {
+      document.body.removeEventListener('DOMNodeInserted', setZIndex, false)
+    }
+  }, [])
+
   return (
     <Container className="Select-block" style={{ flex }}>
       <label htmlFor={name}>{label}</label>

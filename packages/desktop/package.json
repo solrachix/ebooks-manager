@@ -65,6 +65,7 @@
     "react-spring": "^8.0.27",
     "react-svg-loader": "^3.0.3",
     "react-use": "^15.3.2",
+    "reactjs-popup": "^2.0.4",
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
     "url-loader": "^4.1.0",

@@ -38,18 +38,13 @@ export const Select = styled(select)`
     outline: 0;
     font: 1rem Archivo;
   }
+
+  .select__value-container, .select__single-value {
+    color: ${props => props.theme.colors.themeColors.text.normal};
+  }
 `
 
-export const CreatableSelect = styled(creatableSelect).attrs(() => {
-  return {
-    styles: {
-      MenuList: base => ({
-        ...base,
-        zIndex: 9999999
-      })
-    }
-  }
-})`
+export const CreatableSelect = styled(creatableSelect)`
   .select__control{
     width: 100%;
     height: 3rem;
@@ -63,5 +58,9 @@ export const CreatableSelect = styled(creatableSelect).attrs(() => {
 
     outline: 0;
     font: 1rem Archivo;
+  }
+
+  .select__value-container, .select__single-value{
+    color: ${props => props.theme.colors.themeColors.text.normal};
   }
 `
