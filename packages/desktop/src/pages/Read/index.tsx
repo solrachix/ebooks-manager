@@ -112,6 +112,7 @@ const Read: React.FC<Props> = (props) => {
       const iframeDoc = iframeWindow.document
       const Body = iframeDoc.querySelector('body')
 
+      disableElements(['toolsHeader'])
       disableElements(['ribbons'])
       // set the default toolbar group to the Shapes group
       setToolbarGroup('toolbarGroup-view')
