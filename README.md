@@ -51,7 +51,7 @@
 
 # :pushpin: Project motivation
 
-I am a person fascinated by reading. One day I was reading one of Rick riordan's books (super recommend), and often I would change devices; Cell phone, Laptop, accounts on the desktop itself. And I always had to keep opening in a different app and always kept the pages, and I had to keep looking where I stopped. Well, then I thought about creating a book management application that would run both on the Desktop and Mobile! Where it would bring me statistics of hours of reading, pages read, most read authors, list of favorites, synchronization between devices, etc? And the result... Good is this one!
+I am a person fascinated by reading. One day I was reading one of Rick riordan's books (super recommend), and often I would change devices; Cell phone, Laptop, accounts on the desktop itself. And I always had to keep opening in a different app and always kept the pages, and I had to keep looking where I stopped. Well, then I thought about creating a book management application that would run both on the Desktop and Mobile! Where it would bring me statistics of hours of reading, pages read, most read authors, list of favorites, synchronization between devices, etc... And the result... Good is this one!
 
 
 # :pushpin: Table of Contents
