@@ -67,29 +67,54 @@ const Read: React.FC<Props> = (props) => {
 
   useEffect(() => {
     const SideBar = SideBarRef.current
+    const Puller = $('.puller > svg')
 
     if (!SideBar) return
+    if (!Puller) return
 
     if (showSidebar) {
+      Puller.animate({
+        transform: ['rotateY(0deg)', 'rotateY(180deg)']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      })
+
       SideBar.animate({
         right: ['-60%', '0%']
       }, {
         duration: 600,
         easing: 'ease-out',
         iterations: 1
+      }).addEventListener('finish', () => {
+        // alert('a')
+        SideBar.style.right = '0%'
       })
 
-      SideBar.style.right = '0%'
+      Puller.style.transform = 'rotateY(180deg)'
     } else {
-      SideBar.animate({
-        right: ['0%', '-60%']
+      Puller.animate({
+        transform: ['rotateY(180deg)', 'rotateY(0deg)']
       }, {
         duration: 600,
         easing: 'ease-out',
         iterations: 1
       })
 
-      SideBar.style.right = '-60%'
+      SideBar.animate({
+        right: ['0%', '-60%']
+      }, {
+        duration: 600,
+        easing: 'ease-out',
+        iterations: 1
+      }).addEventListener('finish', () => {
+        // alert('a')
+
+        SideBar.style.right = '-60%'
+      })
+
+      Puller.style.transform = 'rotateY(0deg)'
     }
   }, [showSidebar])
 
