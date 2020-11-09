@@ -94,20 +94,41 @@ export default class EbookController {
 
     if (verify.length > 0) return res.status(400).json({ error: 'Ebook already exists' })
 
-    const [id] = await db('ebooks').insert({
-      title,
-      description,
-      edition,
-      numberOfPages: await getNumberOfPages(ebook.filename),
+    const trx = await db.transaction()
 
-      albums_id: albumId,
-      url: ebook.filename,
-      thumbnail
-    })
+    try {
+      const [id] = await trx('ebooks').insert({
+        title,
+        description,
+        edition,
+        numberOfPages: await getNumberOfPages(ebook.filename),
 
-    if (!id) return res.status(400).json({ error: 'Ebook registration failed' })
+        albums_id: albumId,
+        url: ebook.filename,
+        thumbnail
+      })
 
-    return res.status(201).json({ id })
+      // if (!id) return res.status(400).json({ error: 'Ebook registration failed' })
+
+      const [idEvaluation] = await trx('evaluations').insert({
+        user_id: userId,
+        ebook_id: id,
+
+        message: '',
+        note: 5
+      })
+
+      await trx.commit()
+
+      return res.status(201).json({ id })
+    } catch (e) {
+      await trx.rollback()
+
+      return res.status(400).json({
+        e,
+        message: 'Ebook registration failed'
+      })
+    }
   }
 
   async update (req: Request, res: Response): Promise<Response<unknown>> {
