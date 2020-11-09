@@ -80,7 +80,11 @@ export default class AuthorController {
 
     if (!id) return res.status(400).json({ error: 'Author registration failed' })
 
-    return res.status(201).json({ id })
+    return res.status(201).json({
+      id,
+      name,
+      avatar: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${avatar.filename}`
+    })
   }
 
   async update (req: Request, res: Response): Promise<Response<unknown>> {

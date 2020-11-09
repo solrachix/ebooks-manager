@@ -39,7 +39,7 @@ interface ProgressEvent {
 }
 
 const SendBook: React.FC = () => {
-  const { Toast } = useWindow()
+  const { Toast, Header } = useWindow()
   const [albums, setAlbums] = useState<Albums[] | null>(null)
   const [openModal, setOpenModal] = useState(false)
   const [newAlbum, setNewAlbum] = useState('')
@@ -51,6 +51,8 @@ const SendBook: React.FC = () => {
   const [description, setDescription] = useState('')
 
   useEffect(() => {
+    Header.hidden(false)
+
     api.get<Albums[]>('/album').then(response => {
       setAlbums(response.data)
     }).catch(e => alert(e))
@@ -200,7 +202,7 @@ const SendBook: React.FC = () => {
               onCreateOption={createAlbum}
 
               isLoading={!albums}
-              isDisabled={!albums}
+              isDisabled={false}
               isClearable
               required
 
