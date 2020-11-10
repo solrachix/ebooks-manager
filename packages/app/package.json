@@ -12,7 +12,6 @@
   "dependencies": {
     "@expo-google-fonts/archivo": "^0.1.0",
     "@expo-google-fonts/poppins": "^0.1.0",
-    "@thoth/axios-config": "*",
     "@react-native-community/async-storage": "~1.11.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "5.9.2",
@@ -20,6 +19,7 @@
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "@thoth/axios-config": "*",
     "expo": "~38.0.8",
     "expo-av": "~8.2.1",
     "expo-font": "~8.2.1",
@@ -33,6 +33,7 @@
     "react-native-gesture-handler": "~1.6.0",
     "react-native-media-controls": "^2.0.3",
     "react-native-modalize": "^2.0.5",
+    "react-native-pdftron": "github:PDFTron/pdftron-react-native",
     "react-native-portalize": "^1.0.4",
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",

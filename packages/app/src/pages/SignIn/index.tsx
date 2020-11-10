@@ -6,10 +6,13 @@ import { useAuth } from '../../contexts/auth'
 // import { Container } from './styles';
 
 const SignIn: React.FC = () => {
-  const { signIn } = useAuth()
+  const { Auth: { signIn } } = useAuth()
 
   function handleSignIn () {
-    signIn()
+    signIn('/user/authenticate', {
+      email: 'carlos.miguel.oliveira.17@gnail.com',
+      password: 'Carlo$fer'
+    })
   }
 
   return (

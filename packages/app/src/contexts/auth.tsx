@@ -1,24 +1,36 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react'
 import AsyncStorage from '@react-native-community/async-storage'
 import api from '@thoth/axios-config'
 
+interface UserData {
+  id: number,
+  name: string,
+  email: string,
+  avatar: string | null,
+  whatsapp: string | null,
+  bio: string | null
+}
+
 interface User {
-    name: string;
-    email: string
+  Logged: boolean,
+  token: null | string,
+  data: null | UserData
 }
 
 interface AuthContextData {
   signed: boolean;
   user: User | null;
   loading: boolean;
-  signIn(url: string, params: unknown): Promise<void>;
-  signOut(): void;
+  Auth: {
+    signIn(url: string, params: unknown): Promise<void>;
+    signOut(): void;
+  }
   firstTimeInTheAPP: boolean;
   finishedTheIntro() : void
 }
 
 interface Authentication {
-  user: User,
+  user: UserData,
   token: string
 }
 
@@ -38,39 +50,102 @@ export const AuthProvider: React.FC = ({ children }) => {
       ])
 
       // await new Promise((resolve) => setTimeout(resolve, 1000));
-      if (user && token) {
+      if (user && token && FirstTime[1]) {
+        await Auth.renewToken()
         // Set toke for all request
-        api.defaults.headers.Authorization = `Bearer ${token[1]}`
+        // api.defaults.headers.Authorization = `Token ${token[1]}`
 
         setFirstTimeInTheAPP(JSON.parse(FirstTime[1]))
-        setUser(JSON.parse(user[1]))
-        setLoading(false)
+        // setUser(JSON.parse(user[1]))
+
+        setUser({
+          Logged: true,
+          token: '',
+          data: (user as UserData)
+        })
+
+        setInterval(() => Auth.renewToken(), 1000 * 60 * 60)
       }
+
+      setLoading(false)
     }
     loadStorageData()
   }, [])
 
-  async function signIn (url: string, params: unknown) {
-    const { data } = await api.get<Authentication>(url, { params })
+  const Auth = {
+    signIn: useCallback(async (url: string, params: unknown) => {
+      const { data } = await api.get<Authentication>(url, { params })
 
-    setTimeout(() => {
-      setUser(data.user)
-    }, 5000)
+      // setTimeout(() => {
 
-    setUser(data.user)
+      // }, 1000)
 
-    // Set toke for all request
-    api.defaults.headers.Authorization = `Token ${data.token}`
+      // Set toke for all request
+      api.defaults.headers.authorization = `Token ${data.token}`
 
-    await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(data.user))
-    await AsyncStorage.setItem('@RNAuth:token', data.token)
+      setUser({
+        Logged: true,
+        token: data.token,
+        data: data.user
+      })
+
+      await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(data.user))
+      await AsyncStorage.setItem('@RNAuth:token', data.token)
+    }, []),
+    signOut: useCallback(() => {
+      AsyncStorage.clear().then(() => {
+        setUser({
+          Logged: false,
+          token: null,
+          data: null
+        })
+      })
+    }, []),
+    renewToken: useCallback(async () => {
+      console.log(user?.token)
+
+      api.defaults.headers.authorization = `Token ${user?.token}`
+
+      await api.post<Authentication>('/user/renewToken').then(({ data: { token } }) => {
+        if (!token) return
+        // Set toke for all request
+        api.defaults.headers.authorization = `Token ${token}`
+
+        if (!user) return false
+
+        setUser({
+          ...user,
+          token
+        })
+      }).catch((error) => {
+        console.log(error)
+        Auth.signOut()
+      })
+    }, [])
+
   }
 
-  function signOut () {
-    AsyncStorage.clear().then(() => {
-      setUser(null)
-    })
-  }
+  // async function signIn (url: string, params: unknown) {
+  //   const { data } = await api.get<Authentication>(url, { params })
+
+  //   setTimeout(() => {
+  //     setUser(data.user)
+  //   }, 5000)
+
+  //   setUser(data.user)
+
+  //   // Set toke for all request
+  //   api.defaults.headers.Authorization = `Token ${data.token}`
+
+  //   await AsyncStorage.setItem('@RNAuth:user', JSON.stringify(data.user))
+  //   await AsyncStorage.setItem('@RNAuth:token', data.token)
+  // }
+
+  // function signOut () {
+  //   AsyncStorage.clear().then(() => {
+  //     setUser(null)
+  //   })
+  // }
 
   async function finishedTheIntro () {
     setLoading(false)
@@ -80,7 +155,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }
   return (
     <AuthContext.Provider
-      value={{ signed: !!user, user, loading, signIn, signOut, firstTimeInTheAPP, finishedTheIntro }}>
+      value={{ signed: !!user, user, loading, Auth, firstTimeInTheAPP, finishedTheIntro }}>
       {children}
     </AuthContext.Provider>
   )
