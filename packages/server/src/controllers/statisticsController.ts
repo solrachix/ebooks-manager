@@ -23,6 +23,7 @@ interface Ebook {
 }
 
 interface ReadingBook {
+  id: number;
   title: string;
   description: string;
   thumbnail: string;
@@ -81,8 +82,7 @@ export default class StatisticsController {
       ebook.percentage > 0 &&
       ebook.percentage < 100 &&
         readingBooks.push({
-          title: ebook.title,
-          description: ebook.description,
+          ...ebook,
           thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`,
           pagesAlreadyRead: `${numberOfPagesRead}/${ebook.numberOfPages}`,
           percentage: ebook.percentage
