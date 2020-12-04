@@ -37,7 +37,18 @@ export default class EbookController {
         .join('albums', 'ebooks.albums_id', '=', 'albums.id')
         .join('authors', 'albums.author_id', '=', 'authors.id')
         .join('evaluations', 'evaluations.ebook_id', '=', 'ebooks.id')
-        .where('title', 'like', `%${String(search)}%`)
+        .where(function () {
+          const [$, id] = String(search).split('@id ')
+
+          if (id) {
+            return this
+              .where('ebooks.id', '=', String(id))
+          } else {
+            return this
+              .orWhere('ebooks.title', 'like', `%${String(search)}%`)
+              .orWhere('ebooks.description', 'like', `%${String(search)}%`)
+          }
+        })
         .select('ebooks.*',
           'albums.name AS albumName', 'albums.author_id',
           'authors.name AS authorName', 'authors.avatar AS authorAvatar'
