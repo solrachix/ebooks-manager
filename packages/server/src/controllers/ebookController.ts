@@ -50,28 +50,38 @@ export default class EbookController {
     /**
     * Processo de virtualização dos campos do banco.
     */
-    const serializedMidia = ebooks.map((ebook) => {
-      const notes = []
-      for (let i = 1; i <= 5; i++) {
-        if (i <= ebook.notes) {
-          notes.push(true)
-        } else {
-          notes.push(false)
+    const serializedMidia = []
+    for (const key in ebooks) {
+      if (Object.prototype.hasOwnProperty.call(ebooks, key)) {
+        const ebook = ebooks[key]
+        const notes = []
+        for (let i = 1; i <= 5; i++) {
+          if (i <= ebook.notes) {
+            notes.push(true)
+          } else {
+            notes.push(false)
+          }
         }
-      }
 
-      // const lovedList = await db('loved_list')
-      //   .join('ebooks', 'loved_list.ebook_id', '=', String(ebook.id))
-      //   .count('* as numberOfLove')
-      //   .select('*').then(() => )
+        const readingList = (await db('reading_list')
+          .where('ebook_id', '=', String(ebook.id))
+          .count('ebook_id as numberOfReaders')
+          .select('*'))[0]
 
-      return {
-        ...ebook,
-        notes,
-        url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
-        thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
+        // const lovedList = await db('loved_list')
+        //   .join('ebooks', 'loved_list.ebook_id', '=', String(ebook.id))
+        //   .count('* as numberOfLove')
+        //   .select('*').then(() => )
+
+        serializedMidia.push({
+          ...ebook,
+          numberOfReaders: Number(readingList.numberOfReaders).rankNumber(),
+          notes,
+          url: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/${ebook.url}`,
+          thumbnail: `${process.env.HOST_APP}:${process.env.PORT_APP}/uploads/thumbnail/${ebook.thumbnail}`
+        })
       }
-    })
+    }
 
     return res.json(serializedMidia)
   }
