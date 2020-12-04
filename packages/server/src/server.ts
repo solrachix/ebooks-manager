@@ -1,4 +1,5 @@
 import './utils/stringReplaceAll'
+import './utils/rankNumber'
 
 import express from 'express'
 import cors from 'cors'
