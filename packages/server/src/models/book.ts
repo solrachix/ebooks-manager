@@ -2,7 +2,7 @@
 
 import fs from 'fs'
 import path from 'path'
-import PDF from 'pdf-poppler'
+// import PDF from 'pdf-poppler'
 import pdfParse from 'pdf-parse'
 import Tesseract from 'tesseract.js'
 
@@ -15,12 +15,12 @@ export const getCover = async (fileName: string): Promise<string> => {
   const filePath = path.resolve(uploadsURL, fileName)
   const imageName = path.basename(`thumbnail-${fileName}`, path.extname(fileName))
 
-  await PDF.convert(filePath, {
-    format: 'jpeg',
-    out_dir: thumbnailURL,
-    out_prefix: imageName,
-    page: 1
-  })
+  // await PDF.convert(filePath, {
+  //   format: 'jpeg',
+  //   out_dir: thumbnailURL,
+  //   out_prefix: imageName,
+  //   page: 1
+  // })
 
   return `${imageName}-001.jpg`
 }

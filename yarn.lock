@@ -15151,6 +15151,10 @@ react-native-modalize@^2.0.5:
   resolved "https://registry.yarnpkg.com/react-native-modalize/-/react-native-modalize-2.0.6.tgz#0a8662e77b1fb68d37baa6440cf64b0c0d718b71"
   integrity sha512-/JE9ZRVL9AdjspXBpQnGk+BRiYHnKW77ptXLhudwETQRW5uPR/a80ph4BRkV7DVGwadlf04ASgq63lTpOtAtiw==
 
+"react-native-pdftron@github:PDFTron/pdftron-react-native":
+  version "2.0.3-beta.7"
+  resolved "https://codeload.github.com/PDFTron/pdftron-react-native/tar.gz/2f7567ccb09ec48d2d2e71a1302829aaf9849ce8"
+
 react-native-portalize@^1.0.4:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/react-native-portalize/-/react-native-portalize-1.0.7.tgz#8b3c742a06f863654d526ea1075a8596625f8482"

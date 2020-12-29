@@ -10,7 +10,9 @@
     "start:mobile": "yarn workspace @thoth/app start",
     "test": "jest",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx ./",
-    "fix": "eslint --ext .js,.jsx,.ts,.tsx  --fix ./"
+    "fix": "eslint --ext .js,.jsx,.ts,.tsx  --fix ./",
+    "postinstall": "cd packages/server && tsc",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "workspaces": {
     "packages": [
